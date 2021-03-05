@@ -1372,3 +1372,63 @@ int main(void)
 	return 0;
 ```
 
+
+
+# 8. 배열
+
+* 한번에 많은 변수를 선언할 수 있음
+
+## 1) 1차원 배열
+
+* 이름, 자료형, 길이정보가 필요. 예) int oneDimArr[4]
+* 배열 선언과 동시에 초기화 가능
+
+```c
+int arr1[5] = {1, 2, 3, 4, 5}; // 순차적으로 1, 2, 3, 4, 5로 초기화
+
+// 혹은 아래와 같이 리스트 길이 생략 가능
+int arr2[] = {1, 2, 3, 4, 5, 6, 7};
+
+// 
+int arr3[5] = {1, 2}; // 3, 4, 5번째 인덱스는 0으로 채워짐
+```
+
+
+
+* 리스트 길이 확인
+
+```c
+int main(void)
+{
+	int arr1[5] = { 1, 2 };
+
+	printf("%d", sizeof(arr1) / sizeof(int));	
+	return 0;	
+}
+
+// 혹은
+
+int main(void)
+{
+	int arr1[5] = { 1, 2 };
+	int ar1Len, i;
+
+	ar1Len = sizeof(arr1) / sizeof(int);
+
+	for (i = 0; i < ar1Len; i++)
+		printf("%d ", arr1[i]);
+
+	return 0;
+}
+```
+
+
+
+## 2) 문자열 배열
+
+문자열 리스트 저장 또한 가능
+
+```c
+char str[14] = "Good morning!";  // 이 리스트에는 끝에 \0(null)이라는 특수문자(escape sequence)가 자동 삽입됨
+```
+
