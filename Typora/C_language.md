@@ -1426,6 +1426,7 @@ int main(void)
 
 ## 2) 문자열 배열
 
+
 * 문자열 리스트 저장
 
 ```c
@@ -1476,3 +1477,9 @@ int main(void)
 
 ## 2) 상수형태 포인터
 
+
+문자열 리스트 저장 또한 가능
+
+```c
+char str[14] = "Good morning!";  // 이 리스트에는 끝에 \0(null)이라는 특수문자(escape sequence)가 자동 삽입됨
+```
