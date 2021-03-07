@@ -23,6 +23,10 @@
 
 
 
+## 3) GUI 환경 git
+
+* sourcetree
+
 # 2. git 사용하기
 
 * git 커맨드에 대한 자세한 정보를 알려면 git help 인자 커맨드 입력. 예) git help add -> add에 대한 커맨드 매뉴얼 출력
@@ -111,11 +115,19 @@
 * git log --pretty: 커밋 히스토리를 깔끔하게 정리함
 * git show 커밋아이디: 커밋아이디는 앞 4자리만 쳐도 문제없음. 예) git show 3867
 
+### a. 히스토리 다양하게 보는 방법
+
+* 현재 브랜치와 다른 브랜치도 보려면 --all 옵션 추가, --graph옵션 또한 추가하면 입체적으로 나타냄
+
+예) git log --pretty=oneline --all --graph
+
 
 
 ## 5) 최신 커밋 수정
 
-* git commit --amend 커맨드로 바꿀 수 있음. 예) git add -> git commit --amend 후 저장 종료
+* git commit --amend 커맨드로 가장 최신 커밋 1개를 수정된 커밋으로 덮어씌울 수 있음
+
+예) git add -> git commit --amend 후 저장 종료
 
 
 
@@ -130,6 +142,56 @@
 * 태그 달기: git tag [태그이름] [커밋 아이디]
 * git tag: 태그 목록을 보여주는 커맨드
 * git show [태그이름]: 해당 태그 커밋을 보여줌
+
+
+
+## 8) git reflog
+
+* git reflog는 reference log로, HEAD 가 가리켰던 커밋들을 모두 출력해줌
+
+
+
+## 9) git rebase
+
+* 커밋을 재배치하다 라는 의미
+* premium 브랜치와 test 브랜치 2개 중 git rebase test를 하면 브랜치가 더 깔끔하게 정리 됨
+
+예) git rebase test (test 브랜치로 베이스를 옮기라는 뜻) 커맨드 후에 conflict 해결 후 git rebase --continue
+
+
+
+## 10) git stash
+
+### a. 임시저장용
+
+* working directory에서 작업하던 내용을 깃이 따로 보관 (작업 중 다른 브랜치로 이동할때)
+* git stash list 커맨드로 임시저장 내용 확인 가능
+* 최근 커밋 이후로 작업했던 내용은 모두 스택에 옮겨지고 working directory 내부는 다시 최근 커밋의 상태로 초기화
+* git stash apply: 스택에 옮겨진 가작 최근의 작업 내용을 다시 불러옴
+
+### b. 잘못된 브랜치에서 작업하고 있을때
+
+* 우선 git stash로 스택에 작업내용 저장 후 올바른 브랜치로 가서 git stash apply [stash 아이디]로 불러오기 실행
+
+### c. stash 지우기
+
+* git stash drop [stash 아이디]
+* 주로 복구 후 바로 스태시 내용 삭제함.
+
+### d. git stash pop
+
+* git stash apply 후 git stash drop을 동시에 진행
+
+
+
+## 11) git cherry-pick
+
+* 자신이 원하는 작업이 들어있는 커밋들만 가져와서 현재 브랜치에 추가
+* git cherry-pick [커밋아이디] -> conflict 해결 -> 커밋 진행
+
+
+
+## 
 
 
 
@@ -150,6 +212,7 @@
 ## 2) git pull
 
 * 리모트 레포지토리 -> 로컬 레포지토리로 가져오려면 git pull 커맨드로 업데이트 해야함
+* git pull은 git fetch 후 자동으로 merge해주는 기능임
 
 
 
@@ -173,21 +236,16 @@
 
 
 
-## 2) 브랜치 나누기(만들기)
+## 2) 브랜치 나누기(만들기) & 삭제
 
 * git branch [브랜치 이름]: 브랜치 만들기
 * git checkout [가고싶은 브랜치 이름]: 브랜치 이동
 * git checkout -b [브랜치 이름]: 브랜치 만듦과 동시에 이동
+* git branch -d [브랜치이름]: 브랜치 삭제
 
 
 
-## 3) 브랜치 삭제
-
-* git branch -d [브랜치이름]
-
-
-
-## 4) 브랜치 merge 하기
+## 3) 브랜치 merge 하기
 
 ### a. merge
 
@@ -208,3 +266,34 @@
 
 
 
+# 5. git 협업하기
+
+
+
+## 1) git push 전 git pull하는 경우
+
+* merge가 필요한 경우가 많음
+
+
+
+## 2) git fetch
+
+* 리모트에서 가져온 브랜치의 내용을 머지하기 전에 점검할 때 사용
+* 리모트에 있는 브랜치 내용과 나의 고드를 비교하여 검토 시 사용
+* git fetch 커맨드 후에 git diff [로컬브랜치] [리모트브랜치]로 비교.  예) git diff premium origin/premium
+
+
+
+## 3) git blame
+
+* 어떤 파일의 특정 코드를 누가 작성했는지 찾아내기 위한 커맨드
+* git blame [파일 이름]
+
+
+
+## 4) git revert 커밋
+
+* 최신 커밋을 되돌리고 다시 커밋함
+* git revert [커밋아이디]를 하고 커밋 메세지 작성 후 git push하면 바로 이전 단계로 커밋이 리모트로 푸쉬됨
+* git reset을 하게되면 리모트보다 이전 단계의 커밋을 가지고 있으므로 푸쉬할 시 오류가 발생함. 그래서 revert 커밋으로 한단계 더 업데이트하여 커밋, 푸쉬를 하는것임
+* 여러개의 커밋으로 한번에 revert도 가능 예) git revert facd..eeat (여기서 facd 커밋은 포함되지 않음)

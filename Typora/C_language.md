@@ -733,7 +733,7 @@ int main(void)
 
 * <b>char 자료형은 문자를 저장할때 사용된다. 그래서 이름도 char(acter)이다.</b> 연산은 int, 문자는 char를 사용함.
 
-
+ 
 
 ## 4) 상수에 대한 이해
 
@@ -1371,4 +1371,108 @@ int main(void)
 	printf("%d! = %d", fac, factorial(fac));
 	return 0;
 ```
+
+
+
+# 8. 배열
+
+* 한번에 많은 변수를 선언할 수 있음
+
+## 1) 1차원 배열
+
+* 이름, 자료형, 길이정보가 필요. 예) int oneDimArr[4]
+* 배열 선언과 동시에 초기화 가능
+
+```c
+int arr1[5] = {1, 2, 3, 4, 5}; // 순차적으로 1, 2, 3, 4, 5로 초기화
+
+// 혹은 아래와 같이 리스트 길이 생략 가능
+int arr2[] = {1, 2, 3, 4, 5, 6, 7};
+
+// 
+int arr3[5] = {1, 2}; // 3, 4, 5번째 인덱스는 0으로 채워짐
+```
+
+
+
+* 리스트 길이 확인
+
+```c
+int main(void)
+{
+	int arr1[5] = { 1, 2 };
+
+	printf("%d", sizeof(arr1) / sizeof(int));	
+	return 0;	
+}
+
+// 혹은
+
+int main(void)
+{
+	int arr1[5] = { 1, 2 };
+	int ar1Len, i;
+
+	ar1Len = sizeof(arr1) / sizeof(int);
+
+	for (i = 0; i < ar1Len; i++)
+		printf("%d ", arr1[i]);
+
+	return 0;
+}
+```
+
+
+
+## 2) 문자열 배열
+
+* 문자열 리스트 저장
+
+```c
+char str[14] = "Good morning!";  // 이 리스트에는 끝에 \0(null)이라는 특수문자(escape sequence)가 자동 삽입됨
+// null 문자의 아스키 코드 값은 0임.
+
+srt[12] = ?  // 인덱스 변환도 가능
+```
+
+* 문자열 입력받기
+
+```c
+int main(void)
+{
+	char str[50];
+	int idx = 0;
+	
+	printf("문자열 입력: ");
+	scanf("%s", str);  // 문자열 입력은 &문자 제외
+	printf("입력 받은 문자열: %s \n", str);  // 입력받은 모든 문자열의 끝에는 null(\0) 문자가 자동으로 삽입됨
+
+	return 0;
+}
+```
+
+
+
+# 9. 포인터
+
+
+
+## 1) 포인터변수
+
+* 메모리의 주소 값을 저장하기 위한 변수
+
+예) 세 변수 char 'A', char 'B', int 7(각각 1, 1, 4 바이트)는 메모리 공간에 할당됨(0x12ff74, ox12ff75, ...ox12ff79 ). 메모리 주소값 또한 정수이므로 저장이 가능함. 이의 저장을 위해 마련된 변수가 포인터 변수
+
+```c
+int main(void)
+{
+    int num = 7;
+    int * pnum;  // 포인터 변수 pnum 선언
+    pnum = &num;  // num의 주소 값을 포인터 변수 pnum에 저장
+}
+```
+
+
+
+## 2) 상수형태 포인터
 
