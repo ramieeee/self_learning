@@ -1468,18 +1468,114 @@ int main(void)
 int main(void)
 {
     int num = 7;
-    int * pnum;  // 포인터 변수 pnum 선언
-    pnum = &num;  // num의 주소 값을 포인터 변수 pnum에 저장
+    int * pnum = &num;  // 포인터 변수 pnum 선언 및 num의 주소 값을 포인터 변수 pnum에 저장
+}
+```
+
+* 포인터 형(type) 별 변수 선언
+
+```c
+int * pnum1;  // int형 포인터 변수 선언
+double * pnum2;  // double형 포인터 변수 선언
+unsigned int * pnum3;  // unsigned int형 포인터 변수 선언
+```
+
+
+
+## 2) &연산자
+
+* 주소 연산자. 뒤에 있는 변수의 주소값을 불러옴
+* 연산자의 피 연산자는 변수여야함.(상수는 피연산자가 될 수 없음
+
+```c
+int main(void)
+{
+    int a = 10;
+    printf("%p", &a);  // 값: 00EFFEC4. %p는 포인터 주소값을 출력하는 서식문자
+    return 0;
 }
 ```
 
 
 
-## 2) 상수형태 포인터
+## 3) *연산자
 
-
-문자열 리스트 저장 또한 가능
+* 포인터 변수 주소값에 있는 데이터
+* 포인터가 가리키는 메모리 공간에 접근할 때 사용.
 
 ```c
-char str[14] = "Good morning!";  // 이 리스트에는 끝에 \0(null)이라는 특수문자(escape sequence)가 자동 삽입됨
+int main(void)
+{
+    int num = 10;
+    int * pnum = &num;
+    *pnum = 20;
+    printf("%d", *pnum);  // pnum이 가리키는 변수(num)를 부호 있는 정수로 출력. 값: 20
+}
 ```
+
+
+
+## 4) Null 포인터
+
+* 포인터 초기화에 아무 값을 주지 않는 것
+
+```c
+int main(void)
+{
+    int * ptr1 = 0;  // Null과 같은 의미
+    int * ptr2 = NULL;  // Null은 사실상 0을 의미
+}
+```
+
+
+
+## 5) 포인터와 배열의 관계
+
+* 배열의 이름은 포인터임. 아래 실행 결과를 보면 int형 배열요소간 주소 값의 차는 4바이트인것을 알 수 있음.
+
+```c
+int main(void)
+
+{
+	int arr[3] = { 0, 1, 2 };
+	printf("배열의 이름 %p \n", arr);  // 00A6F764 (배열의 이름은 배열의 시작 주소 값을 의미)
+	printf("첫 번째 요소: %p \n", &arr[0]);  // 00A6F764
+	printf("두 번째 요소: %p \n", &arr[1]);  // 00A6F768
+	printf("세 번째 요소: %p \n", &arr[2]);  // 00A6F76C
+
+	return 0;
+}
+```
+
+
+
+## 6) 포인터 연산
+
+* 포인터를 대상으로 n의 크기만큼 값을 증가 및 감소 시 n x sizeof(타입)의 크기만큼 주소 증감소
+
+```c
+int main(void)
+
+{
+	int arr[3] = { 11, 22, 33 };
+	int* ptr = arr;
+	printf("%d %d %d \n", *ptr, *(ptr + 1), *(ptr + 2));  // 값: 11 22 33. 4바이트씩 증가하였기 때문에 1차원 배열된 다음 인덱스 값이 출력됨
+	
+	printf("%d ", *ptr); ptr++;  // 11
+	printf("%d ", *ptr); ptr++;  // 22
+	printf("%d ", *ptr); ptr--;  // 33
+	printf("%d ", *ptr); ptr--;  // 22
+	printf("%d ", *ptr); printf("\n"); // 11
+    
+    // 아래 네 출력 모두 값이 11 22 33으로 똑같음
+    printf("%d %d %d \n", *(ptr + 0), *(ptr + 1), *(ptr + 2));
+    printf("%d %d %d \n", ptr[0], ptr[1], ptr[2]);
+    printf("%d %d %d \n", *(arr + 0), *(arr + 1), *(arr + 2));
+    printf("%d %d %d \n", arr[0], arr[1], arr[2]);
+    
+	return 0;
+}
+```
+
+* 위의 결과로 볼때 <b>arr[i] == *(arr + i)</b> 임을 알 수 있음
+
