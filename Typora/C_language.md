@@ -773,8 +773,14 @@ int main(void)
 // 심볼릭 상수의 예
 int main(void)
 {
+	int num = 10;
     const int MAX = 100;  // MAX는 상수. 따라서 값의 변경 불가
     const int PI = 3.1415;  // PI는 상수. 따라서 값의 변경 불가
+    const int * ptr = &num;  // 포인터 변수를 대상으로도 const 선언 가능
+    int * const ptr2 = &num;  // 포인터 변수 이름 앞에도 위치 가능. (포인터 변수 ptr2는 상수가 됨)
+    
+    *ptr = 30;  // 컴파일 에러 발생
+    num = 20;  // 컴파일 성공
 }
 
 // 상수는 변수 선언과 동시에 초기화를 해야함.
@@ -1578,4 +1584,156 @@ int main(void)
 ```
 
 * 위의 결과로 볼때 <b>arr[i] == *(arr + i)</b> 임을 알 수 있음
+
+
+
+## 7) 상수 형태의 문자열을 가리키는 포인터
+
+```c
+int main(void)
+{
+	char str1[] = "My string";  // 문자열
+	char* str2 = "Your string";  // 상수 형태의 문자열
+	printf("%s %s \n", str1, str2);  // 값: My string Your string
+
+	str2 = "Our String";  // str2는 상수형태의 문자열 포인터이기 때문에 문자 하나하나 내용 변경이 불가능
+	printf("%s %s \n", str1, str2);  // 값: My string Our String
+	return 0;
+}
+```
+
+
+
+## 8) 포인터 배열
+
+* 포인터 변수로 이뤄졌으며 주소 값의 저장이 가능한 배열
+
+```c
+int * arr1[20];  // 길이가 20인 int형 포인터 배열
+double * arr2[30];  // 길이가 30인 double형 포인터 배열
+```
+
+예)
+
+```c
+int main(void)
+{
+	int num1 = 10, num2 = 20, num3 = 30;
+	int* arr[3] = { &num1, &num2, &num3 };
+	
+	printf("%d \n", *arr[0]);
+	printf("%d \n", *arr[1]);
+	printf("%d \n", *arr[2]);
+	return 0;
+}
+```
+
+
+
+## 9) 포인터 문자열 배열
+
+```c
+int main(void)
+{
+	char* strarr[3] = { "Simple", "String", "Array" };
+	printf("%s \n", strarr[0]);
+	printf("%s \n", strarr[1]);
+	printf("%s \n", strarr[2]);
+	return 0;
+}
+```
+
+
+
+# 10. 포인터와 함수
+
+* 함수의 매개변수는 배열의 형태로 전달받을 수 없음. 그래서 배열의 주소값을 인자로 전달하여야 함.
+
+```c
+void ShowArayElem(int* param, int len)  // 배열 파라미터를 포인터 배열로 전달
+{
+	int i;
+	for (i = 0; i < len; i++)
+		printf("%d ", param[i]);
+	printf("\n");
+}
+
+int main(void)
+{
+	int arr1[3] = { 1, 2, 3 };
+	int arr2[5] = { 4, 5, 6, 7, 8 };
+	ShowArayElem(arr1, sizeof(arr1) / sizeof(int));
+	ShowArayElem(arr2, sizeof(arr2) / sizeof(int));
+	return 0;
+}
+```
+
+* 배열의 값의 변경 또한 가능
+
+```c
+void ShowArayElem(int* param, int len)  // int * param 대신 int param[] 선언 가능. 단, 매개변수일때만 가능
+{
+	int i;
+	for (i = 0; i < len; i++)
+		printf("%d ", param[i]);
+	printf("\n");
+}
+
+void AddArayElem(int* param, int len, int add)
+{
+	int i;
+	for (i = 0; i < len; i++)
+		param[i] += add;
+}
+
+int main(void)
+{
+	int arr[3] = { 1, 2, 3 };
+	AddArayElem(arr, sizeof(arr) / sizeof(int), 1);  // arr 인덱스 값을 각각 1씩 증가시킴
+	ShowArayElem(arr, sizeof(arr) / sizeof(int));  // 값: 2 3 4
+
+	AddArayElem(arr, sizeof(arr) / sizeof(int), 2);  // arr 인덱스 값을 각각 2씩 증가시킴
+	ShowArayElem(arr, sizeof(arr) / sizeof(int));  // 값: 4 5 6
+
+	AddArayElem(arr, sizeof(arr) / sizeof(int), 3);  // arr 인덱스 값을 각각 3씩 증가시킴
+	ShowArayElem(arr, sizeof(arr) / sizeof(int));  // 7 8 9
+    return 0;
+}
+```
+
+
+
+## 1) Call-by-value & Call-by-reference
+
+* 함수의 호출 방식을 의미
+
+### a. Call-by-value
+
+* 함수를 호출할 때 단순히 값을 전달하는 형태의 함수호출. 예) 대부분의 함수가 Call-by-value.
+
+### b. Call-by-reference
+
+* 메모리의 접근에 사용되는 주소 값을 전달하는 형태의 함수호출. 예) void ShowArayElem(int * param, int len)과 같은 함수
+
+```c
+void Swap(int* ptr1, int* ptr2)
+{
+	int temp = *ptr1;
+	*ptr1 = *ptr2;
+	*ptr2 = temp;
+}
+
+int main(void)
+{
+	int num1 = 10;
+	int num2 = 20;
+	printf("num1 num2: %d %d \n", num1, num2);
+
+	Swap(&num1, &num2);  // num1과 num2의 주소값에 접근하여 바꾸므로 num1과 num2의 값이 Swap 함수로 인해 바뀜
+	printf("num1 num2: %d %d \n", num1, num2);
+	return 0;
+}
+```
+
+
 
