@@ -239,8 +239,6 @@
 * 자동으로 꺼질지 켜질지 설정.
 * 패키지가 없다면 dnf install ntsysv
 
-
-
 # 12. CRON과 AT
 
 ## 1) cron
@@ -346,7 +344,7 @@
 
 * 네트워크 장치의 정보 확인
 
-## 5) nslookup (server 명령어 추가)
+## 5) nslookup (후에 "server" 입력)
 
 * DNS 서버의 작동을 테스트하는 명령어
 
@@ -443,3 +441,39 @@
 * **password thisislinux 4321**
 * **EOF 후에 grub2mkconfig -o /boot/grub2/grub.cfg 명령 실행**
 
+# 20. 모듈의 개념과 커널 컴파일의 필요성
+
+* 커널: 하드웨어와 소통하는 역할(자동차의 엔진 역할)
+* 모듈: 커널에서 평소 불필요한 것들을 모듈로 저장해놓음
+
+## 1) 커널 컴파일
+
+* 커널을 업그레이드(컴파일) 할 수 있음
+
+## 2) 커널 업그레이드
+
+* uname -r: 버전 확인.  (4.18.0과 같이 버전이 나옴)
+* kernel.org에서 원하는 버전 다운
+* /usr/src에서 커널 소스 압축 풀기
+* 필수 패키지 설치: dnf -y install make bison flex elfutils-libelf-devel openssl-devel
+* 커널 설정 초기화: make mrproper(/usr/src/리눅스에 들어가서 명령어 입력)
+* 커널 컴파일 환경설정(커널과 모듈에 뭘 넣을지 설정해주는것): make xconfig 입력
+* .config 파일을 vim으로 열어서 /CONFIG_SYSTEM_TRUSTED 두줄을 모두 삭제 혹은 주석처리로 바꾸기
+* make clean으로 정리하기
+* make ; make modules_install ; make install
+
+# 21. X윈도 사용
+
+## 1) 테마 변경
+
+* su -c 'dnf -y install gnome-tweak-tool': -c 옵션으로 1번만 관리자 권한으로 명령을 실행할 수 있음
+* 위 명령 실행 후 옵션 테마창을 보면 바꿀 수 있는 기능들이 생김
+
+## 2) GRUB 배경 설정
+
+* png 파일 다운로드
+* su -c 'mv wallpaper.png /boot/grub2' 로 파일 옮기기
+* su -c 'vim /etc/default/grub' 실행
+* "console" 있는 줄을 주석처리
+* 마지막줄에 GRUB_BACKGROUND='/boot/grub2/wallpaper.png'
+* su -c 'vim /etc/default/grub'su -c 'grub2-mkconfig -o /boot/grub2/grub.cfg' 로 적용
