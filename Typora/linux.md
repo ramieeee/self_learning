@@ -476,4 +476,150 @@
 * su -c 'vim /etc/default/grub' 실행
 * "console" 있는 줄을 주석처리
 * 마지막줄에 GRUB_BACKGROUND='/boot/grub2/wallpaper.png'
-* su -c 'vim /etc/default/grub'su -c 'grub2-mkconfig -o /boot/grub2/grub.cfg' 로 적용
+* su -c 'grub2-mkconfig -o /boot/grub2/grub.cfg' 로 적용
+
+## 3) 파일 브라우저 노틸러스
+
+* 윈도우의 탐색기와 비슷
+
+## 4) 브라세로
+
+* CD/DVD ISO 파일 만드는 프로그램
+* 새 데이터 디스크 프로젝트로 진행
+
+## 5) 파이어폭스 업데이트
+
+* 브라우저에서 파일 다운로드
+* 관리자 권한으로 mv firefox /usr/local/ 옮기기
+* chown -R root.root /usr/local/firefox/ 로 권한 바꾸기 (-R은 하부 파일과 폴더까지 다 바꾸기)
+* cd /usr/local/bin/ 으로 이동
+* ln -s /usr/local/firefox/firefox . 으로 링크 만들기
+
+# 22. 하드디스크 관리
+
+* VMware상 메인보드에 SCSI는 서버용 하드를 주로 설치함(0 ~ 15번까지 총 16개 슬롯이 있음). 1개는 이미 reserved라 15개 사용 가능
+* 하드디스크를 /dev/sda(sda1, sda2..), sdb, sdc 형식으로 부름
+* 반드시 하나 이상의 파티션이 있어야함
+
+## 1) 파티션 나누기
+
+* 하드디스크(SCSI) 추가 장착
+* fdisk 명령어 사용: fdisk /dev/sdb
+* n 입력(new partition)
+* p 입력(primary 파티션)
+* 1 입력(파티션 1개)
+* 사이즈 설정에서 그냥 엔터(디폴트값)
+* 두번째 사이즈 설정에서 그냥 앤터(디폴트값)
+* w 입력(write, 저장)
+
+## 2) 포멧
+
+* mkfs.ext4 /dev/sdb1: 위 파티션 나눈 하드디스크를 사용할 수 있도록 포멧해줌.(ext4 타입이 많이 쓰임)
+* mount /dev/sdb1 /mydata: 슬래시(/)에 mydata라는 디렉토리를 만들고 sdb1을 mydata로 연결시켜주는 mount 명령어
+* mount 명령어를 치면 맨아래 내용을 확인할 수 있음
+
+## 3) 부팅시  자동 mount
+
+* vim /etc/fstab에서 맨 아래에 /dev/sdb1 /mydata ext4 defaults 0 0 추가
+
+## 4) 여러개 디스크 관리하는 RAID
+
+* RAID(Redundant Array of Inexpensive Disks)디스크 구조 여러개의 디스크를 마치 한개의 디스크인척 사용하는것
+* 비용절감(10테라 디스크보다 1테라 디스크 10개가 더 쌈)
+* 여러군데 나눠서 저장하기 때문에 성능, 신뢰성이 향상됨
+
+### a. 하드웨어
+
+* 안정적이지만 상당히 비쌈
+
+### b. 소프트웨어
+
+* 하드웨어 RAID의 대안.
+
+### c. 각 RAID 방식의 비교
+
+* 단순볼륨: 하나의 디스크
+
+#### i. Linear RAID
+
+* 2개 이상
+* 차례대로 하나로 묶는 것. 저장은 첫번째 디스크부터 저장됨
+* 100% 공간 효율성(=비용 저렴)
+* 
+
+#### ii. RAID 0
+
+* 2개 이상
+* 2개이상 디스크에 동시에 저장(stripping)
+* 100% 공간 효율성
+* 신뢰성 낮음
+* 빠른 효율성이지만 안정적이지 않음
+* 디스크 크기가 다르면 가장 작은 크기의 디스크만큼만 다같이 저장이 됨(1TB, 100TB, 100TB라면 모두 1TB만 사용됨)
+
+#### iii. RAID 1
+
+* 미러링(mirroring)이라고 부름. 백업개념
+* 저장용량이 2배가 필요함. 첫번째 디스크에 저장되면 두번째도 같이 저장이 됨
+* 비용이 많이 들고 공간효율이 안좋음.
+* 저장속도가 느려지진 않음
+* 결함 허용 제공(Fault-tolerance)하기 때문에 중요한 데이터 저장에 적절함
+
+#### iv. RAID 5
+
+* RAID 0 + RAID 1의 장점
+* 3개 이상. 결함 허용 제공
+* 페리티(데이터 복구를 위한 것) 정보 사용
+* 짝수가 되어야 하는 값을 페리티에 넣어줌.
+
+![image-20210508191355158](linux.assets/image-20210508191355158.png)
+
+* 디스크 개수 - 1 의 공간을 사용하기때문에 효율이 좋은편
+* 디스크 2개가 고장나면 복구 불가능
+
+#### v. RAID 6
+
+* RAID 5의 개선
+* 성능은 RAID 5에 비해 약간 떨어짐
+* 최소 4개 디스크 사용
+* 페리티를 2개 사용
+
+#### vi. RAID 1 + 0
+
+* RAID 1과 0의 장점을 동시에 가짐. 마찬가지로 RAID 1 + 5와 같은 다양한 방식으로 적용 가능
+
+# 23. RAID 만들기
+
+* VMware에서 하드디스크 추가
+* fdisk /dev/sdb 후 파티션 나누기
+* t 입력 후 fd 설정. 파티션 타입이 linux가 아니라 16진법인 fd(Linux raid auto)로 설정해야함
+* mdadm 명령어를 사용하여 두개를 하나로 논리볼륨으로 묶음
+* 두개 묶으면 sd 대신 md라는 이름이 부여됨
+* mdadm --create /dev/md9 --level=linear --raid-devices=2 /dev/sdb1 /dev/sdc1 (mdadm 명령어로 /dev/md9라는 RAID를 만드는데 linear 형식이고 디바이스는 2개이다. 그 디바이스는 sdb1과 sdc1이다 라는 의미)
+* mdadm --detail --scan: 현재 작동하는 디바이스 확인
+* mdadm --detail /dev/md9: md9에 대한 자세한 내용 확인 가능
+* mkfs.ext4 /dev/md9로 포멧
+* mount /dev/md9 /raidLinear: md9를 /raidLinear라는 디렉토리에 마운트 시킴
+* df 명령어로 디스크 스페이스 확인
+* vim /etc/fstab에서 마지막에 /dev/md9 /raidLinear ext4 defaults 0 0으로 부팅시 자동 마운트 설정
+
+# 24. 하드디스크 관리(문제발생 및 조치방법)
+
+* mdamd --stop /dev/md9: md9로 설정해놨던 RAID를 정지시킴(linear나 RAID0은 하나만 제거 되어도 복구 불가능. 그래서 나머지도 지워서 정상 부팅/작동 되도록 해야함)
+* vim /etc/fdtab에서도 해당 내용 삭제
+* RAID1이나 RAID5는 정상 작동 되고 있으니 얼른 백업해놓아야함
+
+## 1) 복구
+
+* 새로운 하드디스크를 장착을 해서 원래대로 복구
+
+### a. linear 혹은 RAID0
+
+* linear나 RAID0은 데이터 복구 불가능 하며 장치만 원래대로 돌려놓는것
+* 하드디스크를 장착했으면 fdisk로 다시 파티셔닝
+* 복구 후 RAID0에 파일이 있는것 처럼 보여도 50% 데이터만 있는 깨진 파일임. linear에는 간혹 데이터가 살아있는 경우가 있음
+
+### b. RAID1 혹은 RAID5
+
+* mdadm /dev/md5 --add /dev/sdi1 : mdadm --add옵션으로 md5 RAID에 sdi1 이라는 디스크만 추가
+* 마지막으로 vim /etc/fstab 에서 md5 내용 추가
+
