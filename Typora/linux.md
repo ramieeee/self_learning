@@ -578,9 +578,10 @@
 
 #### v. RAID 6
 
+* 최소 4개 디스크 사용
 * RAID 5의 개선
 * 성능은 RAID 5에 비해 약간 떨어짐
-* 최소 4개 디스크 사용
+* 
 * 페리티를 2개 사용
 
 #### vi. RAID 1 + 0
@@ -623,3 +624,59 @@
 * mdadm /dev/md5 --add /dev/sdi1 : mdadm --add옵션으로 md5 RAID에 sdi1 이라는 디스크만 추가
 * 마지막으로 vim /etc/fstab 에서 md5 내용 추가
 
+# 25. 하드디스크 관리(LVM)
+
+* Logical Volume Manage
+* RAID와 비슷하지만 약간 다름
+* 2TB 용량의 하드 2개를 합친 후 1TB와 3TB로 나눠서 사용 가능
+* 물리볼륨: /dev/sda1, /dev/sdb1 등의 파티션
+* 볼륨 그룹: 물리 볼륨을 합쳐서 1개의 물리 그룹으로 만드는 것
+* 논리 볼륨: 볼륨 그룹을 1개 이상으로 나눠서 논리 그룹으로 나눈 것
+
+## 1) LVM 만들기
+
+* 하드디스크 장착(예: 2TB와 3TB)
+* fdisk /dev/sdb와 sdc 실행
+* 포맷 저장 전 t로 타입 8e(Linux LVM) 지정
+* pvcreate /dev/sdb1, /dev/sdc1으로 피지컬 볼륨으로 만들기
+* vgcreate /dev/myVG /dev/sdb1 /dev/sdc1 으로 볼륨 그룹 만들기
+* vgdisplay로 볼륨 그룹 확인 가능
+* lvcreate --size 1T --name myLG1 myVG 입력(lvcreate 명령어로 사이즈는 1TB이고 이름은 myLG1로 만듦)
+* lvcreate --extents 100%FREE --name myLG2 myVG(마지막은 용량이 정확하지 않기때문에 나머지를 전부 사용하라는 extents 옵션 사용)
+* mkfs.ext4 /dev/myVG/myLG1, myLG2, myLG3로 포멧
+* mkdir /lvm1 /lmv2 /lmv3 로 디렉토리 생성
+* mount /dev/mvVG/myLG1 /lvm1 등으로 마운트
+* fstab에 등록
+
+## 26. 사용자별 공간 할당 - 쿼터
+
+* 사용자나 그룹이 생성할 수 있는 파일의 용량 및 개수를 제한하는 것
+
+## 1) 쿼터 만들기전 설정
+
+* 디스크 장착
+* 파티션(기본 리눅스 파티션), 포멧, 마운트(/userHome으로), fstab 등록 진행
+* useradd -d /userHome/john john: john이라는 사용자 생성
+* useradd -d /userHome/bann bann: bann이라는 사용자 생성
+* passwd john, bann 으로 비밀번호 설정
+
+## 2) 쿼터 만들기
+
+* fstab에서 /userHome defaults를  defaults,usrjquota=aquota.user,jqfmt=vfsv0 으로 수정
+* mount --options remount /userHome으로 리마운트
+
+## 3) 쿼터 DB 생성
+
+* cd /userHome 이동
+* quotaoff -avug 명령어로 쿼터 오프
+* quotacheck -augmn 실행
+* rm -rf aquota.* 삭제 실행
+* touch aquota.user aquota.group 만들기
+* chmod 600 aquota.* 명령어 실행. 다른사람들이 보지 못하도록 하기 위해
+* 다시 quotacheck-augmn 실행
+* quataon -avug로 쿼터 실행
+* edquota -u john으로 vim 환경 실행
+* soft(경고)와 hard(실제 제한되는 용량)의 용량 설정(kb로 설정)
+* su - john 으로 변경 호 quota 명령어를 치면 하드 용량 권한을 볼 수 있음
+* root 관리자는 repquota /userHome 을 보면 quota 사용 현황을 볼 수 있음
+* edquota -p john bann: john 사용자의 quota 내용을 bann에게도 paste하여 설정을 같게 한번에 바꿀 수 있음
