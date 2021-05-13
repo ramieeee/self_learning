@@ -681,7 +681,7 @@
 * root 관리자는 repquota /userHome 을 보면 quota 사용 현황을 볼 수 있음
 * edquota -p john bann: john 사용자의 quota 내용을 bann에게도 paste하여 설정을 같게 한번에 바꿀 수 있음
 
-# 27 원격지 시스템 관리-텔넷
+# 27. 원격지 시스템 관리-텔넷
 
 * 서버 컴퓨터에 접속해서 사용할 수 있게 하는것
 * 오랫동안 사용되어옴. 보안에 취약함
@@ -689,3 +689,47 @@
 
 ## 1) 텔넷 서버 구축
 
+* 탈넷은 기본적으로 방화벽이 막혀있어서 열어놔야함
+* dnf -y install telnet-server: 텔넷 서버 다운로드
+* systemctl restart telnet.socket: 텔넷 서비스 시작
+* systemctl status telnet.socket: 텔넷 작동 상태 확인(active listening은 서비스가 작동해서 누군가 나에게 요청하는것을 기다리는 것)
+* useradd, passwd [유저]로 원격 전용 유저 만들기
+* 방화벽 포트를 열어줌
+* firewall-config 명령어 실행(텔넷은 23번 포트를 쓰는데 포트를 열어줘야함)
+* firewall-config에서 위에 설정을 런타임에서 영구적으로 설정(재부팅 시 설정 유지를 위해)
+* public -> telnet 설정
+* 상위 옵션 탭 -> firewall 다시 불러오기로 적용
+* systemctl enable telnet.socket: 서버 컴퓨터를 꺼도 원격이 항상 켜져있도록 함
+* 다른 컴퓨터에서 telnet 192.168.111.100(서버 컴퓨터 IP주소)로 telnet 원격 접속
+
+## 2) OpenSSH
+
+* 텔넷과 동일. 보안은 강화
+* 실무에서 잘 쓰임
+* 데이터 전송 시 패킷 암호화
+* 서버 컴퓨터 안에 모든 원격 서버 구축해도 관계 없음. 포트가 다르기때문
+* 기본적으로 리눅스에 설치되어있음. (확인은 rpm -qa openssh-server)
+* firewall-config로 방화벽 설정 (SSH는 22번 포트를 씀)
+* 다른 리눅스 컴퓨터에서 ssh teluser@192.168.111.100 으로 접속
+
+## 3) XRDP 서버
+
+* X 윈도우 환경으로 원격접속을 하고싶을때
+* 원격지로 그래픽 화면을 전송해서 속도가 느림
+* 클라이언트는 Windows만 지원.
+* dnf -y install epel-release: 추가 패키지를 설치할 수 있는 저장소 설치
+* dnf -y install xrdp
+* systemctl restart xrdp로 실행
+* firewall-config로 방화벽 설정(서비스탭에 없으면 포트에 3389 추가)
+* 윈도우에 원격 접속 프로그램으로 접속
+
+# 28. 네임서버
+
+* 네임서버 = DNS(Domain Name System) 서버
+* 도메인 이름을 IP 주소로 변환시켜줌 = 이름해석(Name Resolution)
+* www. google.com -> 120.50.132.112
+* /etc/hosts에 파일이 있음
+* 네임서버는 전세계 모든 IP를 알고있음. 그래서 우리는 네임서버의 주소만 알고있으면 됨.
+* nslookup 커맨드 후에 server나 url을 직접 입력하여 ip 확인 가능
+* cat /etc/resolv.conf 로 확인하면 현재 컴퓨터가 설정된 DNS 서버 주소를 볼 수 있음
+* /etc/hosts에 수동으로 url을 적어놓을 수 있음 (IP주소먼저 적고 url주소 뒤에)
