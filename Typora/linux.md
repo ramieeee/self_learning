@@ -723,7 +723,7 @@
 * firewall-config로 방화벽 설정(서비스탭에 없으면 포트에 3389 추가)
 * 윈도우에 원격 접속 프로그램으로 접속
 
-# 28. 네임서버
+# 28. 네임서버(DNS 서버)
 
 * 네임서버 = DNS(Domain Name System) 서버
 * 도메인 이름을 IP 주소로 변환시켜줌 = 이름해석(Name Resolution)
@@ -733,3 +733,36 @@
 * nslookup 커맨드 후에 server나 url을 직접 입력하여 ip 확인 가능
 * cat /etc/resolv.conf 로 확인하면 현재 컴퓨터가 설정된 DNS 서버 주소를 볼 수 있음
 * /etc/hosts에 수동으로 url을 적어놓을 수 있음 (IP주소먼저 적고 url주소 뒤에)
+* 도메인 이름체계: 세계에 인터넷이 확장되면서 트리형식으로 관리하게됨.
+
+## 1) 캐싱 전용 네임 서버
+
+* 사용자 컴퓨터가 로컬 네트워크 내에서 url을 물어보면 우선 알아서 전화번호 책을 뒤져주는 서버(PC에서 url로 IP 주소를 얻고자 할 때, 해당하는 url의 IP 주소를 알려주는 네임 서버)
+
+### a. 캐싱 전용 네임 서버 구축
+
+* dnf -y install bind-chroot로 패키지 설치
+* vim /etc/named.conf
+* 11행 listen-on port 53 { any; };로 변경
+* 12행 listen-on-v6 port 53 { none; }; 으로 변경
+* 19행 allow-query { any; };로 변경
+* 34행 dnssec-validation no;로 변경
+* systemctl restart named로 실행
+* systemctl enable named로 항시 실행
+* firewall-config -> 위에 영구적으로 바꾸고 public에서 dns 설정
+* dig @192.168.111.100 www.naver.com 명령어를 치면 answer section에 주소를 외부로부터 찾아서 출력
+* nslookup 들어가서 server 192.168.111.100 명령하면 서버를 바꿈
+* client도 nslookup으로 들어가서 server 192.168.111.100으로 변경하면 ip주소를 잘 받아옴
+* su -c 'gedit /etc/resolv.conf': client에서 영구적으로 네임서버를 설정하기위함
+* 192.168.111.100으로 파일 수정
+
+## 2) 마스터 네임 서버
+
+* 가지 자신이 컴퓨터들을 관리하는 컴퓨터 개념. 외부에 해당 컴퓨터의 IP 주소를 알려주는 역할
+
+### a. 웹서버로 만들기
+
+* dnf -y install httpd 패키지 설치
+* systemctl start httpd 로 시작
+* firewall-config 후 영구적 선택, http / https 선택
+* vim /var/www/html/index.html 에서 간단한 웹서버 구축(<h1> hello! <h.1>)
