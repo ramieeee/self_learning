@@ -244,8 +244,8 @@
 ## 1) cron
 
 * 주기적으로 반복되는 일을 자동적으로 실행할 수 있도록 설정
-* 관련파일은 /etc/crontab
-* 시간별, 일별, 주별, 월별에 script를 넣어놓으면 자동으로 실행됨
+* vim /etc/crontab에서 직접 수정 가능
+* 또는 crontab -e로 시간별, 일별, 주별, 월별에 script를 넣어놓으면 자동으로 실행됨
 * 01 **** root run-parts /etc/cron.hourly (01분 모든 시/일/월/요일마다)
 * 02 4*** root run-parts /etc/cron.daily (02분 새벽4시 모든 일/월/요일마다)
 
@@ -766,3 +766,45 @@
 * systemctl start httpd 로 시작
 * firewall-config 후 영구적 선택, http / https 선택
 * vim /var/www/html/index.html 에서 간단한 웹서버 구축(<h1> hello! <h.1>)
+
+# 29. 라운드 로빈(Round Robin) 방식의 네임 서버
+
+* 여러 대의 웹 서버를 운영하여 웹 클라이언트가 서비스를 요청할 경우에 교대로 서비스를 실시
+* /var/named/*.db 로 수정해서 설정
+
+# 30. 메일 서버 설치와 운영
+
+* 메일 써서 보낼때: SMTP(Simple Main Stransfer Protocol)
+* 메일 받아서 열어보는 것: POP3 혹은 IMAP
+
+![image-20210515143237729](linux.assets/image-20210515143237729.png)
+
+![image-20210515143657072](linux.assets/image-20210515143657072.png)
+
+* 사용자가 메일을 보내면 센드메일이 받아서 메일큐에 집어넣음.(/var/spool/mqueue)
+* MDA(Mail Delivery Agent는 메일 큐에 있는것을 보냄
+* 상대방측 센드메일이 메일을 받아서 메일박스에 넣어놓음(/var/spool/mail/사용자이름)
+* dovecot 이란 것이 다운로드를 POP3로 받음
+
+## 1) 메일 서버 구축
+
+* 메일 서버 만들기: vim /etc/hostname 에서 기존 있던거 지우고 mail.naver.com 이런식으로 작성 후 저장
+* vim /etc/hosts 에서 아래에 192.168.111.100(서버 IP) mail.naver.com 으로 저장
+* dnf -y install sendmail 패키지 설치
+* vim /etc/mail/local-host-names 에서 밑에 mail.naver.com 추가하기
+* vim /etc/sysconfig/network 에서 HOSTNAME=mail.naver.com 추가하기
+* /var/named 디렉토리 안에 naver.com.db 파일 만든 후 vim으로 열기
+* 내용 추가(내용 잘 모르기때문에 추가로 확인할 것)
+* named-checkconf 로 잘 설정 되었는지 확인
+* named-checkzone naver.com naver.com.db 로 확인
+* systemctl restart named
+* systemctl enable named
+
+## 2) 네임 서버를 사용하게 지정하기
+
+* vim /etc/sysconfig/network-scripts/ifcfg-ens32 에서 DNS를 192.168.111.100으로 설정
+* vim /etc/resolv.conf 를 192.168.111.100으로 설정 후 재부팅
+
+## 3) 클라이언트 설정
+
+* vim /etc/resolv.conf 에서 192.168.111.100으로 설정
