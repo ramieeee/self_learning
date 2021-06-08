@@ -28,16 +28,19 @@
 ### a. IaaS
 
 * Infrastructure as a Service: 물리적 컴퓨터 또는 가상 머신을 빌려주는 서비스
+* OS에 직접 접근해서 관리하는것
 
 ### b. PaaS
 
 * Platform as a Service: 어플리케이션을 개발하고 서비스할 수 있도록 해주는 서비스
+* OS까지는 안들어가고 Spark 클러스터
 * 코드 작성 -> 실행환경 구축 -> 서비스 실행 중, 실행환경을 서비스 해줘서 개발자들이 코드 작성에만 몰입할 수 있음
 * Amazon Web Service(Amazon Beanstalk), Microsoft Azure(App Service), Google Cloud Platform(App Engine)이 그 예.
 
 ### c. Saas
 
 * Software as a Service: 어플리케이션을 바로 사용할 수 있도록 해주는 서비스(예. 구글드라이브, 드랍박스)
+* 애플리케이션 레벨
 * 하드웨어를 신경쓸 필요 없음
 
 ## 4) 클라우드 구축 상태에 따른 분류
