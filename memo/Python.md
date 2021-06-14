@@ -103,7 +103,7 @@
 
 
 
-## 4) while, if, for
+## 4) while, if, for 
 
 - while문: 조건을 달고 조건이 끝날때까지 반복함
 - if문: 조건문 (elif와 else가 함께 쓰임)
@@ -243,8 +243,3 @@ with open("new_file.txt", "w") as file:
     file.write("Hello!\n")
     file.write("World!")
 ```
-
-
-
-# 2. 파이썬 알고리즘
-
