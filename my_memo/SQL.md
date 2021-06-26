@@ -28,3 +28,27 @@
 CREATE DATABASE ramie_main
 ```
 
+## 1) Primary Key
+
+* 기본키 라고 함.
+* id 라는 column이 맨 앞에 생기는데, 테이블에서 하나의 raw를 고유하게 식별할 수 있도록 해주는 컬럼.
+* 가장 처음에 DB를 만들 때 설정해주는것
+
+### a. Natural Key
+
+* 어떤 개체가 갖고있는 속성을 나타내는 컬럼이 기본키가 됐을 때 이를 Natural Key라고 함.
+
+### b. Surrogate Key
+
+* 어떤 속성을 직접적으로 나타내는 컬럼은 아니지만 primary key로 쓰기 위해 추가한 컬럼
+* 보통 1부터 시작해서 1씩 증가하는 정수값을 가짐
+
+## 2) NN (not null)
+
+* 특정 컬럼에서 값이 존재하지 않는 상태를 나타내는 키워드
+* 해당 컬럼에 null이 있으면 안된다는 뜻(예: 게시판의 번호)
+* primary key는 반드시 nn이 되어야함.
+
+## 3) Auto Increment
+
+* row가 새로 추가될때마다 자동으로 primary key 값이 1씩 증가하게하는 기능. 명령어를 통해 2, 3 등 증가값 변경 가능
