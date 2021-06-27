@@ -136,3 +136,72 @@ SELECT id, DATE_SUB(sign_up_day, INTERVAL 250 DAY) FROM ramie_main.member;
 # 가입날짜 250일 이전 날짜를 리턴
 ```
 
+* UNIX Timestamp 값: 시간을 별도로 나타냄(예: 2018-12-31 23:54:12)
+
+```mysql
+SELECT sign_up_day, UNIX_TIMESTAMP(sign_up_day) FROM ramie_main.member;
+# UNIX_TIMESTAMP 함수만 쓰면 초단위로 계산한 값이 리턴됨. 그래서 아래와 같이 써야함
+
+SELECT sign_up_day, FROM_UNIXTIME(UNIX_TIMESTAMP(sign_up_day)) FROM ramie_main.member;
+```
+
+# 7. 여러 조건
+
+```mysql
+SELECT * FROM ramie_main.member
+WHERE gender = 'm'
+	AND address LIKE '서울%'
+	AND age BETWEEN 25 and 29;
+# 성별 남, 서울 살고 나이는 25-29세 필터링한 값을 조회
+```
+
+* OR 조건: 조건 중 하나라도 만족하는 값이 있으면 리턴
+
+```mysql
+SELECT * FROM ramie_main.member
+WHERE MONTH(sign_up_day) BETWEEN 3 AND 5  # 조건 1
+	OR MONTH(sign_up_day) BETWEEN 9 AND 11;  # 조건 2
+
+# AND, OR 조건 섞어 사용하기(괄호를 사용하는것이 좋음)
+SELECT * FROM ramie_main.member
+WHERE (gender = 'm' AND height >= 180)
+	OR (gender = 'f' AND height >= 170);
+```
+
+* MySQL에선 0 외의 값은 모두 TRUE이기 때문에 주의해야함
+* AND가 OR보다 연산 순위가 높음. 괄호로 우선 순위를 정하는게 좋음
+* 특수문자는 escaping(\)을 사용
+* 대소문자 구분
+
+```mysql
+SELECT * FROM ramie_main.member WHERE email LIKE BINARY '%M%';
+# Binary(0과 1처럼)를 넣어 대문자 M을 구분하여 조회
+```
+
+# 8. 정렬
+
+* 정렬을 할때 NULL이 가장 처음에 정렬됨
+* 오름/내림차순 정렬
+
+```mysql
+SELECT * FROM ramie_main.member
+ORDER BY height ASC; # 키별로 오름차순 정렬(ascending)
+
+SELECT * FROM ramie_main.member
+ORDER BY height DESC; # 키별로 내림차순 정렬(descending)
+```
+
+```mysql
+SELECT * FROM ramie_main.member
+WHERE gender = 'm'
+	AND weight >= 70
+ORDER BY height ASC;  # 조건 where는 order by 이전에 나옴
+```
+
+* 다중 정렬
+
+```mysql
+SELECT sign_up_day, email FROM ramie_main.member
+ORDER BY YEAR(sign_up_day) DESC, email ASC;
+```
+
