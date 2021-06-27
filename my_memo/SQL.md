@@ -52,3 +52,87 @@ CREATE DATABASE ramie_main
 ## 3) Auto Increment
 
 * row가 새로 추가될때마다 자동으로 primary key 값이 1씩 증가하게하는 기능. 명령어를 통해 2, 3 등 증가값 변경 가능
+
+# 5. 명령어
+
+* 문장의 끝은 항상 세미콜론
+* 예약어(내장된 키워드) 들은 대문자로 쓰는것이 관례. 예) SELECT, WHERE 등
+* 선택
+
+```mysql
+SELECT * FROM ramie_main.member WHERE age NOT BETWEEN 30 AND 39;
+# ramie_main DB의 member 테이블 전체 중 나이가 30-39세가 아닌 영역 선택
+
+SELECT email, age, address FROM ramie_main.member;
+# 특정 컬럼만 조회 가능
+
+SELECT * FROM ramie_main.member WHERE email = 'taehos@hanmail.net';
+# 원하는 row만 선택
+```
+
+* 선언(USE)
+
+```mysql
+USE ramie_main;  # 처음부터 이 DB를 쓰겠다고 선언
+SELECT * FROM member;  # DB 선언 후 테이블명만 명령어 입력 가능
+```
+
+* LIKE
+
+```mysql
+SELECT * FROM ramie_main.member WHERE address LIKE '서울%';
+# address 컬럼에서 '서울'로 시작하고 뒤에 임의의 문자가 들어간 것 조회
+```
+
+* 같지 않음
+
+```mysql
+# 같이 않음은 <>와 != 모두로 표현할 수 있음.
+SELECT * FROM ramie_main.member WHERE gender <> 'f'; # 성이 f가 아닌 row 조회
+SELECT * FROM ramie_main.member WHERE gender != 'f'; # 성이 f가 아닌 row 조회
+```
+
+* IN
+
+```mysql
+SELECT * FROM ramie_main.member WHERE age IN (20, 30); # 나이 20과 30만 조회
+```
+
+* 한 글자를 의미하는 _
+
+```mysql
+SELECT * FROM ramie_mail.member WHERE email LIKE 'c__@%'; # 이메일 cxx@* 조회
+```
+
+# 6. SQL 함수
+
+* 연도, 월, 일 추출
+
+```mysql
+SELECT * FROM ramie_main.member WHERE YEAR(birthday) = '1992';
+SELECT * FROM ramie_main.member WHERE MONTH(sign_up_day) IN (1, 5, 8); # 가입월 조회
+
+# 각 달의 15-31일에 가입했던 회원들 조회
+SELECT * FROM ramie_main.member WHERE DAYOFMONTH(sign_up_day) BETWEEN 15 AND 31
+```
+
+* 날짜 간의 차 구하기: DATEDIFF(''날짜 a', '날짜 b') 는 날짜 a, -날짜 b 를 리턴해줌
+
+```mysql
+SELECT id, sign_up_day, CURDATE(), DATEDIFF(sign_up_day, CURDATE()) FROM ramie_main.member;
+# id, sign_up_day, 오늘날짜, DATEDIFF 컬럽 4개가 리턴
+
+SELECT id, sign_up_day, DATEDIFF(sign_up_day, '2019-01-01') FROM ramie_main.member;
+# id, sign_up_day, DATEDIFF 컬럼 3개가 리턴됨
+```
+
+* 날짜 더하기 빼기 DATE_ADD(), DATE_SUB()
+
+```mysql
+SELECT id, DATE_ADD(sign_up_day, INTERVAL 300 DAY) FROM ramie_main.member;
+# 가입날짜 300일 이후를 계산 후 리턴
+
+SELECT id, DATE_SUB(sign_up_day, INTERVAL 250 DAY) FROM ramie_main.member;
+# 가입날짜 250일 이전 날짜를 리턴
+```
+
