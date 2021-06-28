@@ -203,5 +203,85 @@ ORDER BY height ASC;  # 조건 where는 order by 이전에 나옴
 ```mysql
 SELECT sign_up_day, email FROM ramie_main.member
 ORDER BY YEAR(sign_up_day) DESC, email ASC;
+# 가입날짜가 먼저 내림차순, 후에 이메일 오름차순 정렬
 ```
 
+## 1) CAST 함수
+
+* text는 int와 다르게 문자 하나 하나를 비교하기 때문에 유의해야함. (숫자로 된 문자열이라면 20, 112 두개 중 112가 우선 정렬됨)
+* 이런 문제를 해결하기 위해 CAST를 써서 type을 바꿀 수 있음
+
+```mysql
+SELECT * FROM ramie_main.member ORDER BY CAST(data_col AS signed) ASC;
+# data_col 이라는 컬럼이 INT일때와 같은 결과가 나옴
+```
+
+* 숫자에 소수점이 포함되어 있다면 signed 대신 decimal을 적고 사용
+
+```mysql
+SELECT * FROM ramie_main.member ORDER BY CAST(data_col AS decimal) ASC;
+```
+
+# 9. 데이터 일부 추리기(LIMIT)
+
+```mysql
+SELECT * FROM ramie_main.member ORDER BY sign_up_day DESC
+LIMIT 10;
+# 가입날 처음부터 10번째 row까지 조회
+
+SELECT * FROM ramie_main.member ORDER BY sign_up_day DESC
+LIMIT 3, 2;
+# 가입날 기준 4번째 row 부터 2줄 조회(0부터 시작하기 때문에 3번째가 아니라 4번째임)
+```
+
+* 페이지네이션(pagination): 각 페이지마다 1 - 10, 11 - 20 같은 페이지를 보여주는 것. 데이터 추리기로 표현한다고 생각하면 됨
+* MySQL 문법상 가장 맨 뒤에 써야함
+
+# 10. 데이터 특성 구하기
+
+* 개수 구하기 COUNT ()
+
+```mysql
+SELECT COUNT(email) FROM ramie_main.member;
+# email 컬럼에서 NULL을 제외한 값이 있는 row의 개수를 조회함
+
+SELECT COUNT(*) FROM ramie_main.member;
+# asterisk가 있으면 모든 row 수를 출력해줌
+```
+
+* 가장 큰/작은 값 구하기 MAX(), MIN()
+
+```mysql
+SELECT MAX(height), MIN(weight) FROM ramie_main.member;
+# 키가 가장 큰사람, 몸무게가 가장 적은 사람 조회
+```
+
+* 평균 값 AVG()
+
+```mysql
+SELECT AVG(height) FROM ramie_main.member;
+# NULL이 있는 row는 제외하고 평균값을 구함
+```
+
+* 합계 SUM()
+
+```mysql
+SELECT SUM(age) FROM ramie_main.member;
+```
+
+* 표준편차 STD()
+
+```mysql
+SELECT STD(age) FROM ramie_main.member;
+```
+
+* 절대값 ABS()
+* 제곱근 SQRT()
+* 올림 CEIL()
+
+```mysql
+SELECT CEIL(height) FROM ramie_main.member;
+```
+
+* 내림 FLOOR()
+* 반올림 ROUND()
