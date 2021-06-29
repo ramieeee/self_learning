@@ -285,3 +285,76 @@ SELECT CEIL(height) FROM ramie_main.member;
 
 * 내림 FLOOR()
 * 반올림 ROUND()
+
+# 11. NULL 다루기
+
+* NULL이 있는 목록 조회
+
+```mysql
+SELECT * FROM ramie_main.member WHERE address IS NULL;
+# 혹은 IS NOT NULL로 NULL 제외 조회 가능
+```
+
+```mysql
+SELECT * FROM ramie_main.member
+WHERE address IS NULL
+	OR height IS NULL
+	OR weight IS NULL;
+# NULL이 있는 컬럼들 모두 조회 가능
+```
+
+* NULL을 다른 형식으로 조회 COALESCE()
+
+```mysql
+SELECT
+	COALESCE(address, '---')  # address 컬럼의 NULL은 ---로 출력
+	COALESCE(weight, '###')
+	COALESCE(height, '***')
+FROM ramie_main.member;
+```
+
+* NULL은 비교 대상이 아님. WHERE height = NULL 이 아니라 WHERE height IS NULL 이어야함
+
+# 12. 이상한 값 제외시키기
+
+* 예를들어 입력되는 나이값이 -10, 200 이런식이라면 아래처럼 예외처리를 해줘야함
+
+```mysql
+SELECT AVG(age) FROM ramie_main.member WHERE age BETWEEN 5 AND 100;
+```
+
+# 13. 컬럼끼리 계산
+
+```mysql
+SELECT height, weight, weight / ((height/100) * (height/100)) FROM ramie_main.member;
+# 이런식으로 컬럼을 바로 계산할 수 있음. 
+```
+
+* 하나라도 NULL 이 있으면 계산 값도 NULL임
+
+# 14. 컬럼에 alias(별칭) 붙이기
+
+* AS를 붙이면 됨
+
+```mysql
+SELECT
+	height AS 키,
+	weight AS 몸무게,
+	ROUND(weight / ((height/100) * (height/100))) AS BMI
+FROM ramie_main.member;
+```
+
+* 붙이기 CONCAT()
+
+```mysql
+SELECT
+	email,
+	CONCAT(height, 'cm', ', ', weight, 'kg') AS '키, 몸무게', # 컬럼 2개 row를 하나로 붙임
+	ROUND(weight / ((height/100) * (height/100))) AS BMI
+FROM ramie_main.member;
+```
+
+# 15. 컬럼 값 변환
+
+
+
