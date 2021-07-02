@@ -423,3 +423,56 @@ FROM ramie_main.member
 ORDER BY obesity_check ASC; # obesity_check를 정렬함
 ```
 
+# 17. 고유값 보기
+
+* DISTINCT(): 고유한 값만 보여주는 것
+
+```mysql
+SELECT DISTINCT(gender) FROM ramie_main.member;
+# 성별의 고유값인 'm'과 'f'만 보여줌
+
+SELECT COUNT(DISTINCT(gender)) FROM ramie_main.member;
+# 고유값의 갯수를 파악할 수 있음. 값: 2
+```
+
+* SUBSTRING(): 주소같은 고유값 보여주기
+
+```mysql
+SELECT DISTINCT(SUBSTRING(address, 1, 2)) FROM ramie_main.member;
+# 주소의 첫번째부터 두개의 문자만 잘라내어 조회
+```
+
+# 18. 문자열 관련 함수
+
+## 1) LENGTH()
+
+* 문자열의 길이를 구해줌
+
+```mysql
+SELECT address, LENGTH(address) FROM ramie_main.member; # 주소 문자열 길이와 함께 조회
+```
+
+## 2) UPPER(), LOWER()
+
+* 모두 대문자, 소문자로 보여주는 함수
+
+```mysql
+SELECT email, UPPER(email) FROM ramie_main.member;
+```
+
+## 3) LPAD(), RPAD()
+
+* 문자열의 왼쪽 또는 오른쪽을 특정 문자열로 채워주는 함수
+* left padding, right padding(채우기)
+* int형이라도 문자열 함수 안에 인자로 넣으면 자동으로 문자열로 형 변환되어 계산됨
+
+```mysql
+SELECT age, LPAD(age, 5, '*') FROM ramie_main.member;
+```
+
+## 4) TRIM(), LTRIM(), RTRIM()
+
+* LTRIM: 왼쪽 공백 삭제
+* RTRIM: 오른쪽 공백 삭제
+* TRIM: 양쪽 공백 삭제
+* 문자열 사이의 공간은 삭제되지 않음
