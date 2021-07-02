@@ -303,7 +303,7 @@ WHERE address IS NULL
 # NULL이 있는 컬럼들 모두 조회 가능
 ```
 
-* NULL을 다른 형식으로 조회 COALESCE()
+## 1) COALESCE()
 
 ```mysql
 SELECT
@@ -314,6 +314,40 @@ FROM ramie_main.member;
 ```
 
 * NULL은 비교 대상이 아님. WHERE height = NULL 이 아니라 WHERE height IS NULL 이어야함
+
+```mysql
+SELECT COALESCE(height, weight * 2.3, 'N/A') FROM ramie_main.member;
+# 만약 height가 NULL이라면 1차적으로 weight * 2.3(평균 키 계산)대입, 없으면 'N/A' 대입
+```
+
+## 2) IFNULL()
+
+* COALESCE() 함수와 같으나 파라미터를 2개밖에 넣지 못함.
+
+```mysql
+SELECT IFNULL(height, 'N/A') FROM ramie_main.member;
+```
+
+## 3) IF()
+
+* 첫번째 인자 = 조건식
+* 두번재 인자 = 조건식의 결과가 True일때 리턴값
+* 세번재 인자 = 조건식의 결과가 False일때 리턴값
+
+```mysql
+SELECT IF(height IS NOT NULL, height, 'N/A')
+```
+
+## 4) CASE()
+
+```mysql
+SELECT
+	CASE
+		WHEN height IS NOT NULL THEN height
+		ELSE 'N/A'
+	END
+FROM ramie_main.member;
+```
 
 # 12. 이상한 값 제외시키기
 
