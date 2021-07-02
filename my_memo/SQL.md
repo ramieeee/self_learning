@@ -349,12 +349,43 @@ FROM ramie_main.member;
 ```mysql
 SELECT
 	email,
-	CONCAT(height, 'cm', ', ', weight, 'kg') AS '키, 몸무게', # 컬럼 2개 row를 하나로 붙임
+	CONCAT(height, 'cm', ', ', weight, 'kg') AS '키와 몸무게', # 컬럼 2개 row를 하나로 붙임
 	ROUND(weight / ((height/100) * (height/100))) AS BMI
 FROM ramie_main.member;
 ```
 
 # 15. 컬럼 값 변환
 
+* CASE 함수: 기타 언어의 if문과 같음
+* CASE, WHEN, THEN, ELSE, END를 사용
 
+```mysql
+CASE 
+  WHEN 조건1 THEN 값
+  WHEN 조건2 THEN 값 
+  WHEN 조건3 THEN 값 
+  ELSE 값
+END 
+```
+
+* 예시
+
+```mysql
+SELECT
+	email,
+	CONCAT(height, 'cm', ', ', weight, 'kg') AS '키와 몸무게',
+	weight / ((height/100) * (height/100)) AS BMI,
+
+(CASE # 3가지 조건을 달아서 각각에 대한 출력 결과를 다르게 함
+	WHEN weight IS NULL OR height IS NULL THEN '비만 여부 알 수 없음'
+	WHEN weight / ((height/100) * (height/100)) >= 25 THEN '과체중 또는 비만'
+	WHEN weight / ((height/100) * (height/100)) >= 18.5
+		AND weight / ((height/100) * (height/100)) < 25
+		THEN '정상'
+	ELSE '저체중' # 만약 ELSE BMI 라고 하면 그냥 BMI의 기존 숫자만 보여줌
+END) AS obesity_check # 위의 결과를 obesity_check로 컬럼명 변경
+
+FROM ramie_main.member
+ORDER BY obesity_check ASC; # obesity_check를 정렬함
+```
 
