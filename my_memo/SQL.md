@@ -476,3 +476,21 @@ SELECT age, LPAD(age, 5, '*') FROM ramie_main.member;
 * RTRIM: 오른쪽 공백 삭제
 * TRIM: 양쪽 공백 삭제
 * 문자열 사이의 공간은 삭제되지 않음
+
+# 19. 그루핑(grouping)
+
+* 각각의 row는 하나의 그룹을 가지고 있음
+* 집계 함수(aggregate function): COUNT, AVG, MIN과 같은 함수와 함께 사용하면 좋음
+
+```mysql
+SELECT
+	gender,
+    COUNT(*),
+    AVG(height),
+    MIN(weight)
+FROM ramie_main.member
+GROUP BY gender;
+# 젠더를 그룹으로 묶어서 m, f만 출력되지만 카운트를 하면 남성/여성회원 전체 수가 나타남.
+# 각 성별의 평균 키와 가장 몸무게가 작은 사람을 그루핑으로 보기좋게 가져올 수 있음
+```
+
