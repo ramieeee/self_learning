@@ -481,6 +481,8 @@ SELECT age, LPAD(age, 5, '*') FROM ramie_main.member;
 
 * 각각의 row는 하나의 그룹을 가지고 있음
 * 집계 함수(aggregate function): COUNT, AVG, MIN과 같은 함수와 함께 사용하면 좋음
+* GROUP BY 절 뒤에 쓴 컬럼 이름들만 SELECT 절 뒤에 쓸 수 있음
+* 집계함수를 넣으면 SELECT 절 뒤에 다른 컬럼 이름을 인자로 넣을 수 있음
 
 ```mysql
 SELECT
@@ -493,4 +495,81 @@ GROUP BY gender;
 # 젠더를 그룹으로 묶어서 m, f만 출력되지만 카운트를 하면 남성/여성회원 전체 수가 나타남.
 # 각 성별의 평균 키와 가장 몸무게가 작은 사람을 그루핑으로 보기좋게 가져올 수 있음
 ```
+
+* 주소 그루핑
+
+```mysql
+SELECT
+	SUBSTRING(address, 1, 2) as region,
+    COUNT(*)
+FROM ramie_main.member
+GROUP BY SUBSTRING(address, 1, 2);
+# 주소의 앞부분 2자리만 SUBSTRING 함수로 잘라내어 그루핑 하고 지역별로 사는 인원을 볼 수 있음
+```
+
+* 여러 컬럼 그루핑
+
+```mysql
+SELECT
+	SUBSTRING(address, 1, 2) as region,
+    COUNT(*),
+    gender
+FROM ramie_main.member
+GROUP BY
+	SUBSTRING(address, 1, 2),
+    gender;
+```
+
+* 특정 그룹만 보고싶을 때
+
+```mysql
+SELECT
+	SUBSTRING(address, 1, 2) as region,
+    COUNT(*),
+    gender
+FROM ramie_main.member
+GROUP BY
+	SUBSTRING(address, 1, 2),
+    gender
+HAVING  # WHERE를 쓰게되면 오류가남.
+	region = '서울'
+	AND gender = 'm';
+# 서울에 사는 남자 그룹만 조건을 걸어 조회
+```
+
+* 그루핑, 조건, 정렬
+
+```mysql
+SELECT
+	SUBSTRING(address, 1, 2) as region,
+    COUNT(*),
+    gender
+FROM ramie_main.member
+GROUP BY
+	SUBSTRING(address, 1, 2),
+    gender
+HAVING region IS NOT NULL
+ORDER BY
+	region ASC,
+    gender DESC;
+```
+
+# 20. SELECT문 실행 순서
+
+1) FROM
+
+2) WHERE
+
+3) GROUP BY
+
+4) HAVING
+
+5) SELECT
+
+6) ORDER BY
+
+# 21. 그루핑 WITH ROLLUP
+
+* 소계 같은 역할을 함
+* 세부 그룹들을 조금 더 큰 단위로의 그룹으로 중간에 합쳐줌
 
