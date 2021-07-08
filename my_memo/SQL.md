@@ -572,4 +572,36 @@ ORDER BY
 
 * 소계 같은 역할을 함
 * 세부 그룹들을 조금 더 큰 단위로의 그룹으로 중간에 합쳐줌
+* GROUP BY 뒤 기준들의 순서에 따라 WITH ROLLUP의 결과도 달라짐
+* 모든 컬럼이 NULL인 부분은 전체 총계를 보여줌
+
+```mysql
+SELECT YEAR(sign_up_day) AS s_year, YEAR(birthday) AS b_year, gender, COUNT(*)
+FROM ramie_main.member
+GROUP BY YEAR(sign_up_day), YEAR(birthday), gender WITH ROLLUP
+ORDER BY s_year DESC
+
+# group by 순서가 s_year > b_year > gender 이기 때문에 1. gender, 2. b_year, 3. s_year 순으로 소계를 보여줌.
+```
+
+## 1) **<u>GROUPING()</u>**
+
+* 원래 있던 NULL값과 소계인 NULL값이 구분이 되지 않을때 GROUPING 함수를 사용
+
+```mysql
+SELECT
+	YEAR(sign_up_day) AS s_year,
+	gender,
+	SUBSTRING(address, 1, 2) AS region,
+	GROUPING(YEAR(sign_up_day)),  # 그루핑 함수로 컬럼 생성. 값이 1이면 소계
+	GROUPING(gender),  # 그루핑 함수로 컬럼 생성. 값이 1이면 소계
+	GROUPING(SUBSTRING(address, 1, 2)),  # 그루핑 함수로 컬럼 생성. 값이 1이면 소계
+	COUNT(*)
+FROM ramie_main.member
+GROUP BY
+	YEAR(sign_up_day),
+	gender,
+	SUBSTRING(address, 1, 2) WITH ROLLUP
+ORDER BY s_year DESC;
+```
 
