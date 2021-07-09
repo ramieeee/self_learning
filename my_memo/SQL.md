@@ -605,3 +605,4 @@ GROUP BY
 ORDER BY s_year DESC;
 ```
 
+# 21. Join
