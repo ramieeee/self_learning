@@ -1,6 +1,4 @@
 def solution(participant, completion):
-    answer = ''
-
     i = sorted(participant)
     j = sorted(completion)
     
