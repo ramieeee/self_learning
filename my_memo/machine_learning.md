@@ -146,3 +146,37 @@ B = np.array([
 
 * 행렬 덧셈 연산과 거의 똑같은 성질을 갖음(행렬의 수가 같을 때)
 * 곱셈 표기를 동그라미(o)를 써서 표현(A o B)
+
+### c. 행렬의 곱 메소드, dot
+
+```python
+import numpy as np
+
+A = np.array([
+    [1, 3, 1],
+    [2, 2, 8],
+    [5, 6, 3]
+])
+
+B = np.random.rand(3, 3)
+
+print(np.dot(A, B))
+# 혹은 print(A @ B)를 해도 dot 메소드와 같이 행렬 곱셈을 해줌
+```
+
+## 4) 일반 연산처럼 사용 가능
+
+```python
+import numpy as np
+
+A = np.array([
+    [1, 3, 1],
+    [2, 2, 8],
+    [5, 6, 3]
+])
+
+B = np.random.rand(3, 3)
+
+print(A @ B + (A + 2 * B)) # 일반 연산처럼 괄호 안 곱셈 먼저 계산
+```
+
