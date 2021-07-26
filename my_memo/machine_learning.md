@@ -180,3 +180,80 @@ B = np.random.rand(3, 3)
 print(A @ B + (A + 2 * B)) # 일반 연산처럼 괄호 안 곱셈 먼저 계산
 ```
 
+## 5) 특수 행렬들
+
+### a. 전치 행렬(transposed matrix)
+
+```python
+A = [[1 2 1]
+     [3 2 2]]
+
+A^T = [[1 3]  # A가 A^T로 바뀌는 것. 첫번째 행이 첫번째 열로 바뀜
+       [2 2]
+       [1 2]]
+```
+
+```python
+import numpy as np
+
+A = np.array([
+    [1, -1, 2],
+    [3, 2, 2],
+    [4, 1, 2]
+])
+
+A_transpose = np.transpose(A) # 혹은 A_transpose = A.T
+print(A_transpose)
+```
+
+
+
+### b. 단위 행렬(identity matrix)
+
+* 항상 정사각형의 행렬임
+* I(대문자 i)로 표현함
+* 단위 행렬을 곱하면 기존 행렬은 그대로 유지됨
+
+```python
+I = [[1 0 0]
+     [0 1 0]
+     [0 0 1]]
+```
+
+```python
+import numpy as np
+
+A = np.array([
+    [1, -1, 2],
+    [3, 2, 2],
+    [4, 1, 2]
+])
+
+I = np.identity(3)
+print(A @ I)
+```
+
+
+
+### c. 역행렬(inverse matrix)
+
+* 행렬에 역행렬을 곱하면 단위행렬이 나옴
+* 항상 정사각형이어야 함
+* 모든 행렬에 역행렬이 있는것은 아님
+
+```python
+import numpy as np
+
+A = np.array([
+    [1, -1, 2],
+    [3, 2, 2],
+    [4, 1, 2]
+])
+
+A_inverse = np.linalg.pinv(A)
+print(A_inverse)
+print(A @ A_inverse)
+
+# np. linalg.det(A) 를 실행하고 0이 나오면 역행렬이 존재하지 않고 0이 아니면 역행렬이 존재함
+```
+
