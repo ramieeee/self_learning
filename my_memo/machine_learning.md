@@ -119,28 +119,36 @@ print(i * A) # 각 원소에 i(5)를 곱해주면 됨
 * A = m x n 행렬, B = n x p 행렬일때 AB = m x p 행렬이 나옴
 * 교차 법칙 성립 X (AB != BA)
 
-```python
-A = np.array([
-    [1, 3, 1],
-    [2, 2, 1]
-])
+$$
+\begin{matrix}
+A =\begin{bmatrix}
+1 & 3 & 1\\
+2 & 2 & 1
+\end{bmatrix}
+\\
+\\
+B =\begin{bmatrix}
+5 & 6\\
+4 & 2\\
+3 & 1
+\end{bmatrix}
+\end{matrix}
+$$
 
-B = np.array([
-    [5, 6],
-    [4, 2],
-    [3, 1]
-])
-
-# AB = [
-#     [1 * 5 + 3 * 4 + 1 * 3, 1 * 6 + 3 * 2 + 1 * 1]
-#     [2 * 5 + 2 * 4 + 1 + 3, 2 * 6 + 2 * 2 + 1 * 1]
-# ]
-
-# AB = [
-#     [20, 13]
-#     [21, 17]
-# ]
-```
+$$
+\begin{matrix}
+AB &=&\begin{bmatrix}
+1 \times 5 + 3 \times 4 + 1 \times 3 & 1 \times 6 + 3 \times 2 + 1 \times 1\\
+2 \times 5 + 2 \times 4 + 1 + 3 & 2 \times 6 + 2 \times 2 + 1 \times 1
+\end{bmatrix}
+\\
+\\
+AB &=&\begin{bmatrix}
+20 & 13\\
+21 & 17
+\end{bmatrix}
+\end{matrix}
+$$
 
 ### b. 요소별 곱하기(Element-wise Multiplication)
 
@@ -184,14 +192,22 @@ print(A @ B + (A + 2 * B)) # 일반 연산처럼 괄호 안 곱셈 먼저 계산
 
 ### a. 전치 행렬(transposed matrix)
 
-```python
-A = [[1 2 1]
-     [3 2 2]]
+$$
+A =\begin{bmatrix}
+1 & 2 & 1\\
+3 & 2 & 2
+\end{bmatrix}
+$$
 
-A^T = [[1 3]  # A가 A^T로 바뀌는 것. 첫번째 행이 첫번째 열로 바뀜
-       [2 2]
-       [1 2]]
-```
+* A가 A^T로 바뀌는 것. 첫번째 행이 첫번째 열로 바뀜
+
+$$
+A^T =\begin{bmatrix}
+1 & 3\\
+2 & 2\\
+1 & 2
+\end{bmatrix}
+$$
 
 ```python
 import numpy as np
@@ -214,11 +230,13 @@ print(A_transpose)
 * I(대문자 i)로 표현함
 * 단위 행렬을 곱하면 기존 행렬은 그대로 유지됨
 
-```python
-I = [[1 0 0]
-     [0 1 0]
-     [0 0 1]]
-```
+$$
+I =\begin{bmatrix}
+1 & 0 & 0\\
+0 & 1 & 0\\
+0 & 0 & 1
+\end{bmatrix}
+$$
 
 ```python
 import numpy as np
@@ -269,15 +287,25 @@ print(A @ A_inverse)
 첫번째: 110 x a1 + 400 x a2 + 20 x a3
 두번째: 100 x a1 + 1000 x a2 + 5 x a3
 ...
-
-# 위의 데이터를 식으로 표현하면
-
-    [110 400 20]       [a1]
-X = [100 1000 5]   a = [a2]
-    [...       ]       [a3]
-
-모든 집 값 = Xa
 ```
+
+* 위의 데이터를 식으로 표현하면
+
+$$
+X =\begin{bmatrix}
+110 & 400 & 20\\
+100 & 1000 & 5\\
+\cdots & \cdots & \cdots
+\end{bmatrix}
+
+\quad a =\begin{bmatrix}
+a1\\
+a2\\
+a3
+\end{bmatrix}
+$$
+
+* 모든 집 값 = Xa
 
 # 7. 미분
 
@@ -330,20 +358,75 @@ $$
 * f(x) = x^2 - 2x + 1 이란 함수일때
 
 $$
-\lim_{b \to 0} \frac {[(2+h)^2-2 \times (2+h)+1]-[(2)^2-2 \times (2) + 1]}{h}
-$$
-
-$$
-=\lim_{h\to0} \frac {h^2+2h}{h}
-$$
-
-$$
-=\lim_{h\to0} \frac{h+2}{h}
-$$
-
-$$
-=2
+\displaylines{
+&=& \lim_{b \to 0} \frac {[(2+h)^2-2 \times (2+h)+1]-[(2)^2-2 \times (2) + 1]}{h}
+\\\\
+&=& \lim_{h \to 0} \frac {h^2+2h}{h}
+\\\\
+&=& \lim_{h \to 0} h+2
+\\\\
+&=&2
+}
 $$
 
 * h가 0에 무한대로 가깝기 때문에 0을 대입하면 값은 2임
 * 여기에 x=1 을 대입하면 값은 0이 나옴(가장 바닥 부분이기 때문에)
+
+## 5) 미분
+
+* 만약 2차함수 식이 아래와 같다면
+
+$$
+\displaylines{
+f(x)=x^2-2x+1\\
+\\
+\lim_{h \to 0} \frac {f(x+h)-f(x)}{h}
+\\\\
+=& \lim_{h \to 0} \frac {[(x+h)^2-2\times(x+h)+1]-[(x)^2-2\times(x)+1]}{h}
+\\\\
+=& \lim_{h \to 0} \frac {x^2+2xh+h^2-2x-2h+1-x^2+2x-1}{h}
+\\\\
+=& \lim_{h \to 0} \frac {2xh+h^2-2h}{h}
+\\\\
+=& \lim_{h \to 0} 2x+h-2
+\\\\
+=& 2x-2
+}
+$$
+
+* x값만 대입하면 원하는 곳의 순간 기울기를 구할 수 있음
+* 함수로도 표현 가능한데 아래와 같이 f프라임 이라고 말함
+
+$$
+f\prime(x)
+$$
+
+* 위의 식에 대입하면
+
+$$
+\displaylines{
+f\prime(x)=2x-2
+\\f\prime(x)는 기존 함수 f(x)의 미분이다
+}
+$$
+
+* 다른 방식으로 미분 식을 쓸 수 있음
+
+$$
+\frac{d}{dx}f(x)
+$$
+
+* 차수의 숫자를 상수와 곱하고 차수를 -1 해줌
+
+$$
+\displaylines{
+f(x)=x^2-2x+1일때
+\\\\
+x^2의\space 2를\space 앞으로\space 가져오고\space -1해줘서\space 2x가\space 되고\\
+2x의\space 차수\space 1을\space -2와\space 곱하고\space x^{1-0}은\space x^0이니까\space 1이되어\space -2가\space 됨.\\
+상수항은\space 날려버림
+\\\\
+\frac{d}{dx}f(x)=2x-2
+}
+$$
+
