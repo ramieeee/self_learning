@@ -170,7 +170,7 @@ example.remove(5) # remove method. 인덱스 값 5를 없앰. example = [3, 2, 1
 
 
 
-### d. 라이브러리
+### d. 딕셔너리
 
 key-value가 하나의 pair가 됨.
 
