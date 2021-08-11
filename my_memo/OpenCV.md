@@ -292,7 +292,18 @@ while True:
 cv2.destryWindow('Parabolic Motion')
 ```
 
-## 10) 피보나치 수열 그래픽
+# 3. 컴퓨터 비전
 
-*  
+* 레벨: 픽셀이 가질 수 있는 값의 범위
+* 채널: 픽셀이 몇 개의 값으로 구성되는지를 의미
+* 이진 영상: 흑백 2가지 레벨, 채널의 수는 1
+* OpenCV에서는 threshold()함수로 영상 이진화를 수행할 수 있음
+
+## 1) threshold(src, thresh, maxval, type, dst=None)
+
+* src: 입력 행렬(다중 채널, 8비트 또는 32비트의 실수)
+* thresh: 임계치
+* maxval: 특정 방법(THRESH_BINARY, THRESH_BINARY_INV)을 사용할 때에 반환값의 최댓값
+* type: 이진화 방법(THRESH_BINARY, THRESH_BINARY_INV, THRESH_TRUNC, THRESH_TOZERO, THRESH,_TOZERO_INV, THRESH_MASK, THRESH_OTSU, THRESH_TRIANGLE)
+* dst: 결과 행렬(입력 행렬과 동일한 크기와 채널의 수를 가짐)
 
