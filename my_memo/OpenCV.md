@@ -307,3 +307,11 @@ cv2.destryWindow('Parabolic Motion')
 * type: 이진화 방법(THRESH_BINARY, THRESH_BINARY_INV, THRESH_TRUNC, THRESH_TOZERO, THRESH,_TOZERO_INV, THRESH_MASK, THRESH_OTSU, THRESH_TRIANGLE)
 * dst: 결과 행렬(입력 행렬과 동일한 크기와 채널의 수를 가짐)
 
+## 2) 영상 밝기 조절
+
+* 한 픽셀이 8비트로 표현될 때 영상이 전반적으로 밝게 보인다면 흰색(255)에 근접한 값을 가지는 픽셀의 비중이 높으며, 반대로 검은색(0)에 가까운 값을 가지는 픽셀의 비중이 낮은 것임
+
+## 3) 명암비
+
+* 밝은 영역과 어두운 영역의 밝기 차이를 의미
+
