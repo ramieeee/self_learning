@@ -289,7 +289,7 @@ while True:
     if cv2.waitKey(100) >= 0:
         break
 
-cv2.destryWindow('Parabolic Motion')
+cv2.destroyWindow('Parabolic Motion')
 ```
 
 # 3. 컴퓨터 비전
@@ -315,3 +315,48 @@ cv2.destryWindow('Parabolic Motion')
 
 * 밝은 영역과 어두운 영역의 밝기 차이를 의미
 
+## 4) 히스토그램 분석
+
+* 가로축: 데이터 값. (일반적으로 Bin 이라고 표현)
+* 세로축: 해당 데이터 값의 발생 빈도. [0, w x h]의 값을 가질 수 있음
+* OpenCV에서는 calcHist()를 활용하여 히스토그램 계산 가능
+
+**calcHist([images], [channels], mask, [histSize], [ranges], hist=None, accumulate=None)**
+
+* 입력 영상의 지정된 채널에서 특정 값 범위에 대하여 총 빈 개수가 histSize인 히스토그램을 계산함
+* images: 히스토그램을 계산하기 위한 입력 영상
+* channels: 입력 영상에 히스토그램을 계산하고자 하는 채널을 지정(그레이 영상은 [0], 컬러 영상은 B,G,R에 대하여 [0], [1], [2]를 사용)
+* histSize: 총 빈 개수
+* ranges: 가로축의 범위
+* accumulate: 히스토그램을 누적하여 사용할지를 지정(True이면 초기화하지 않음)
+
+```python
+from matplotlib import pyplot as plt
+import cv2
+import numpy as np
+
+ch1 = [0]
+ch2 = [0]
+ch3 = [0]
+ranges1 = [0, 256]
+ranges2 = [0, 128]
+ranges3 = [128, 256]
+histSize1 = [256]
+histSize2 = [128]
+histSize3 = [128]
+hist1 = cv2.calcHist([img1], ch1, None, histSize1, ranges1)
+hist2 = cv2.calcHist([img1], ch2, None, histSize2, ranges2)
+hist3 = cv2.calcHist([img1], ch3, None, histSize3, ranges3)
+
+bin_x1 = np.arange(256)
+bin_x2 = np.arange(128)
+bin_x3 = np.arange(128) +128
+plt.title("Histogram")
+plt.xlabel("Bin")
+plt.ylabel("Frequency")
+plt.plot(bin_x1, hist1, color='b')
+plt.bar(bin_x2, hist2[:,0], width=6, color='r')
+plt.bar(bin_x3, hist3[:,0], width=6, color='g')
+plt.grid(True, lw=1, ls='--', c='.75')
+plt.xlim([0,255])
+```
