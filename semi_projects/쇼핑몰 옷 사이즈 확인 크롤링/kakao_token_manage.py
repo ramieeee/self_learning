@@ -9,7 +9,7 @@ import datetime
 
 rest_API_key = '03e461ff4bab0a5e4979c7d12a3f6706'
 redirect_uri = 'https://localhost.com/auth'
-code = "s4maYjRlCA7GgBKwaPvIsGA6xnxCEmdPBG1mvimd_9DBOi-ij68aNaiPcxvH-k3uy_rzRAopcFAAAAF7ge2w7A"
+code = "pnEfOJmVNilmo3-5aWEoFZgeAQu4hYC4FNGSY2nExZO58eFnYSKKx9VyrrHZ7E18k--GRgo9c00AAAF7hRowMg"
 # ------------------- 인증코드 받기 ---------------------#
 # API Key
 #웹에서 받은 코드
@@ -79,6 +79,8 @@ def refreshToken():
     url = "https://kapi.kakao.com/oauth/token"
     temp = open("kakao_code.json", 'r')
     tokens = json.load(temp)
+    if 'refresh_token' not in tokens:
+        return 'No token available'
     
     data = {
         "grant_type": "refresh_token",
@@ -88,6 +90,7 @@ def refreshToken():
 
     response = requests.post(url, data=data)
     tokens = response.json()
+    
     with open("kakao_code.json", "w") as fp:
         json.dump(tokens, fp)
     return response.status_code, tokens, response.json()

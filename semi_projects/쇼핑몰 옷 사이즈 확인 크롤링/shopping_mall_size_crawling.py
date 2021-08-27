@@ -6,6 +6,7 @@ import time
 class size_check_bot:
     def __init__(self):
         self.options = Options()
+        self.options.add_argument("headless")
         self.options.add_argument("--window-size=1024,768")
         self.driver = webdriver.Chrome(executable_path="./chromedriver.exe", chrome_options=self.options)
         self.webpage = "https://troubadour.kr/product/detail.html?product_no=1105"
