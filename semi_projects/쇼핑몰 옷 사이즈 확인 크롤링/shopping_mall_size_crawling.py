@@ -47,14 +47,12 @@ class size_check_bot:
 
         data = open(file, 'r')
         a = data.readline().strip()
-        print(a)
 
         if a == 'sent':
             return True
         else:
             return False
         
-
     def run_process(self):
         if self.check_previous_message() == False:
             self.find_path()

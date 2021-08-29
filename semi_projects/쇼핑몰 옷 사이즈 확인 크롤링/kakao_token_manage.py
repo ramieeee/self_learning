@@ -4,15 +4,11 @@ import json
 import sys
 import datetime
 
-
-
-
 rest_API_key = '03e461ff4bab0a5e4979c7d12a3f6706'
 redirect_uri = 'https://localhost.com/auth'
 code = "m6zXqc2cg2ZNP31NTHprNcPevx-OSBK23UrTV1rUDXMMKuwJph5Wk_Vc4E_yLZoTh9Q0DAo9dNoAAAF7kcTTNQ"
+
 # ------------------- 인증코드 받기 ---------------------#
-# API Key
-#웹에서 받은 코드
 # 인증 코드 받는 곳: https://kauth.kakao.com/oauth/authorize?client_id=03e461ff4bab0a5e4979c7d12a3f6706&redirect_uri=https://localhost.com/auth&response_type=code&scope=talk_message,friends
 
 def registerAccessToken():
@@ -53,7 +49,7 @@ def sendMessageToMe(message):
     return response.status_code
 
 def sendMessageToFriend():
-    url = "https://kapi.kakao.com/v1/api/talk/friends/message/default/send" #api 주소
+    url = "https://kapi.kakao.com/v1/api/talk/friends/message/default/send"
     temp = open("kakao_code.json", 'r')
     tokens = json.load(temp)
     
