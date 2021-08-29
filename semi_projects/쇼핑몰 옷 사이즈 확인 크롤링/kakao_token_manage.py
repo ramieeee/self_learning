@@ -9,7 +9,7 @@ import datetime
 
 rest_API_key = '03e461ff4bab0a5e4979c7d12a3f6706'
 redirect_uri = 'https://localhost.com/auth'
-code = "pnEfOJmVNilmo3-5aWEoFZgeAQu4hYC4FNGSY2nExZO58eFnYSKKx9VyrrHZ7E18k--GRgo9c00AAAF7hRowMg"
+code = "m6zXqc2cg2ZNP31NTHprNcPevx-OSBK23UrTV1rUDXMMKuwJph5Wk_Vc4E_yLZoTh9Q0DAo9dNoAAAF7kcTTNQ"
 # ------------------- 인증코드 받기 ---------------------#
 # API Key
 #웹에서 받은 코드

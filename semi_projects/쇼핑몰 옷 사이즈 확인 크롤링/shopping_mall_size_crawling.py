@@ -2,6 +2,7 @@ import kakao_token_manage as ktm
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import time
+import os
 
 class size_check_bot:
     def __init__(self):
@@ -30,11 +31,32 @@ class size_check_bot:
             ktm.sendMessageToMe("재고 \"없음\"")
         else:
             ktm.sendMessageToMe("재고 \"있음\"")
+            file = "previous_message.txt"
+            if file not in os.listdir():
+                with open(file, 'w') as w:
+                    w.write("sent")
 
     def kill_process(self):
         self.driver.quit()
     
+    def check_previous_message(self):
+        file = "previous_message.txt"
+        if file not in os.listdir():
+            with open(file, 'w') as w:
+                w.write("")
+
+        data = open(file, 'r')
+        a = data.readline().strip()
+        print(a)
+
+        if a == 'sent':
+            return True
+        else:
+            return False
+        
+
     def run_process(self):
-        self.find_path()
-        self.send_message()
+        if self.check_previous_message() == False:
+            self.find_path()
+            self.send_message()
         self.kill_process()
