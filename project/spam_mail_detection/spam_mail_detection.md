@@ -70,3 +70,9 @@ sudo pip install m2crypto
 git clone https://github.com/cuckoobox/cuckoo.git cuckoo
 ```
 
+9. mysql 설치
+
+```
+sudo apt-get install mysql-server
+```
+

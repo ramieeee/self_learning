@@ -6,7 +6,7 @@ import datetime
 
 rest_API_key = '03e461ff4bab0a5e4979c7d12a3f6706'
 redirect_uri = 'https://localhost.com/auth'
-code = "m6zXqc2cg2ZNP31NTHprNcPevx-OSBK23UrTV1rUDXMMKuwJph5Wk_Vc4E_yLZoTh9Q0DAo9dNoAAAF7kcTTNQ"
+code = "xdWITG1RGC6ouCRpVPxNPoQ3JhiSYwgPzNX_MNE69hu4takrzT6vz8nYM9adxKvG4KlvxAopcFAAAAF7m0Kfzg"
 
 # ------------------- 인증코드 받기 ---------------------#
 # 인증 코드 받는 곳: https://kauth.kakao.com/oauth/authorize?client_id=03e461ff4bab0a5e4979c7d12a3f6706&redirect_uri=https://localhost.com/auth&response_type=code&scope=talk_message,friends
