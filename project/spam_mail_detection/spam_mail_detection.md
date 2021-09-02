@@ -10,7 +10,8 @@
 
 * VMware
 * Ubuntu 20.04
-* Ubuntu 안에 VMware Windows 7 설치 (가상 머신 안의 가상머신에서 쿠쿠 샌드박스 구현)
+* Ubuntu 안에 VMware Windows 7 32bit 설치 (가상 머신 안의 가상머신에서 쿠쿠 샌드박스 구현)
+* cuckoo 2.0.7
 
 # 2. 설치
 
@@ -20,7 +21,9 @@
 
 ```
 sudo apt-get install python python3-pip python-dev libffi-dev libssl-dev
-sudo apt-get install python3-virtualenv python-setuptools
+
+sudo apt-get install python3-virtualenv python-setuptools python-sqlalchemy python-jinja2 python-magic python3-pymongo python3-bottle libpcre3 libpcre3-dev
+
 sudo apt-get install libjpeg-dev zlib1g-dev swig
 ```
 
@@ -64,15 +67,26 @@ sudo apt-get install yara
 sudo pip install m2crypto
 ```
 
-8. cuckoo 샌드박스 설치
+8. subversion 설치
+9. cuckoo 샌드박스 설치
 
 ```
-git clone https://github.com/cuckoobox/cuckoo.git cuckoo
+# python2로만 다운 가능
+sudo apt install python2
+sudo curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
+sudo python2 get-pip.py
+
+sudo pip2 install cuckoo
+sudo pip2 install -U cuckoo
+sudo pip2 install distorm3
+cuckoo -d
+cuckoo community
 ```
 
-9. mysql 설치
+10. virtualBox 설치
 
 ```
-sudo apt-get install mysql-server
+sudo apt-get install virtualbox
+sudo apt-get install net-tools
 ```
 
