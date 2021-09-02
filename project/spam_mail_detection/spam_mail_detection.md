@@ -90,3 +90,5 @@ sudo apt-get install virtualbox
 sudo apt-get install net-tools
 ```
 
+* virtualBox 설정: 네트워크를 bridged adapter로 설정, 공유폴더를 /home/.cuckoo/agent로 설정
+
