@@ -86,9 +86,13 @@ cuckoo community
 10. virtualBox 설치
 
 ```
-sudo apt-get install virtualbox
+sudo apt-get install virtualbox6.0
 sudo apt-get install net-tools
 ```
 
 * virtualBox 설정: 네트워크를 bridged adapter로 설정, 공유폴더를 /home/.cuckoo/agent로 설정
+
+11. windows7 설치
+
+* 설치 오류로 인해 ova 파일로 설치
 
