@@ -37,8 +37,8 @@
 * 참고자료
 
 1. https://www.2cpu.co.kr/lec/2438
-
 2. https://y0c.github.io/2018/09/28/centos7-mail-server/
+3. https://whitewing4139.tistory.com/147
 
 ## 1) postfix 설치
 
@@ -177,6 +177,12 @@ firewall-cmd --permanent --add-port=143/tcp
 firewall-cmd --permanent --add-service=imaps
 firewall-cmd --permanent --add-service=http
 firewall-cmd --reload
+```
+
+## 7) 메일 보내기 테스트
+
+```
+mail -s "제목" user@example.com <<< '본문 작성'
 ```
 
 
