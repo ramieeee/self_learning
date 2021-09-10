@@ -24,7 +24,7 @@
 
 ## 3) 결론
 
-* 어떤점이 현 기술에 문제가 있는지 파악하고 대안 기법 확인
+* 어떤점이 현 기술에 문제가 있는지 파악하고 대안 기법 확인 필요
 
 # 2. 학습 파라미터
 
@@ -42,7 +42,11 @@
 
 ## 1) postfix 설치
 
-* yum -y update
+```
+yum -y install postfix
+```
+
+
 
 ## 2) SSL 인증서 세팅
 
@@ -189,13 +193,8 @@ mail -s "제목" user@example.com <<< '본문 작성'
 
 ## 3) SELinux 비활성화
 
-[root@localhost ~]# **sed -i 's/^SELINUX=.\*/SELINUX=disabled/g' /etc/selinux/config**
-
-[root@localhost ~]# **cat /etc/selinux/config | grep disabled** **(변경 확인)**
-\#   disabled - No SELinux policy is loaded.
-SELINUX=**disabled**
-
 ## 4) 호스트네임 설정
 
-hostnamectl set-hostname mail.eztest.com
+* 프로젝트 서버: hostnamectl set-hostname mail.project.com
+* 스팸 서버: hostnamectl set-hostname mail.test.com
 
