@@ -226,9 +226,22 @@ systemctl restart sendmail
 systemctl enable sendmail
 ```
 
-# 5. GUI 메일 환경 설정
+# 5. Spamassassin 설치
 
 ```
-yum -y install evolution
+yum -y install spamassassin
+```
+
+```
+# Mailbox 로 전송되기 전에 spamassassin 이 처리하도록 설정
+vim /etc/procmailrc
+
+# 아래 내용 추가
+INCLUDERC=/etc/mail/spamassassin/spamassassin-default.rc
+```
+
+```
+systemctl restart spamassassin
+systemctl enable spamassassin
 ```
 
