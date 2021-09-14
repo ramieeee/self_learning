@@ -241,6 +241,24 @@ INCLUDERC=/etc/mail/spamassassin/spamassassin-default.rc
 ```
 
 ```
+# spamassassin 설정
+
+cd /etc/mail/spamassassin
+vim local.cf
+
+# 새 줄 추가
+required_score 5
+```
+
+```
+# spamassassin이 기본적으로 root 계정으로 실행되기때문에 실행 그룹 추가
+
+groupadd -g 5555 spamd
+useradd -u 5555 -g spamd -s /bin/false -d /var/log/spamassassin spamd
+chown spamd:spamd /var/log/spamassassin
+```
+
+```
 systemctl restart spamassassin
 systemctl enable spamassassin
 ```
