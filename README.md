@@ -1,9 +1,11 @@
-coding_practice = 프로그래머스 사이트 코딩 문제 해결
+My self_learning repo consists of:
 
-My_memo = 공부 노트
+1. coding_practice: Python, C
 
-semi_projects = 혼자서 해보는 미니 프로젝트
+2. My_memo: Things that I studied on my own
 
-web_practice = HTML과 CSS를 사용하여 만든 웹페이지
+3. semi_projects: Projects that I conducted on my own
 
-project = 프로젝트
+4. web_practice: Web practice with HTML and CSS
+
+5. projects: Project stuff
