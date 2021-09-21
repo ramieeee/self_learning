@@ -33,7 +33,7 @@
 
 # 3. 네임서버 구축
 
-* mail.project.com(스팸 피해자) = 192.168.100.142
+* mail.project.com(스팸 피해자) = 192.168.100.146
 * mail.test.com(스팸 발신자) = 192.168.100.140
 * DNS = 192.168.100.143
 
@@ -45,7 +45,7 @@ yum -y install bind bind-chroot
 vim /etc/hosts
 
 # project.com 서버
-192.168.100.142 mail.project.com
+192.168.100.146 mail.project.com
 
 # test.com 서버
 192.168.100.140 mail.test.com
@@ -55,10 +55,10 @@ vim /etc/hosts
 vim /etc/sysconfig/network
 
 # project.com 서버
-HOSTNAME=192.168.100.142
+HOSTNAME=mail.project.com
 
 # test.com 서버
-HOSTNAME=192.168.100.140
+HOSTNAME=mail.test.com
 ```
 
 ```
@@ -94,19 +94,21 @@ zone "test.com" IN {
 ```
 
 ```
-vi /var/named/project.com.db
+# name 서버
+vim /var/named/project.com.db
 
 $TTL    3H
 @       SOA     @       root.   ( 2  1D  1H  1W  1H )
         IN      NS      @
-        IN      A       192.168.100.142
+        IN      A       192.168.100.146
         IN      MX      10      mail.project.com.
 
-mail    IN      A       192.168.100.142
+mail    IN      A       192.168.100.146
 ```
 
 ```
-vi /var/named/test.com.db
+# name 서버
+vim /var/named/test.com.db
 
 $TTL    3H
 @       SOA     @       root.   ( 2  1D  1H  1W  1H )
@@ -147,7 +149,7 @@ Server:		192.168.100.143
 Address:	192.168.100.143#53
 
 Name:	mail.project.com
-Address: 192.168.100.142
+Address: 192.168.100.146
 > mail.test.com
 Server:		192.168.100.143
 Address:	192.168.100.143#53
@@ -231,7 +233,7 @@ systemctl enable sendmail
 ## 1)
 
 ```
-yum -y install spamassassin
+yum -y install spamassassin epel-release
 ```
 
 ```
