@@ -325,5 +325,10 @@ to = msg['to']
 from = msg['from']
 subject = msg['subject']
 body = msg['body']
+
+with open('test.txt', 'w') as f:
+    f.write(subject)
+    f.write('\n')
+    f.write(body)
 ```
 
