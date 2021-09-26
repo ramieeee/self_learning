@@ -307,6 +307,10 @@ ok_locales              all
 ```bash
 # ~/.procmailrc
 
+PATH=/usr/bin:/usr/local/bin
+LOGFILE=/var/log/procmail.log
+SHELL=/bin/sh
+
 :0Wc:
 | /usr/bin/python [PATH TO PYTHON SCRIPT]
 ```
