@@ -35,7 +35,7 @@
 
 * mail.project.com(스팸 피해자) = 192.168.100.147
 * mail.test.com(스팸 발신자) = 192.168.100.140
-* DNS = 192.168.100.143
+* DNS = 192.168.100.149
 
 ```
 yum -y install bind bind-chroot
@@ -334,5 +334,39 @@ with open('test.txt', 'w') as f:
     f.write(subject)
     f.write('\n')
     f.write(body)
+```
+
+# 6. Pymilter 설치
+
+```
+wget https://files.pythonhosted.org/packages/ca/b0/0e314563fc802cd7f8f98c858acf5def0ba85acc5fb2cef6db83d1b70431/pymilter-1.0.4.tar.gz
+
+tar xvf pymilter-1.0.4.tar.gz 
+
+cd pymilter-1.0.4/
+yum install gcc
+yum install python-devel
+yum install python3-devel
+yum install sendmail-devel
+
+python setup.py install
+```
+
+```
+wget https://ftp.sendmail.org/sendmail.8.14.7.tar.gz
+yum install m4
+
+tar xvf sendmail.8.14.7.tar.gz
+cd sendmail.8.14.7
+./Build
+cp obj.Linux.3.10.0-1160.el7.x86_64.x86_64/
+/libsmutil/libsmutil.a /usr/lib
+```
+
+```
+# Add these two lines to sendmail.cf[*]:
+
+O InputMailFilters=pythonfilter
+Xpythonfilter,        S=local:/home/username/pythonsock
 ```
 
