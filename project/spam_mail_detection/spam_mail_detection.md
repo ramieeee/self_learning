@@ -341,12 +341,11 @@ with open('test.txt', 'w') as f:
 ```
 wget https://files.pythonhosted.org/packages/ca/b0/0e314563fc802cd7f8f98c858acf5def0ba85acc5fb2cef6db83d1b70431/pymilter-1.0.4.tar.gz
 
-tar xvf pymilter-1.0.4.tar.gz 
+tar xvf pymilter-1.0.4.tar.gz
 
 cd pymilter-1.0.4/
 yum install gcc
 yum install python-devel
-yum install python3-devel
 yum install sendmail-devel
 
 python setup.py install
@@ -370,3 +369,10 @@ O InputMailFilters=pythonfilter
 Xpythonfilter,        S=local:/home/username/pythonsock
 ```
 
+# 7. /etc/aliases
+
+* Modifications to the `/etc/aliases` file are not complete until the `newaliases` command is run to build `/etc/aliases.db`. It is in this later form that `sendmail` actually uses.
+
+```
+some-username@my-web-app.com |/path/to/somescript.py
+```
