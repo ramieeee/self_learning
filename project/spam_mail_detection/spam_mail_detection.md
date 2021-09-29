@@ -336,7 +336,20 @@ with open('test.txt', 'w') as f:
     f.write(body)
 ```
 
-# 6. Pymilter 설치
+# 6. Pymilter
+
+## 1) libmilter 설치
+
+```
+pip install python-libmilter
+
+# 혹은
+# git clone https://github.com/crustymonkey/python-libmilter.git
+# cd python-libmilter
+# python setup.py install
+```
+
+## 2) pymilter 설치
 
 ```
 wget https://files.pythonhosted.org/packages/ca/b0/0e314563fc802cd7f8f98c858acf5def0ba85acc5fb2cef6db83d1b70431/pymilter-1.0.4.tar.gz
@@ -363,16 +376,16 @@ cp obj.Linux.3.10.0-1160.el7.x86_64.x86_64/
 ```
 
 ```
-# Add these two lines to sendmail.cf[*]:
+# sendmail.cf 파일에 아래 두 줄 추가
 
 O InputMailFilters=pythonfilter
-Xpythonfilter,        S=local:/home/username/pythonsock
+Xpythonfilter,        S=local:/home/[사용자 이름]/pythonsock
 ```
 
-# 7. /etc/aliases
-
-* Modifications to the `/etc/aliases` file are not complete until the `newaliases` command is run to build `/etc/aliases.db`. It is in this later form that `sendmail` actually uses.
-
 ```
-some-username@my-web-app.com |/path/to/somescript.py
+# selinux 해제
+
+vim /etc/selinux/config
+
+SELINUX=disabled
 ```
