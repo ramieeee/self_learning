@@ -389,3 +389,24 @@ vim /etc/selinux/config
 
 SELINUX=disabled
 ```
+
+# 7. 학습 모델 불러오기 & 실행
+
+## 1) tensorflow 설치 요구사항
+
+### 시스템 요구사항
+
+- Python 3.6–3.9
+- pip 19.0 이상
+
+```
+# python3 설치
+yum -y install python3
+
+# pip upgrade
+pip3 install --upgrade pip
+
+# tensorflow 설치
+pip3 install --upgrade tensorflow
+```
+
