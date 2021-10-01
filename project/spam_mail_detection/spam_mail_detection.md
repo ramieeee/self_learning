@@ -276,66 +276,6 @@ ok_languages            all
 ok_locales              all
 ```
 
-```
-# MDA가 사용할 procmailrc 파일을 생성
-
-# Pipe the mail through spamassassin (replace 'spamassassin' with 'spamc'
-# if you use the spamc/spamd combination)
-#
-# The condition line ensures that only messages smaller than 250 kB
-# (250 * 1024 = 256000 bytes) are processed by SpamAssassin. Most spam
-# isn't bigger than a few k and working with big messages can bring
-# SpamAssassin to its knees.
-#
-# The lock file ensures that only 1 spamassassin invocation happens
-# at 1 time, to keep the load down.
-
-:0fw: spamassassin.lock
-* < 256000
-| spamassassin
-
-# Mails with a score of 15 or higher are almost certainly spam
-# Let's put them in a different mailbox. (This is optional)
-:0:
-*^X-Spam-Level: \*
-/var/spool/mail/spam
-
-```
-
-## 3) procmail -> python script
-
-```bash
-# ~/.procmailrc
-
-PATH=/usr/bin:/usr/local/bin
-LOGFILE=/var/log/procmail.log
-SHELL=/bin/sh
-
-:0Wc:
-| /usr/bin/python [PATH TO PYTHON SCRIPT]
-```
-
-```python
-# Python script
-
-import sys
-import email
-
-full_msg = sys.stdin.readlines()
-
-msg = email.message_from_string(full_msg.join());
-
-to = msg['to']
-from = msg['from']
-subject = msg['subject']
-body = msg['body']
-
-with open('test.txt', 'w') as f:
-    f.write(subject)
-    f.write('\n')
-    f.write(body)
-```
-
 # 6. Pymilter
 
 ## 1) libmilter 설치
