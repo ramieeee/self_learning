@@ -24,6 +24,6 @@ for i in range(len(df)):
     try:
         df.loc[[i], 'alexa'] = check_alexa_rank(url)
     except:
-        df.loc[[i], 'alexa'] = 'N/A'
+        df.loc[[i], 'alexa'] = 0
     
 # df.to_csv('./data_18.csv', mode='w')
