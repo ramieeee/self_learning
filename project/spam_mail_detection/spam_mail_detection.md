@@ -335,7 +335,7 @@ SELINUX=disabled
 ```python
 # sample.py 에서 수정
 #__init__(self) 함수에 아래 변수 추가
-self.spam = False,
+self.isspam = False,
 self.subject = ""
 
 # header(self,name,val) 함수에 아래 내용 추가
@@ -344,7 +344,18 @@ if lname = name.lower()
         self.subject = val
 
 # eom(self) 함수에 조건 추가 후 아래 내용 추가
-self.addheader('subject', '[phishing] '+subject, idx=-1)
+self.addheader('subject', '[phishing] '+self.subject, idx=-1)
+```
+
+## 4) pymilter와 procmailrc
+
+```
+MAILDIR=$HOME/mail
+LOGFILE=$MAILDIR/procmaillog
+
+:0 H
+* ^Subject: \[PHISHING]
+/home/project/mail/Spam
 ```
 
 
@@ -367,9 +378,5 @@ pip3 install --upgrade pip
 
 # tensorflow 설치
 pip3 install --upgrade tensorflow
-```
-
-```
-
 ```
 
