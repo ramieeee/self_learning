@@ -330,6 +330,25 @@ vim /etc/selinux/config
 SELINUX=disabled
 ```
 
+## 3) pymilter 필터링
+
+```python
+# sample.py 에서 수정
+#__init__(self) 함수에 아래 변수 추가
+self.spam = False,
+self.subject = ""
+
+# header(self,name,val) 함수에 아래 내용 추가
+if lname = name.lower()
+    if lname == 'subject':
+        self.subject = val
+
+# eom(self) 함수에 조건 추가 후 아래 내용 추가
+self.addheader('subject', '[phishing] '+subject, idx=-1)
+```
+
+
+
 # 7. 학습 모델 불러오기 & 실행
 
 ## 1) tensorflow 설치 요구사항
