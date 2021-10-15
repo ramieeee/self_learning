@@ -14,6 +14,7 @@ import tempfile
 from time import strftime
 import tensorflow as tf
 import numpy as np
+import re
 #import syslog
 #syslog.openlog('milter')
 
@@ -98,30 +99,31 @@ class sampleMilter(Milter.Milter):
     return Milter.CONTINUE
 
   # deep learning(DL) model testing function
-  def test_model(self, text):
-    arr = [[int(text[0]), int(text[1])]]
-    model = tf.keras.models.load_model('test.h5')
+#  def test_model(self, text):
+#    arr = [[int(text[0]), int(text[1])]]
+#    model = tf.keras.models.load_model('test.h5')
     # x_data = [[0,0],[0,1],[1,0],[1,1]]
     # y_data = [[0],[1],[1],[1]]
-    return int(np.round(model.predict(arr)))
+#    return int(np.round(model.predict(arr)))
 
   def body(self,chunk):		# copy body to temp file
     if self.fp:
       self.fp.write(chunk)	# IOError causes TEMPFAIL in milter
       self.bodysize += len(chunk)
-
-    text = chunk.split()
-    num_in_str = str(text[0])
-    two_nums = num_in_str[2] + num_in_str[3]
-    if self.test_model(two_nums) == 0: # when text is 00
-      print('mail body text: [[%s]]' % two_nums)
-      print()
-      print("value is FALSE. REJECTION")
-      return Milter.REJECT
-    elif self.test_model(two_nums) == 1: # when text is 01, 10 or 11
-      print('mail body text: [[%s]]' % two_nums)
-      print()
-      print("value is TRUE. CONTINUE")
+    text = chunk.decode('utf-8').strip()
+    urls = re.findall(r'(https?:\/\/[^\s]+)', text)
+ #   text = chunk.split()
+ #   num_in_str = str(text[0])
+ #   two_nums = num_in_str[2] + num_in_str[3]
+ #   if self.test_model(two_nums) == 0: # when text is 00
+ #     print('mail body text: [[%s]]' % two_nums)
+ #     print()
+ #     print("value is FALSE. REJECTION")
+ #     return Milter.REJECT
+ #   elif self.test_model(two_nums) == 1: # when text is 01, 10 or 11
+ #     print('mail body text: [[%s]]' % two_nums)
+ #     print()
+ #     print("value is TRUE. CONTINUE")
     return Milter.CONTINUE
 
   def _headerChange(self,msg,name,value):
