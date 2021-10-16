@@ -18,7 +18,7 @@ import re
 #import syslog
 #syslog.openlog('milter')
 
-class sampleMilter(Milter.Milter):
+class myMilter(Milter.Milter):
   "Milter to replace attachments poisonous to Windows with a WARNING message."
 
   def log(self,*msg):
@@ -33,6 +33,8 @@ class sampleMilter(Milter.Milter):
     self.bodysize = 0
     self.id = Milter.uniqueID()
     self.user = None
+    self.isspam = False
+    self.subject = ""
 
   # multiple messages can be received on a single connection
   # envfrom (MAIL FROM in the SMTP protocol) seems to mark the start
@@ -64,20 +66,7 @@ class sampleMilter(Milter.Milter):
   def header(self,name,val):
     lname = name.lower()
     if lname == 'subject':
-
-      # check for common spam keywords
-      if val.find("$$$") >= 0 or val.find("XXX") >= 0	\
-	or val.find("!!!") >= 0 or val.find("FREE") >= 0:
-        self.log('REJECT: %s: %s' % (name,val))
-	#self.setreply('550','','Go away spammer')
-        return Milter.REJECT
-
-    # check for common bulk mailers
-    if lname == 'x-mailer' and \
-	val.lower() in ('direct email','calypso','mail bomber'):
-      self.log('REJECT: %s: %s' % (name,val))
-      #self.setreply('550','','Go away spammer')
-      return Milter.REJECT
+      self.subject = val
 
     # log selected headers
     if lname in ('subject','x-mailer'):
@@ -116,14 +105,15 @@ class sampleMilter(Milter.Milter):
  #   num_in_str = str(text[0])
  #   two_nums = num_in_str[2] + num_in_str[3]
  #   if self.test_model(two_nums) == 0: # when text is 00
+ #     self.isspam = True
  #     print('mail body text: [[%s]]' % two_nums)
  #     print()
- #     print("value is FALSE. REJECTION")
- #     return Milter.REJECT
+ #     print("Value is FALSE. Into spam box.")
+ #     return Milter.CONTINUE # coninue not to drop the mail
  #   elif self.test_model(two_nums) == 1: # when text is 01, 10 or 11
  #     print('mail body text: [[%s]]' % two_nums)
  #     print()
- #     print("value is TRUE. CONTINUE")
+ #     print("Value is TRUE. CONTINUE")
     return Milter.CONTINUE
 
   def _headerChange(self,msg,name,value):
@@ -139,6 +129,8 @@ class sampleMilter(Milter.Milter):
     if not self.fp: return Milter.ACCEPT
     self.fp.seek(0)
     msg = mime.message_from_file(self.fp)
+    if self.isspam = True
+      self.addheader('subject', '[PHISHING]'+self.subject, idx=-1)
     msg.headerchange = self._headerChange
     if not mime.defang(msg,self.tempname):
       os.remove(self.tempname)
@@ -176,7 +168,7 @@ if __name__ == "__main__":
   #tempfile.tempdir = "/var/log/milter"
   #socketname = "/var/log/milter/pythonsock"
   socketname = os.getenv("HOME") + "/pythonsock"
-  Milter.factory = sampleMilter
+  Milter.factory = myMilter
   Milter.set_flags(Milter.CHGBODY + Milter.CHGHDRS + Milter.ADDHDRS)
   print("""To use this with sendmail, add the following to sendmail.cf:
 
