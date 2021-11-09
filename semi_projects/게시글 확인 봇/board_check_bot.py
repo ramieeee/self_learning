@@ -4,7 +4,7 @@ import sys
 from bs4 import BeautifulSoup
 
 TARGET_URL = 'https://notify-api.line.me/api/notify'
-TOKEN = '' # token from line notify
+TOKEN = ''
 header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36'}
 
 # 문화재청 url
@@ -53,7 +53,7 @@ def one(url):
     try:
         if check_text(file_name, num1) == False:
             write_over(file_name, num1)
-            send_Line('문화재청 웹페이지에 새 개시글이 등록되었습니다.')
+            send_Line('문화재청 웹페이지에 새 개시글이 등록되었습니다. 쀼쮸뀨쭈 뀨뀨')
     except FileNotFoundError:
         write_over(file_name, num1)
         send_Line('문화재청 데이터를 새로 등록합니다.')
@@ -72,7 +72,7 @@ def two(url):
     try:
         if check_text(file_name, num2) == False:
             write_over(file_name, num2)
-            send_Line('국립문화재연구소 웹페이지에 새 개시글이 등록되었습니다.')
+            send_Line('국립문화재연구소 웹페이지에 새 개시글이 등록되었습니다. 쀼쮸뀨쭈 뀨우')
     except FileNotFoundError:
         write_over(file_name, num2)
         send_Line('국립문화재연구소 데이터를 새로 등록합니다.')
@@ -92,7 +92,7 @@ def three(url):
     try:
         if check_text(file_name, num3) == False:
             write_over(file_name, num3)
-            send_Line('경기문화재연구원 웹페이지에 새 개시글/이 등록되었습니다.')
+            send_Line('경기문화재연구원 웹페이지에 새 개시글/이 등록되었습니다. 쀼쮸뀨쭈 뀨잉')
     except FileNotFoundError:
         write_over(file_name, num3)
         send_Line('경기문화재연구원 데이터를 새로 등록합니다.')
@@ -108,9 +108,8 @@ def main():
             time.sleep(0.2)
             three(url3)
             time.sleep(10)
-    except:
-        send_Line('프로그램을 강제 종료합니다.\n\n원하지 않는 종료라면 개발자에게 문의하세요\n\n')
+    except Exception as e:
+        send_Line('에러 발생: ', e)
 
 if __name__ == "__main__":
     main()
-    send_Line('또 만나요.')
