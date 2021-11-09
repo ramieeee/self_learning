@@ -75,3 +75,26 @@ def create_posts(payload: dict = Body(...)):
 
 # Schema
 
+We will use a library called pydantic to restrict the type of data to be received.
+
+```python
+from typing import Optional
+from pydantic import BaseModel
+
+# this Post 
+class Post(BaseModel):
+    title: str
+    content: str
+    published: bool = True  # This is an optional data, when we set default as True
+	rating: Optional[int] = None  # takes int and returns None when no data received
+        
+@app.post("/createposts")
+def create_posts(post: Post):
+    # new_post is the parameter and Post is the class to determine parameter's type.
+    print(post)
+    print(post.dict()) # to save post data into dict type
+    # or print(new_post.title) to extract title data
+    return {"data": "post"}
+
+```
+
