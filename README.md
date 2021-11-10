@@ -7,5 +7,3 @@ My self_learning repo consists of:
 3. semi_projects: Projects that I conducted on my own
 
 4. web_practice: Web practice with HTML and CSS
-
-5. projects: Project stuff
