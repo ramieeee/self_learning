@@ -98,3 +98,26 @@ def create_posts(post: Post):
 
 ```
 
+# CRUD application
+
+Create, Read, Update, Delete acronym
+
+* Create -> POST -> /posts -> @app.post('/posts')
+* Read -> GET /posts/:id -> @app.get("/posts/{id}")
+* Read -> GET /posts -> @app.get("/posts")
+* Update -> PUT/PATCH -> /posts/:id -> @app.put("/posts/{id}") # PUT needs all other data whereas PATCH only needs only the data for the specific field.(e.g. when updating title, PUT needs title and body all. PATCH only needs title)
+* Delete -> DELETE -> /posts//:id -> @app.delete("/posts/{id}")
+
+
+
+Make an hard-coded data in my_posts variable and return this data. If I try GET http://127.0.0.1:8000/posts, my_posts will appear.
+
+```python
+my_posts = [{"title": "title of post 1", "content": "content 1", "id": 1},
+            {"title": "facorite foods", "content": "i like pizza", "id": 2}]
+
+@app.get("/posts")
+def get_posts():
+    return {"data": my_posts}
+```
+
