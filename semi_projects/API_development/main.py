@@ -29,3 +29,14 @@ def create_posts(post: Post):
     post_dict['id'] = randrange(0, 1000000)
     my_posts.append(post_dict)
     return {"data": post_dict}
+
+def find_post(id):
+    for p in my_posts:
+        if p["id"] == id:
+            return p
+
+# path parameter
+@app.get("/posts/{id}")
+def get_post(id: int):
+    post = find_post(id)
+    return {"post_detail": post}

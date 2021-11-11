@@ -121,7 +121,9 @@ def get_posts():
     return {"data": my_posts}
 ```
 
-# Giving ID to the post
+# POST
+
+## Giving ID to the post
 
 To give ID a random number, random lib is called for practice purpose.
 
@@ -134,5 +136,22 @@ def create_posts(post: Post):
     post_dict['id'] = randrange(0, 1000000)
     my_posts.append(post_dict)
     return {"data": post_dict}
+```
+
+# GET
+
+To get the specific post using id, we could use the path as `/posts/{id}`, and set the parameter as `id: int` so it will automatically convert the parameter into integer.
+
+```python
+def find_post(id):
+    for p in my_posts:
+        if p["id"] == id:
+            return p
+
+# path parameter
+@app.get("/posts/{id}")
+def get_post(id: int):
+    post = find_post(id)
+    return {"post_detail": post}
 ```
 
