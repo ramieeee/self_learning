@@ -121,3 +121,18 @@ def get_posts():
     return {"data": my_posts}
 ```
 
+# Giving ID to the post
+
+To give ID a random number, random lib is called for practice purpose.
+
+```python
+from random import randrange
+
+@app.post("/posts")
+def create_posts(post: Post):
+    post_dict = post.dict()
+    post_dict['id'] = randrange(0, 1000000)
+    my_posts.append(post_dict)
+    return {"data": post_dict}
+```
+
