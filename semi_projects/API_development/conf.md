@@ -197,3 +197,30 @@ def delete_post(id: int):
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 ```
 
+# UPDATE
+
+The flow of update is as below.
+
+1. look for index. if not index, raise an error
+2. convert post in JSON type into regular python dict type
+3. change the original post into the new post `my_posts[index] = post_dict`
+
+```python
+def find_index_post(id):
+    for i, p in enumerate(my_posts):
+        if p['id'] == id:
+            return i
+
+@app.put("/posts/{id}")
+def update_post(id: int, post: Post):
+    index = find_index_post(id)
+        
+    if index == None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"post with id: {id} was not found")
+    post_dict = post.dict()
+    post_dict['id'] = id
+    my_posts[index] = post_dict
+    return {"data": post_dict}
+```
+
