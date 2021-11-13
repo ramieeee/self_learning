@@ -224,3 +224,27 @@ def update_post(id: int, post: Post):
     return {"data": post_dict}
 ```
 
+# Built-in documentation
+
+FastAPI automatically update documentation.
+
+`http://127.0.0.1:8000/docs` shows the SwaggerUI
+
+`http://127.0.0.1:8000/redoc` also is a different type of documentation
+
+# Packaging
+
+* Create a folder that reads `app`
+* move `main.py` into `app` folder
+* create `__init__.py` file in `app` folder
+* `uvicorn app.main:app --reload` command will search the path ./app/main.py
+
+# Database
+
+* We don't work or interact with db directly.
+* SQL will be used to communicate with DBMS
+
+# Postgres
+
+It can create multiple separate databases
+

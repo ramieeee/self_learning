@@ -16,7 +16,7 @@ class Post(BaseModel):
     
 
 my_posts = [{"title": "title of post 1", "content": "content 1", "id": 1},
-            {"title": "facorite foods", "content": "i like pizza", "id": 2}]
+            {"title": "favorite foods", "content": "i like pizza", "id": 2}]
 
 def find_post(id):
     for p in my_posts:
