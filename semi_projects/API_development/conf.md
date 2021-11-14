@@ -248,3 +248,4 @@ FastAPI automatically update documentation.
 
 It can create multiple separate databases
 
+* Install PostgreSQL Server, gpAdmin 4
