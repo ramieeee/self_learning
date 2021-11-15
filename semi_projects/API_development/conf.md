@@ -257,3 +257,27 @@ It can create multiple separate databases
 * All data tables are related to one another
 * Each Column represents a different attribute
 * Each row represents a different entry in the table
+* Databases have datatypes like any other programming languages
+
+| Data Type | Postgres                | Python     |
+| --------- | ----------------------- | ---------- |
+| Numeric   | int, decimal, precision | int, float |
+| Text      | Varchar, text           | string     |
+| bool      | boolean                 | boolean    |
+| sequence  | array                   | list       |
+
+# Primary key
+
+* a column or a group of columns that uniquely identifies each row in a table
+* Table can have one and only one primary key
+* The primary key does not have to be the ID column. A table may not contain the primary key column
+* email column could be the primary key column
+
+# Unique Constraints
+
+* Unique constraint can be applied to any column to make sure every record has a unique value for that column(e.g. I could make a blizzard ID but a game character name cannot be duplicate)
+
+# Null Constraints
+
+* by default, postgres allows a black data
+* a NOT NULL constraint can be added to the column to ensure that the column is not left blank
