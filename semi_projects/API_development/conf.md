@@ -249,3 +249,11 @@ FastAPI automatically update documentation.
 It can create multiple separate databases
 
 * Install PostgreSQL Server, gpAdmin 4
+* default port is 5432
+
+# Database
+
+* A table represents a subject or event in an application
+* All data tables are related to one another
+* Each Column represents a different attribute
+* Each row represents a different entry in the table
