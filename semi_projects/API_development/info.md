@@ -250,6 +250,9 @@ It can create multiple separate databases
 
 * Install PostgreSQL Server, gpAdmin 4
 * default port is 5432
+* When creating a server, super user is postgres
+* tables at pgAdmin 4: database -> schemas -> public -> table
+* data type `serial`: it is a randomely created number to act as id
 
 # Database
 
@@ -281,3 +284,4 @@ It can create multiple separate databases
 
 * by default, postgres allows a black data
 * a NOT NULL constraint can be added to the column to ensure that the column is not left blank
+
