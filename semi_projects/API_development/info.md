@@ -285,3 +285,62 @@ It can create multiple separate databases
 * by default, postgres allows a black data
 * a NOT NULL constraint can be added to the column to ensure that the column is not left blank
 
+# Query
+
+* selecting data from a table
+
+```sql
+# all
+SELECT * FROM products;
+
+# few columns
+SELECT name, id, price FROM products;
+
+# rename column
+SELECT it AS products_id FROM products;
+
+# select according to conditions
+SELECT * FROM products WHERE id = 10;
+SELECT * FROM products WHERE name = 'TV';
+SELECT * FROM products WHERE price < 80;
+SELECT * FROM products WHERE inventory > 0 AND price > 20;
+SELECT * FROM products WHERE price > 100 OR price < 20;
+
+# multiple selection
+SELECT * FROM products WHERE id IN (1,2,3);
+
+# LIKE
+SELECT * FROM products WHERE name LIKE 'TV%'; # where name starts with 'TV'
+SELECT * FROM products WHERE name NOT LIKE '%en%'; # all that does not include 'en'
+```
+
+* `not` query
+
+```sql
+SELECT * FROM products WHERE inventory <> 0;
+# or
+SELECT * FROM products WHERE inventory != 0;
+```
+
+* ORDER(sorting)
+
+```sql
+SELECT * FROM products ORDER BY price ASC;
+SELECT * FROM products ORDER BY price DESC;
+
+# first sort inventry, and when inventory is in a tie, then ORDER BY price ASC
+SELECT * FROM products ORDER BY inventory DESC, price;
+
+SELECT * FROM products WHERE price > 20 ORDER BY created_at DESC;
+```
+
+* LIMIT, OFFSET
+
+```sql
+# data retrieving limitation
+SELECT * FROM products WHERE price > 10 LIMIT 2;
+
+# OFFSET
+SELECT * FROM products ORDER BY id LIMIT 5 OFFSET 3; #skip first 3 rows and limit 5
+```
+
