@@ -344,3 +344,20 @@ SELECT * FROM products WHERE price > 10 LIMIT 2;
 SELECT * FROM products ORDER BY id LIMIT 5 OFFSET 3; #skip first 3 rows and limit 5
 ```
 
+# INSERT data
+
+```sql
+# in products table, name/price/inventory columns, the value would be tortilla, 4, 1000
+INSERT INTO products (name, price, inventory) VALUES ('tortilla', 4, 1000);
+```
+
+* INSERT 0 1 means everything is successful.
+
+```sql
+# returning shows the inserted data at the same time of its creation
+INSERT INTO products (price, name, inventory) VALUES (10000, 'car', 1000) returning *;
+
+# or
+INSERT INTO products (price, name, inventory) VALUES (10000, 'car', 1000), (50, 'laptop', 25), (60, 'monitor', 4) returning id, created_at, name;
+```
+
