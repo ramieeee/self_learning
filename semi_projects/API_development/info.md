@@ -254,6 +254,8 @@ It can create multiple separate databases
 * tables at pgAdmin 4: database -> schemas -> public -> table
 * data type `serial`: it is a randomely created number to act as id
 
+When using Postgres with Python, it needs a driver.
+
 # Database
 
 * A table represents a subject or event in an application
@@ -374,5 +376,32 @@ DELETE FROM products WHERE id = 11 RETURNING *;
 ```sql
 UPDATE products SET name = 'flour tortilla', price = 40 WHERE id = 20;
 UPDATE products SET is_sale = true WHERE id = 22 RETURNING *;
+```
+
+# Connecting to DB
+
+We need psycopg2 to connect to DB using python.
+
+```
+pip install psycopg2
+```
+
+Try connection in the while loop until it is successful to connect.
+
+```python
+import psycopg2
+from psycopg2.extras import RealDictCursor
+
+# the conn code below is a hard coding and we need to fix the environment for that
+while True:
+    try:
+        conn = psycopg2.connect(host='localhost', database='fastapi', user='postgres', password='password', cursor_factory=RealDictCursor)
+        cursor = conn.cursor()
+        print("Database connection was successful")
+        break
+    except Exception as error:
+        print("Connecting to database failed")
+        print("Error: ", error)
+        time.sleep(2)
 ```
 
