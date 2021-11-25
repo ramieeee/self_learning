@@ -361,3 +361,18 @@ INSERT INTO products (price, name, inventory) VALUES (10000, 'car', 1000) return
 INSERT INTO products (price, name, inventory) VALUES (10000, 'car', 1000), (50, 'laptop', 25), (60, 'monitor', 4) returning id, created_at, name;
 ```
 
+# DELETE data
+
+```sql
+# for example
+DELETE FROM products WHERE id = 10;
+DELETE FROM products WHERE id = 11 RETURNING *;
+```
+
+# UPDATE data
+
+```sql
+UPDATE products SET name = 'flour tortilla', price = 40 WHERE id = 20;
+UPDATE products SET is_sale = true WHERE id = 22 RETURNING *;
+```
+
