@@ -405,3 +405,13 @@ while True:
         time.sleep(2)
 ```
 
+# Retrieving posts from postgres
+
+```python
+@app.get("/posts")
+def get_posts():
+    cursor.execute("""SELECT * FROM posts""") # execute SQL query
+    posts = cursor.fetchall() # call data from query into posts var
+    return {"data": posts}
+```
+
