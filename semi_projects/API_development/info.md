@@ -415,3 +415,28 @@ def get_posts():
     return {"data": posts}
 ```
 
+# Created posts using postgres
+
+```python
+@app.post("/posts", status_code=status.HTTP_201_CREATED)
+def create_posts(post: Post):
+    # it could be f string format but vulnerable to SQL injection. This passing value method is safe
+    cursor.execute("""INSERT INTO posts (title, content, published) VALUES (%s, %s, %s) RETURNING *""", (post.title, post.content, post.published))
+    new_post = cursor.fetchone()
+    conn.commit() # to actually safe the data into postgres, commit is a must
+    return {"data": new_post}
+```
+
+# Retrieving a post with an ID from postgres
+
+```python
+@app.get("/posts/{id}")
+def get_post(id: int, response: Response):
+    cursor.execute("""SELECT * FROM posts WHERE id = %s""", (str(id))) # change id to str for datatype issue
+    post = cursor.fetchone() # only fetch one specific post, not fetchall()
+    if not post:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"post with id: {id} was not found")
+    return {"post_detail": post}
+```
+
