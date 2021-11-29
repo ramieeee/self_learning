@@ -440,3 +440,17 @@ def get_post(id: int, response: Response):
     return {"post_detail": post}
 ```
 
+Deleting a post from postgres
+
+```python
+@app.delete("/posts/{id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_post(id: int):
+    cursor.execute("""DELETE FROM posts WHERE id = %s returning *""", (str(id),))
+    deleted_post = cursor.fetchone()
+    conn.commit()
+    if deleted_post == None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"post with id: {id} was not found")
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+```
+
