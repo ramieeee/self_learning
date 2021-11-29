@@ -440,7 +440,7 @@ def get_post(id: int, response: Response):
     return {"post_detail": post}
 ```
 
-Deleting a post from postgres
+# Deleting a post from postgres
 
 ```python
 @app.delete("/posts/{id}", status_code=status.HTTP_204_NO_CONTENT)
