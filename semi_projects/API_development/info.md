@@ -454,3 +454,9 @@ def delete_post(id: int):
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 ```
 
+# ORM(Object Relational Mapper)
+
+* Layer of abstraction that sits between the DB and us
+* performs all database operations through traditional python code(No SQL)
+* Sqlalchemy is one of the most popular python ORMs
+

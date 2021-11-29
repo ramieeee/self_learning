@@ -27,9 +27,6 @@ while True:
         time.sleep(2)
         
 
-my_posts = [{"title": "title of post 1", "content": "content 1", "id": 1},
-            {"title": "favorite foods", "content": "i like pizza", "id": 2}]
-
 def find_post(id):
     for p in my_posts:
         if p["id"] == id:
