@@ -460,3 +460,65 @@ def delete_post(id: int):
 * performs all database operations through traditional python code(No SQL)
 * Sqlalchemy is one of the most popular python ORMs
 
+# sqlalchemy
+
+* sqlalchemy needs psycopg to connect to the db
+
+```
+# installation
+pip install sqlalchemy
+touch database.py
+```
+
+```python
+# write in database.py file
+
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+
+# dependancy
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+SQLALCHEMY_DATABASE_URL = 'postgresql://<username>:<password>@<ip-addr/hostname>/<database_name>'
+
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
+```
+
+* models in python code will work as tables of SQL
+
+```python
+# store models in models.py
+# touch models.py
+
+from sqlalchemy import Column, Integer, String
+from .database import Base
+class Post(Base):
+    __tablename__ = "posts"
+    id = Column(Integer, primary_key=True, nullable=False)
+    title = Column(String, nullable=False)
+    content = Column(String, nullable=False)
+    published = Column(Boolean, default = True)
+```
+
+```python
+# in the main.py file
+
+import sqlalchemy.orm import Session
+from . import models
+from .database import engine, get_db
+
+models.Base.metadata.create_all(bind=engine)
+        
+@app.get("/sqlalchemy")
+def test_posts(db: Session = Depends(get_db)):
+    return {"status": "success"}
+```
+
