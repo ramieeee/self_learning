@@ -31,3 +31,41 @@ public class Main {
 }
 ```
 
+# Print
+
+* `System.out.println("text");` would be the basic syntax to print text out
+
+```java
+package tutorial;
+
+public class Main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.out.println("Hello World!");
+		System.out.println("Hello World! 2");
+	}
+}
+```
+
+# Data type and variable
+
+* int, double, boolean, char, String
+
+```java
+package tutorial;
+
+public class Main {
+	public static void main(String[] args) {
+		// primitive (not changable)
+		int hello_world = 5;
+		double num2 = 5.0;
+		boolean b = true;
+		char c = 't'; // single quotation mark
+		
+		// String is a different data type
+		String str = "this is string"; // double quotation mark
+	}
+}
+```
+
