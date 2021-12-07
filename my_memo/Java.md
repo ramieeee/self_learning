@@ -69,3 +69,65 @@ public class Main {
 }
 ```
 
+# operation
+
+All operation is the same as other languages except division
+
+```java
+package tutorial;
+
+public class Main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int x = 5;
+		int y = 7;
+		int z = 57;
+		int u = z * y + x - y;
+		System.out.println(u);
+	}
+}
+```
+
+# Division
+
+* if one of the operands is double, the output is always double data type
+
+```java
+package tutorial;
+
+public class Main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int x = 5;
+		int y = 7;
+		double z = 57;
+		double u = z / y;
+		System.out.println(u);
+	}
+}
+```
+
+# Exponent
+
+```java
+// exponent is a double data type
+int x = 5;
+int y = 7;
+
+// '**' doesn't apply to Java
+double n = Math.pow(x, y);
+```
+
+# Type casting
+
+* instead of changing data type when initializing, we could change the type of the value
+
+```java
+int x = 5;
+int y = 7;
+int z = 57;
+double u = x / (double)y;
+```
+
