@@ -165,3 +165,37 @@ int x = Integer.parseInt(scanned);
 * and: &&
 * or: ||
 * not: !. it is the reversing the value
+
+```java
+// String comparison
+Scanner sc = new Scanner(System.in);
+String s = sc.next();
+s.equals("hello"); // it is not s == "hello";
+```
+
+# if, else, else if
+
+```java
+package tutorial;
+import java.util.Scanner;
+
+public class Main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner sc = new Scanner(System.in);
+		String s = sc.nextLine();
+		
+		if (s.equals("helloworld")) {
+			System.out.println("helloworld!");
+		}
+		else if (s.equals("hello")) {
+			System.out.println("hey");
+		}
+		else {
+			System.out.println("other");
+		}
+	}
+}
+```
+
