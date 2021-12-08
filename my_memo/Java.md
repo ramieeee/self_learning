@@ -102,6 +102,7 @@ public class Main {
 		// TODO Auto-generated method stub
 		int x = 5;
 		int y = 7;
+         int m = 25 % 3; // modulus or remainder operation
 		double z = 57;
 		double u = z / y;
 		System.out.println(u);
@@ -131,3 +132,36 @@ int z = 57;
 double u = x / (double)y;
 ```
 
+# Input
+
+```java
+package tutorial;
+import java.util.Scanner;
+
+public class Main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner sc = new Scanner(System.in);
+		String scanned = sc.next();
+		int scanned = sc.nextInt(); // if I want it to be int
+		boolean scanned = sc.nextBoolean(); // if I want it to be boolean
+		double scanned = sc.nextDouble(); // if I want it to be double
+		System.out.println(scanned);
+	}
+}
+```
+
+* take input as string, and convert into int
+
+```java
+Scanner sc = new Scanner(System.in);
+String scanned = sc.next();
+int x = Integer.parseInt(scanned);
+```
+
+# Comparison operator
+
+* and: &&
+* or: ||
+* not: !. it is the reversing the value
