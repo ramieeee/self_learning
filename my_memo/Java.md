@@ -199,3 +199,27 @@ public class Main {
 }
 ```
 
+# Array
+
+* To declare an array, put the type that I want it to be
+
+```java
+public class Main {
+
+	public static void main(String[] args) {
+		String[] newArr = new String[5];
+		newArr[0] = "hello"; 
+		newArr[1] = "hi";
+		newArr[2] = "tim";
+		newArr[3] = "bill";
+		newArr[4] = "joe";
+		
+		int[] nums = {2, 3, 45, 6, 1};
+		double[] nums2 = {2.1, 3.8};
+		
+		int x = nums[4];
+		System.out.println(x);
+	}
+}
+```
+
