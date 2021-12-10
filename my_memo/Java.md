@@ -332,3 +332,79 @@ public class Main {
 }
 ```
 
+# Sets and list
+
+* Set: collection of unordered elements that are unique. element cannot be contained twice.
+* Set is very fast compared to list.
+
+```java
+package tutorial;
+import java.util.Set;
+import java.util.HashSet;
+
+public class Main {
+	public static void main(String[] args) {
+		// HashSet is a standard set
+		Set<Integer> t = new HashSet<Integer>();
+		t.add(5);
+		t.add(5); // adding another 5 does not do anything as 5 already exists
+		t.add(9);
+		t.remove(9); // removing the element 
+		t.isEmpty(); // checks if set is empty
+		t.size(); // checks size
+		System.out.println(t);
+		
+		// to check if set contains 5
+		boolean x = t.contains(5);
+		System.out.println(x);
+	}
+}
+```
+
+* TreeSet: it comes with an order
+
+```java
+import java.util.TreeSet;
+
+Set<Integer> t = new TreeSet<Integer>();
+```
+
+* LinkedHashSet
+
+```java
+import java.util.LinkedHashSet;
+
+Set<Integer> t = new LinkedHashSet<Integer>();
+```
+
+* List: it wors the same as array but slower. It can add things and remove elements
+
+```java
+import java.util.ArrayList;
+
+public class Main {
+	public static void main(String[] args) {
+		// HashSet is a standard set
+		ArrayList<Integer> t = new ArrayList<Integer>();
+		t.add(1);
+		t.add(2);
+		t.add(3);
+		t.add(4);
+		
+		t.get(0); // get a value of index 0. it is not t[0]
+		t.set(0, 5); // changing the value of the index 0th to 5
+		t.size();
+		t.subList(0, 2); // get values in the range of 0 - 1
+		System.out.println(t.subList(0, 2));
+	}
+}
+```
+
+* LinkedList: faster in some operation
+
+```java
+import java.util.LinkedList;
+
+LinkedList<Integer> t = new LinkedList<Integer>();
+```
+
