@@ -51,7 +51,76 @@ $$ # process number of the current shell
 
 # Basic operators
 
+* arithmetic
+* relational
+* boolean
+* string
+* file test operators
+
+# Loops
+
+* while
+
+```shell
+#!/bin/sh
+# printing 0-9
+a=0
+while [ $a -lt 10 ]
+do
+	echo $a
+	a='expr $a + 1'
+done
 ```
+
+* for
+
+```shell
+#!/bin/sh
+
+# printing 0-9 hard coding
+for var in 0 1 2 3 4 5 6 7 8 9
+do
+	echo $var
+done
+```
+
+* until
+
+```shell
+#!/bin/sh
+
+# printing 0-9
+until [ ! $a -lt 10 ]
+do
+	echo $a
+	a='expr $a + 1'
+done
+```
+
+* nested
+
+```shell
+#!/bin/sh
+
 
 ```
 
+* loop control(break)
+
+```shell
+#!/bin/sh
+
+a=0
+
+while [ $a -lt 10 ]
+do
+	echo $a
+	if [ $a -eq 5 ]
+	then
+		break # or continue to keep the program running
+	fi
+	a='expr $a + 1'
+done
+```
+
+* exit
