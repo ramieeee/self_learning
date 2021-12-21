@@ -123,4 +123,28 @@ do
 done
 ```
 
-* exit
+# Function
+
+```shell
+#/bin/sh
+
+#functions
+
+Hello(){
+        echo "Hello $1!"
+}
+
+# function calling
+Hello ramie
+
+Add(){
+        return $(expr $1 + $2)
+}
+
+Add 3 5
+# data saving into var
+ret=$?
+
+echo $ret
+```
+
