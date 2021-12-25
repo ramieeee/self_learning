@@ -408,3 +408,51 @@ import java.util.LinkedList;
 LinkedList<Integer> t = new LinkedList<Integer>();
 ```
 
+# Maps and HashMaps
+
+* It is like dictionary in python
+* key and value pair(list or array)
+* very fast
+* HashMap does not guarantee orders. It is only extremely fast like `set`
+
+```java
+import java.util.Map;
+
+public class Main {
+	public static void main(String[] args) {
+		Map m = new HashMap();
+		m.put("key", "value"); // putting key and value in the map
+		m.put("joe",  5);
+        
+		System.out.println(m); // output as {key=value}
+		System.out.println(m.get("key")); // to get value of "key"
+         System.out.println(m.values()); // prints all values of m
+
+         m.claer(); // to empty the Map
+         m.isEmpty(); // tells if m is empty
+	}
+}
+```
+
+* TreeMap(): the key has to be in the same type. it sort the keys in orders.
+
+```java
+import java.util.TreeMap;
+
+public class Main {
+	public static void main(String[] args) {
+
+		Map m = new TreeMap();
+		m.put("key", "value");
+		m.put("joe",  5);
+		
+		System.out.println(m);
+		System.out.println(m.get("key"));
+	}
+}
+```
+
+* LinkedHashMap(): It keeps the order the user puts in.
+
+
+
