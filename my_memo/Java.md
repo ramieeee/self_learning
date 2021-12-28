@@ -456,3 +456,45 @@ public class Main {
 
 
 
+# Practice 1
+
+* Counting all letters in the string
+
+```java
+public class Main {
+	public static void main(String[] args) {
+		Map m = new HashMap();
+		String str = "hello my name is Ramie";
+		
+        // str.toCharArray() converts the string into an array
+		for(char x:str.toCharArray()) {
+			if (m.containsKey(x)){
+				int old = (int) m.get(x);
+				m.put(x,  old+1);
+			}
+			else {
+				m.put(x,  1);
+			}
+		}
+		System.out.println(m);
+	}
+}
+```
+
+# Sorting
+
+```java
+public class Main {
+	public static void main(String[] args) {
+		int[] x = {-99, 5, 1, 2, 5, 7};
+		
+		// sorting array
+		Arrays.sort(x);
+		
+		for(int i:x) {
+			System.out.print(i + ",");			
+		}
+	}
+}
+```
+
