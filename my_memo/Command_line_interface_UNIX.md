@@ -220,3 +220,4 @@
 * 텍스트 치환(s, substitute) 예) :s/like/love -> like를 love로 바꿈(모든줄의 )
 * 모든줄의 텍스트 치환(%): 각 줄의 첫번째 모든 단어를 치환. g(global) 옵션을 주면 모든 단어를 바꾸게 됨. 예) :%s/like/love/g
 * 원하는 것만 바꾸고 싶을땐 c(confirm) 옵션 사용. :%s/like/love/gc.
+* :noh     검색 하이라이트 지우기
