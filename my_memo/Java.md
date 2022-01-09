@@ -498,3 +498,26 @@ public class Main {
 }
 ```
 
+# Objective oriented programme
+
+* object: instance of data type
+* method: a method comes with an instance like length method in `var.length();`
+
+```java
+// calling functions within the Main class
+public class Main {
+	public static void main(String[] args) {
+		System.out.println(add2(1));
+		System.out.println(str("Hi"));
+	}
+	
+	public static int add2(int x) {
+		return x + 2; 
+	}
+	
+	public static String str(String x) {
+		return x + "!";
+	}
+}
+```
+
