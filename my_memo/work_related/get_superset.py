@@ -29,7 +29,8 @@ def path_set(arg):
         path = "./"
     return path
 
-def get_file_name(arg, path):
+# pharsing file name
+def get_file_name(arg):
     idx = 0
     for i in range(len(arg), 0, -1):
         idx += 1
@@ -54,7 +55,7 @@ def main():
     check_argv()
     arg = sys.argv[1]
     path = path_set(arg)
-    file_name = get_file_name(arg, path)
+    file_name = get_file_name(arg)
     check_file(file_name, path)
     check_dumpfile(file_name, path)
 
@@ -65,22 +66,26 @@ def main():
     # dumping EXEC CICS phrases into .dump file
     for i in range(len(lines)):
         t_idx = i
-        if "EXEC CICS" in lines[t_idx]:
-            # create .dump file and append
-            while "END-EXEC" not in lines[t_idx-1]:
-                dump_file = open(file_name+".dump", "a")
-                dump_file.write(lines[t_idx][6:].strip())
-                dump_file.write(" ")
+        # check EXEC CICS statement and ignore comments
+        if "EXEC CICS" in lines[t_idx] and lines[t_idx][6] != "*":
+            # append into .dump file
+            while True:
+                if "END-EXEC" in lines[t_idx]:
+                    with open(file_name+".dump", "a") as dump_file:
+                        dump_file.write(lines[t_idx][6:].strip() + " ")
+                    break
+                with open(file_name+".dump", "a") as dump_file:
+                    dump_file.write(lines[t_idx][6:].strip() + " ")
                 t_idx += 1
-            dump_file.write("\n")
-            dump_file.close()
+            with open(file_name+".dump", "a") as dump_file:
+                dump_file.write("\n")
             EXEC_count += 1
+
+    # check if EXEC CICS statement is in the file
     if EXEC_count == 0:
-        print("no \'EXEC CICS\' phrase in the file")
-
-
+        print("no \'EXEC CICS\' statement in the file")
     else:
-        print("total %d EXEC CICS phrase(s) in the file\nDUMPING SUCCESSFUL" %EXEC_count)
+        print("total %d EXEC CICS statement(s) in the file\nDUMPING SUCCESSFUL" %EXEC_count)
 
     f.close()
 
