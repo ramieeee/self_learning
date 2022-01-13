@@ -51,6 +51,18 @@ def check_file(file_name, path):
     if file_name not in file_list:
         raise SystemExit("   %s file does not exist in this directory" %file_name)
 
+def help_print(arg):
+    if arg == "--help":
+        print("\nit detects all EXEC CICS statements and dump into <file_name.dump> file\n")
+        print("usage: python <py_script> <target_file> <option>")
+        print("  <py_script>        python script file to be executed")
+        print("  <target_file>      file from which you need to source out EXEC CICS\n")
+        print("options:")
+        print("  -d, default        dumping only")
+        print("  -l, linear         dumping in a straight line")
+        return 1
+    return 0
+
 def main():
     check_argv()
     arg = sys.argv[1]
