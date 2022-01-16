@@ -89,7 +89,7 @@ def exec_d_option(path, file_name):
 	if EXEC_count == 0:
 		print("no \'EXEC CICS\' statement in the file") 
 	else:
-		print("total %d EXEC CICS statement(s) in the file\nDUMPING SUCCESSFUL into %s.dump" %(EXEC_count,file_name))
+		print("total %d EXEC CICS statement(s) in the file\nDUMPING SUCCESSFUL into %s.dump with default option" %(EXEC_count,file_name))
 		with open(path+file_name+".dump", "a") as w_file:
 			for i in buff:
 				w_file.write(i)
@@ -120,7 +120,7 @@ def exec_l_option(path, file_name):
 	if len(buff) == 0:
 		print("no \'EXEC CICS\' statement in the file") 
 	else:
-		print("total %d EXEC CICS statement(s) in the file\nDUMPING SUCCESSFUL into %s.dump" %(len(buff),file_name))
+		print("total %d EXEC CICS statement(s) in the file\nDUMPING SUCCESSFUL into %s.dump with \'-l\' option" %(len(buff),file_name))
 		buff = "\n".join(buff)
 		with open(path+file_name+".dump", "w") as w_file:
 			w_file.write(buff)
