@@ -133,10 +133,7 @@ def main():
 	if len_argv == 3:
 		option = sys.argv[2]
 
-	if "--help" in arg:
-		help_print()
-		exit(0)
-	elif len_argv == 3 and "--help" in option:
+	if "--help" in arg or (len_argv == 3 and "--help" in option):
 		help_print()
 		exit(0)
 	path = path_set(arg)
