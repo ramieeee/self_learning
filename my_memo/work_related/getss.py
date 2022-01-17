@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # This program aims to find the excessive use of "EXEC CICS READ"
 # It will find all "EXEC CICS READ" statement and dump into [file_name].dump
 
@@ -12,7 +14,7 @@ import os
 ##################################### consider option####################
 def check_argv_len():
 	if len(sys.argv) < 2 or len(sys.argv) > 3:
-		raise SystemExit("   note: the script takes only 1 argument and an option\n   try \'python <py_script> --help\' for details\"")
+		raise SystemExit("   note: getss takes only 1 argument and an option\n   try \'getss --help\' for details\"")
 	if len(sys.argv) == 2:
 		return 2
 	return 3
@@ -57,9 +59,8 @@ def check_file(file_name, path):
 		raise SystemExit("   \'%s\' file does not exist in this directory" %file_name)
 
 def help_print():
-		print("\nit detects all EXEC CICS statements and dump into <file_name.dump> file\n")
-		print("usage: python <py_script> <target_file> <option>")
-		print("  <py_script>        python script file to be executed")
+		print("\nit detects all \'EXEC CICS\' statements and dumps into <file_name.dump> file\n")
+		print("usage: getss <target_file> <option>")
 		print("  <target_file>      file from which you need to source out EXEC CICS\n")
 		print("options:")
 		print("  -d, default        dumping only. dumps in original form")
@@ -89,7 +90,7 @@ def exec_d_option(path, file_name):
 	if EXEC_count == 0:
 		print("no \'EXEC CICS\' statement in the file") 
 	else:
-		print("total %d EXEC CICS statement(s) in the file\nDUMPING SUCCESSFUL into %s.dump with default option" %(EXEC_count,file_name))
+		print("total %d \'EXEC CICS\' statement(s) in the file\nDUMPING SUCCESSFUL into %s.dump with default option" %(EXEC_count,file_name))
 		with open(path+file_name+".dump", "a") as w_file:
 			for i in buff:
 				w_file.write(i)
@@ -120,7 +121,7 @@ def exec_l_option(path, file_name):
 	if len(buff) == 0:
 		print("no \'EXEC CICS\' statement in the file") 
 	else:
-		print("total %d EXEC CICS statement(s) in the file\nDUMPING SUCCESSFUL into %s.dump with \'-l\' option" %(len(buff),file_name))
+		print("total %d \'EXEC CICS\' statement(s) in the file\nDUMPING SUCCESSFUL into %s.dump with \'-l\' option" %(len(buff),file_name))
 		buff = "\n".join(buff)
 		with open(path+file_name+".dump", "w") as w_file:
 			w_file.write(buff)
