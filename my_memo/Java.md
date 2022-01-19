@@ -521,3 +521,40 @@ public class Main {
 }
 ```
 
+# Creating classes
+
+* When creating classes, we need to make a file for the class
+* class is like a Data type
+* attribute: variable that holds information
+
+```java
+// Dog.java
+package tutorial;
+
+public class Dog {
+	private String name; // an attribute
+	private int age;
+	
+	public Dog(String name, int age) { // dog object
+		this.name = name; // instance
+		this.age = age;
+	}
+	
+	public void speak() {
+		System.out.println("I am " + this.name + " and I am " + (this.age));
+	}
+}
+```
+
+```java
+// Main.java
+package tutorial;
+
+public class Main {
+	public static void main(String[] args) {
+		Dog tim = new Dog("Tim", 4);
+		tim.speak();
+	}
+}
+```
+
