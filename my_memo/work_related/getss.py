@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-# This program aims to find the excessive use of "EXEC CICS READ"
-# It will find all "EXEC CICS READ" statement and dump into [file_name].dump
+# This program aims to find the excessive use of "EXEC CICS"
+# It will find all "EXEC CICS" statement and dump into [file_name].dump
 
 ########################
 #   made by Ramieeee   #
@@ -11,7 +11,6 @@ import sys
 import os
 
 # raise an error when system argument is more or less than 1.
-##################################### consider option####################
 def check_argv_len():
 	if len(sys.argv) < 2 or len(sys.argv) > 3:
 		raise SystemExit("   note: getss takes only 1 argument and an option\n   try \'getss --help\' for details\"")
@@ -46,7 +45,6 @@ def get_file_name(arg):
 	else:
 		return arg
 
-
 # check dumpfile in the directory
 def check_dumpfile(file_arg, path):
 	if file_arg+".dump" in os.listdir(path):
@@ -57,6 +55,8 @@ def check_file(file_name, path):
 	file_list = os.listdir(path)
 	if file_name not in file_list:
 		raise SystemExit("   \'%s\' file does not exist in this directory" %file_name)
+	elif os.path.isdir(path + file_name):
+		raise SystemExit("   \'%s\' is a directory" %file_name)
 
 def help_print():
 		print("\nit detects all \'EXEC CICS\' statements and dumps into <file_name.dump> file\n")
@@ -66,36 +66,6 @@ def help_print():
 		print("  -d, default        dumping only. dumps in original form")
 		print("  -l, linear         dumping in a straight line")
 
-def exec_d_option(path, file_name):
-	f = open(path+file_name, "r")
-	lines = f.readlines()
-	EXEC_count = 0
-
-	buff = []
-	for i in range(len(lines)):
-		idx = i
-		if "EXEC" in lines[idx] and "-EXEC" not in lines[idx] and lines[idx][6] != "*":
-			buff.append(lines[idx])
-			idx += 1
-			while True:
-				if "END-EXEC" in lines[idx]:
-					buff.append(lines[idx])
-					break
-				elif len(lines[idx]) > 6 and lines[idx][6] == "*":
-					idx += 1
-					continue
-				buff.append(lines[idx])
-				idx += 1
-			EXEC_count += 1
-	if EXEC_count == 0:
-		print("no \'EXEC CICS\' statement in the file") 
-	else:
-		print("total %d \'EXEC CICS\' statement(s) in the file\nDUMPING SUCCESSFUL into %s.dump with default option" %(EXEC_count,file_name))
-		with open(path+file_name+".dump", "a") as w_file:
-			for i in buff:
-				w_file.write(i)
-	f.close()
-
 def exec_l_option(path, file_name):
 	f = open(path+file_name, "r")
 	lines = f.readlines()
@@ -103,25 +73,41 @@ def exec_l_option(path, file_name):
 	buff = []
 	for i in range(len(lines)):
 		temp = []
+		check_buff = []
 		idx = i
-		if "EXEC" in lines[idx] and "-EXEC" not in lines[idx] and lines[idx][6] != "*":
+
+		# find the line of "EXEC CICS ... END-EXEC"
+		if "EXEC" in lines[idx] and "-EXEC" in lines[idx] and lines[idx][6] != "*":
+			temp.append(lines[idx][6:].strip())
+			check_buff.append("".join(temp))
+			a = check_buff[0].replace(" ","")
+			if "EXECCICS" in a:
+				buff.append(" ".join(temp))
+
+		# find the first line of "EXEC" phrase
+		elif "EXEC" in lines[idx] and "-EXEC" not in lines[idx] and lines[idx][6] != "*":
 			temp.append(lines[idx][6:].strip())
 			idx += 1
 			while True:
 				if "END-EXEC" in lines[idx]:
 					temp.append(lines[idx][6:].strip())
 					break
-				elif len(lines[idx]) > 6 and lines[idx][6] == "*":
+				elif (len(lines[idx]) > 6 and lines[idx][6] == "*") or len(lines[idx]) < 7:
 					idx += 1
-					continue
-				temp.append(lines[idx][6:].strip())
-				idx += 1
-			buff.append(" ".join(temp))
+				else:
+					temp.append(lines[idx][6:].strip())
+					idx += 1
+			check_buff.append("".join(temp))
+			a = check_buff[0].replace(" ","")
+
+			# filter out exceptions. takes only "EXEC CICS" phrase
+			if "EXECCICS" in a:
+				buff.append(" ".join(temp))
 
 	if len(buff) == 0:
 		print("no \'EXEC CICS\' statement in the file") 
 	else:
-		print("total %d \'EXEC CICS\' statement(s) in the file\nDUMPING SUCCESSFUL into %s.dump with \'-l\' option" %(len(buff),file_name))
+		print("total %d \'EXEC CICS\' statement(s) in the file\nDUMPING SUCCESSFUL into %s.dump" %(len(buff),file_name))
 		buff = "\n".join(buff)
 		with open(path+file_name+".dump", "w") as w_file:
 			w_file.write(buff)
@@ -139,13 +125,13 @@ def main():
 	path = path_set(arg)
 	file_name = get_file_name(arg)
 	check_file(file_name, path)
-	check_dumpfile(file_name, path)
+	# check_dumpfile(file_name, path)
 
 	# when takes in option
 	if len_argv == 3 and option == "-l":
 		exec_l_option(path, file_name)
 	elif len_argv == 2 or (len_argv == 3 and option == "-d"):
-		exec_d_option(path, file_name)
+		exec_l_option(path, file_name)
 	else:
 		help_print()
 		exit(0)
