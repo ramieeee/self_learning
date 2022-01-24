@@ -558,3 +558,54 @@ public class Main {
 }
 ```
 
+
+
+# Subclasses
+
+* Make another class called Cat, and we could reuse Dog class's methods
+
+```java
+package tutorial;
+
+public class Cat extends Dog {
+	private int food;
+    
+	// Cat is the subclass(child class)	
+	public Cat(String name, int age, int food) {
+		super(name, age);
+		this.food = food;
+	}
+	
+	// another way to set up the method
+	public Cat(String name, int age) {
+		super(name, age);
+	}
+	
+	// hard code "0" or other numbers
+	public Cat(String name) {
+		super(name, 0);
+	}
+
+    // overwrite speak method only for Cat class
+	public void speak() {
+		System.out.println("Meow my name is " + this.name + " and I get fed" + this.food);
+	}
+}
+```
+
+* Then Dog and Cat classes could be called to main function
+
+```java
+package tutorial;
+
+public class Main {
+	public static void main(String[] args) {
+		Dog tim = new Dog("tim", 18);
+		tim.speak();
+		
+		Cat bob = new Cat("bob");
+		bob.speak();
+	}
+}
+```
+
