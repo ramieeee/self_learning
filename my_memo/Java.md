@@ -609,3 +609,42 @@ public class Main {
 }
 ```
 
+# Static Variable
+
+* It works as a class variable that could be called for every methods within the class.
+
+// class Dog
+
+```java
+package tutorial;
+
+public class Dog {
+	public String name;
+	public int age;
+	protected static int count = 0;
+	
+	public Dog(String name, int age) { // dog object
+		this.name = name;
+		this.age = age;
+		Dog.count += 1;
+	}
+}
+```
+
+// Main
+
+```java
+package tutorial;
+
+public class Main {
+	public static void main(String[] args) {
+		Dog tim = new Dog("tim", 9);
+		Dog bill = new Dog("bill", 5);
+		System.out.println(Dog.count); // value is 2
+	}
+}
+```
+
+# Static Method
+
+* 
