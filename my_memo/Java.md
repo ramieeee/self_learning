@@ -647,4 +647,20 @@ public class Main {
 
 # Static Method
 
-* 
+* it works as a function in other languages
+* It does not care about instance but it just does something
+
+```java
+	public static void display() {
+		System.out.println("I am a dog!");
+	}
+```
+
+# Compare objects
+
+* d
+
+```java
+
+```
+
