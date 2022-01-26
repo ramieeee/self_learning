@@ -658,9 +658,38 @@ public class Main {
 
 # Compare objects
 
-* d
+* if there was no boolean equals method in Student class, it will compare addresses and returns false.
 
 ```java
+package tutorial;
 
+public class Main {
+	public static void main(String[] args) {
+		Student Joe = new Student("Joe");
+		Student Bill = new Student("Joe");
+		
+		System.out.println(Joe.equals(Bill)); // returns true
+	}
+}
+```
+
+```java
+package tutorial;
+
+public class Student {
+	private String name;
+	
+	public Student(String name) {
+		this.name = name;
+	}
+	
+	public boolean equals(Student other) {
+		if (this.name == other.name)
+			return true;
+		else {
+			return false;
+		}
+	}
+}
 ```
 
