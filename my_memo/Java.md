@@ -669,6 +669,7 @@ public class Main {
 		Student Bill = new Student("Joe");
 		
 		System.out.println(Joe.equals(Bill)); // returns true
+         System.out.println(Joe.compareTo(Tim)); // returns -10 (a number)
 	}
 }
 ```
@@ -689,6 +690,10 @@ public class Student {
 		else {
 			return false;
 		}
+	}
+    // Comparing bigger, smaller
+    public int compareTo(Student other) {
+		return this.name.compareTo(other.name);
 	}
 }
 ```
