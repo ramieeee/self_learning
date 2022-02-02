@@ -695,6 +695,12 @@ public class Student {
     public int compareTo(Student other) {
 		return this.name.compareTo(other.name);
 	}
+    
+    public String toString() {
+		return "Student(" + this.name + ")"; // returns Student(Tim), not address
+	}
 }
 ```
+
+# Inner Classes
 
