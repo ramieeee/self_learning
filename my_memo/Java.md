@@ -704,3 +704,38 @@ public class Student {
 
 # Inner Classes
 
+* OuterClass class
+
+```java
+package tutorial;
+
+public class OuterClass {
+	public void Inner() {
+		class InnerClass {
+			public void display() {
+				System.out.println("Inner Class");
+			}
+		}
+		
+		InnerClass in = new InnerClass();
+		in.display();
+	}
+}
+```
+
+* Main class
+
+```java
+package tutorial;
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		OuterClass out = new OuterClass();
+        out.Inner();
+       
+        System.out.println();
+	}
+}
+```
+
