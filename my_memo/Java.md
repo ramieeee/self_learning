@@ -50,7 +50,7 @@ public class Main {
 
 # Data type and variable
 
-* int, double, boolean, char, String
+* int, double, boolean, char, String, final
 
 ```java
 package tutorial;
@@ -68,6 +68,8 @@ public class Main {
 	}
 }
 ```
+
+* final: it cannot change its value
 
 # operation
 
@@ -735,6 +737,77 @@ public class Main {
         out.Inner();
        
         System.out.println();
+	}
+}
+```
+
+# Interfaces
+
+* somewhat similar to classes with inheritance
+* abstract.
+* only has public method
+
+```java
+package tutorial;
+
+public interface Vehicle {
+	
+	final int gears = 5;
+	
+	void changeGear(int a);
+    void speedUp(int a);
+    void slowDown(int a);
+    
+    default void out() {
+    	System.out.println("default method");
+    }
+    
+    // this math method could work as a function
+    static int math(int b) {
+    	return b + 9;
+    }
+}
+
+```
+
+* Car class that implements Vehicle interface
+
+```java
+package tutorial;
+
+public class Car implements Vehicle {
+	private int gear = 1;
+	private int speed = 0;
+	
+	public void changeGear(int gear) {
+		this.gear = gear;
+	}
+	public void speedUp(int change) {
+		this.speed += change;
+	}
+	public void slowDown(int change) {
+		this.speed -= change;;
+	}
+	
+	public void display() {
+		System.out.println("I am a car, going " + this.speed + "km/h and I am in gear " + this.gear);
+		out();
+	}
+}
+```
+
+* Main class
+
+```java
+package tutorial;
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Car ford = new Car();
+		ford.speedUp(10);
+		ford.changeGear(2);
+		ford.display();
 	}
 }
 ```
