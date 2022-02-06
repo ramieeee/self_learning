@@ -812,3 +812,79 @@ public class Main {
 }
 ```
 
+# Enums
+
+* Collection of constance that we can reference
+
+```java
+package tutorial;
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Level lvl = Level.LOW;
+		String en = lvl.toString();
+		Level[] arr = Level.values();
+		
+		for (Level e : arr) {
+			System.out.println(e);
+		}
+
+		if (lvl == Level.LOW) {
+			System.out.println(lvl);
+		}else if (lvl == Level.MEDIUM) {
+			System.out.println(lvl);
+		}else {
+			System.out.println(lvl);
+		}
+	}
+}
+```
+
+``` java
+package tutorial;
+
+public enum Level {
+    HIGH,
+    MEDIUM,
+    LOW;
+}
+```
+
+* And use enum in other way
+
+``` java
+package tutorial;
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Level lvl = Level.LOW;
+		lvl.setlvl(5);
+        System.out.println(lvl.getlvl());
+	}
+}
+```
+``` java
+package tutorial;
+
+public enum Level {
+    HIGH(3),
+    MEDIUM(2),
+    LOW(1);
+	
+	private int lvlnum;
+	
+	private Level(int num) {
+		this.lvlnum = num;
+	}
+	
+	public int getlvl() {
+		return this.lvlnum;
+	}
+	
+	public void setlvl(int num) {
+		this.lvlnum = num;
+	}
+}
+```
