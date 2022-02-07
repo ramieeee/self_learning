@@ -31,7 +31,29 @@ multi line comment
 * number
 * object: functions as a library
 
-```javascript
 
+```javascript
+<script>
+/* 
+comment
+*/
+console.log("hello");
+
+var myName = "RH" // throughout the whole program
+myName = 8 // var is assignable
+
+let outName = "JavaCoding" // recommend to use let
+const pi = 3.14 // var that should never change
+</script>
 ```
 
+* decimal number declaring is also possible
+
+# Operators
+* remainder: % `11 % 3 = 2`
+* a += 1 is also possible
+
+# String
+* single quotation, double quotation both possible
+* double quote inside the quote: `let str = "String \"Inside the String\" here";`
+* single, double quote both can exist. `let str = '<a href="https://instagram.com/" target="_blank">Link</a>';`
