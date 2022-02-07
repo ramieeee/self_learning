@@ -64,14 +64,14 @@
 
            EXEC CICS HANDLE AID
                 PF12(9999-ABORT)
-                ANYKEY(9110-INVALID-KEY-RECEIVE-MAP)
-                PF10
+                ANYKEY(9110-INVALID-KEY-DATA)
+                PF10(9999-ABORT)
            END-EXEC.
 
            PERFORM 0200-RECEIVE-MAP.
            PERFORM 0300-CALC.
-           PERFORM 0100-SEND-MAP.
-           PERFORM 9999-ABORT.
+           PERFORM 9200-SHOW-RESULT.
+           PERFORM 5300-RETURN-TRANS-ID.
 
       **** PROCEDURE LIST ****
        0100-FIRST-TIME.
@@ -86,8 +86,8 @@
            EXEC CICS SEND
                MAP('VIVPM01')
                MAPSET('VIVPM01')
-               CURSOR
                ERASE
+               CURSOR(511)
            END-EXEC.
 
        0200-RECEIVE-MAP.
@@ -108,6 +108,7 @@
                MAPSET('VIVPM01')
                FROM(VIVPM01O)
                DATAONLY
+               CURSOR(511)
            END-EXEC.
 
        5100-ALWAYS-TEST.
@@ -135,11 +136,18 @@
            MOVE 'INVALID KEY ENTERED' TO ALRTO.
            PERFORM 0400-SEND-MAP-DATA.
 
-       9110-INVALID-KEY-RECEIVE-MAP.
+       9110-INVALID-KEY-DATA.
            MOVE LOW-VALUES TO VIVPM01O.
-           MOVE 'INVALID KEY ENTERED' TO ALRTO.
+           MOVE 'INVALID KEY' TO ALRTO.
+           MOVE 'PRESS ENTER TO CONTINUE' TO ALRT2O.
            PERFORM 0400-SEND-MAP-DATA.
            PERFORM 5300-RETURN-TRANS-ID.
+
+       9200-SHOW-RESULT.
+           MOVE '                       THE RESULT IS' TO ALRTO.
+           MOVE C TO ALRTRSLTO.
+           MOVE 'PRESS ENTER TO CONTINUE' TO ALRT2O.
+           PERFORM 0400-SEND-MAP-DATA.
 
        9999-ABORT.
            EXEC CICS RETURN
