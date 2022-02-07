@@ -1,0 +1,92 @@
+VIVPM01  DFHMSD TYPE=&SYSPARM,                                         X
+               LANG=COBOL,                                             X
+               MODE=INOUT,                                             X
+               CTRL=FREEKB,                                            X
+               STORAGE=AUTO,                                           X
+               TIOAPFX=YES
+
+VIVPM01  DFHMDI SIZE=(24,80),                                          X
+               LINE=1,                                                 X
+               COLUMN=1
+
+DATE     DFHMDF POS=(1,2),                                             X
+               LENGTH=8,                                               X
+               ATTRB=(NORM,PROT,FSET)
+
+TERM     DFHMDF POS=(1,74),                                            X
+               LENGTH=4,                                               X
+               ATTRB=(NORM,PROT,FSET)
+
+TIME     DFHMDF POS=(2,2),                                             X
+               LENGTH=8,                                               X
+               ATTRB=(NORM,PROT,FSET)
+
+         DFHMDF POS=(1,24),                                            X
+               LENGTH=33,                                              X
+               ATTRB=(NORM,PROT),                                      X
+               HILIGHT=BLINK,                                          X
+               INITIAL='**OpenFrame OSC Sample TEST**'
+
+         DFHMDF POS=(3,2),                                             X
+               LENGTH=77,                                              X
+               ATTRB=(NORM,PROT),                                      X
+               OUTLINE=OVER
+
+         DFHMDF POS=(3,80),                                            X
+               LENGTH=1,                                               X
+               ATTRB=(DRK,PROT)
+
+NO1      DFHMDF POS=(7,31),                                            X
+               LENGTH=2,                                               X
+               ATTRB=(UNPROT,FSET,NUM),                                X
+               COLOR=BLUE,                                             X
+               HILIGHT=REVERSE
+
+         DFHMDF POS=(7,34),                                            X
+               LENGTH=1,                                               X
+               ATTRB=(DRK,PROT)
+
+         DFHMDF POS=(7,35),                                            X
+               LENGTH=1,                                               X
+               ATTRB=(NORM,PROT),                                      X
+               COLOR=BLUE,                                             X
+               INITIAL='X'
+
+NO2      DFHMDF POS=(7,38),                                            X
+               LENGTH=2,                                               X
+               ATTRB=(UNPROT,FSET,NUM),                                X
+               COLOR=BLUE,                                             X
+               HILIGHT=REVERSE
+
+         DFHMDF POS=(7,41),                                            X
+               LENGTH=1,                                               X
+               ATTRB=(DRK,PROT)
+
+         DFHMDF POS=(7,43),                                            X
+               LENGTH=1,                                               X
+               ATTRB=(NORM,PROT),                                      X
+               COLOR=BLUE,                                             X
+               INITIAL='='
+
+RSLT     DFHMDF POS=(7,47),                                            X
+               LENGTH=4,                                               X
+               ATTRB=(PROT,FSET),                                      X
+               COLOR=BLUE,                                             X
+               HILIGHT=REVERSE
+
+         DFHMDF POS=(7,52),                                            X
+               LENGTH=1,                                               X
+               ATTRB=(DRK,PROT)
+
+ALRT     DFHMDF POS=(17,10),                                           X
+               LENGTH=60,                                              X
+               ATTRB=(NORM,PROT),                                      X
+               COLOR=YELLOW                                            X
+
+         DFHMDF POS=(17,72),                                           X
+               LENGTH=1,                                               X
+               ATTRB=(DRK,PROT)
+
+         DFHMSD TYPE=FINAL
+         END
+~                                                                            
