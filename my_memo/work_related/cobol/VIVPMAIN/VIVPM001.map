@@ -87,6 +87,16 @@ ALRT     DFHMDF POS=(17,10),                                           X
                LENGTH=1,                                               X
                ATTRB=(DRK,PROT)
 
+ALRT2     DFHMDF POS=(20,10),                                          X
+               LENGTH=60,                                              X
+               ATTRB=(NORM,PROT),                                      X
+               COLOR=YELLOW                                            X
+
+         DFHMDF POS=(20,72),                                           X
+               LENGTH=1,                                               X
+               ATTRB=(DRK,PROT)
+
+ALRTRSLT DFHMDF POS=(18,38),LENGTH=4,ATTRB=(NORM,PROT),COLOR=YELLOW
+
          DFHMSD TYPE=FINAL
          END
-~                                                                            
