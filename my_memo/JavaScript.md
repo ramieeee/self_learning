@@ -57,3 +57,34 @@ const pi = 3.14 // var that should never change
 * single quotation, double quotation both possible
 * double quote inside the quote: `let str = "String \"Inside the String\" here";`
 * single, double quote both can exist. `let str = '<a href="https://instagram.com/" target="_blank">Link</a>';`
+
+# Code output
+* \' single quote
+* \" double quote
+* \\ backslash
+* \n newline
+* \r carriage return
+* \t tab
+* \b backspace
+* \f form feed
+
+# Concatunate string
+* `myStr = "First" + "Second";`
+* `myStr = = "Hello" + Name + "hey";`
+
+# Find length of string
+```javascript
+let myName = "Ramie";
+len = myName.length;
+```
+
+# bracket notation
+```javascript
+myName = "Ramie";
+a = myName[0];
+
+last = myName[myName.length - 1]
+```
+
+# String immutability
+* String cannot be altered. individual char cannot be changed.
