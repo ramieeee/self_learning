@@ -88,3 +88,9 @@ last = myName[myName.length - 1]
 
 # String immutability
 * String cannot be altered. individual char cannot be changed.
+
+# Array
+```javascript
+let arr = ["John", 22];
+let arr2 = [];
+```
