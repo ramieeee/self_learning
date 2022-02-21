@@ -83,7 +83,7 @@ len = myName.length;
 myName = "Ramie";
 a = myName[0];
 
-last = myName[myName.length - 1]
+last = myName[myName.length - 1];
 ```
 
 # String immutability
@@ -93,4 +93,5 @@ last = myName[myName.length - 1]
 ```javascript
 let arr = ["John", 22];
 let arr2 = [];
+
 ```
