@@ -352,6 +352,9 @@ for (let i=0; i < num.length; i++) {
     }
 }
 console.log(sum);
+
+for (var idx in num){
+    num[idx].update();
 ```
 
 # do...while
@@ -362,4 +365,22 @@ let i = 6
 do {
     arr.push(i);
 } while (i < 5)
+```
+
+# generate random fraction num
+* this cannot be 1 but num between 0 - 1 is generated
+```javascript
+function random_fraction() {
+    return Math.random();
+}
+console.log(random_fraction())
+```
+
+# generate random integer
+```javascript
+ // with Math.floor()
+function random_int() {
+    return Math.floor(Math.random() * 10);
+}
+console.log(random_int())
 ```
