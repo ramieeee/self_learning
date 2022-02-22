@@ -169,3 +169,197 @@ function test(int) {
     return false;
 }
 ```
+# triple equal sign(strict equality)
+* strict equal sign
+```javascript
+3 == 3 // True
+3 == '3' // True
+
+3 === 3 // True
+3 === '3' // False
+```
+
+# strict inequality
+* strict inequal sign
+`if (val !== 17) is also possible`
+
+# logical operator
+* `if (val <= 50 && val >= 25)`: here && works as and
+* || : pipes work as `or` logical operator
+
+# else if, else
+```javascript
+if (val > 10) {
+    return ""
+} else if (val < 5) {
+    return
+} else {
+    return
+}
+```
+
+# switch
+* works as case
+```javascript
+function test(val) {
+    let answer = "";
+    switch(val) {
+        case 1:
+            answer = "alpha";
+            break;
+        case 2:
+            answer = "beta";
+            break;
+        case 3:
+            answer = "gamma";
+            break;
+        default:
+            answer = "other";
+            break;
+    }
+    return answer;
+}
+
+function test2(val) {
+    let answer2 = "";
+    switch(val) {
+        case 1:
+        case 2:
+        case 3:
+            answer2 = "low";
+            break;
+        case 4:
+        case 5:
+        case 6:
+            answer2 = "mid";
+            break;
+        default:
+            answer2 = "high";
+            break;
+    }
+    return answer2;
+}
+```
+
+# javascript objects
+* similar to dictionary
+```javascript
+
+let dog = {
+    "name": "Bill",
+    "tails": 1,
+    "friends": ["everything"],
+    "the drink": "water",
+    1: "age"
+};
+
+let name = dog.name; // Bill
+let drink = dog["the drink"];
+
+let num = 1;
+let age = dog[num]
+
+// if we use dog.name = "Tim", the value changes
+dog['bark'] = 'woof!'; // adding property to object
+delete dog.bark; // deletes bark
+```
+
+# check property
+```javascript
+let dog = {
+    "name": "Bill",
+    "tails": 1,
+    "friends": ["everything"],
+    "the drink": "water",
+    1: "age"
+};
+
+if (dog.bark) {
+    console.log(dog.bark)
+} else {
+    console.log("not found")
+}
+```
+
+# multiple objects in a var
+```javascript
+let dog = {
+    "name": "Bill",
+    "tails": 1,
+    "friends": ["everything"],
+    "the drink": "water",
+    1: "age"
+},
+
+dog2 = {
+    "name": "Tim",
+    "tails": 1,
+    "friends": ["no friends"],
+    "the drink": "milk",
+    2: "age"
+}
+```
+
+# nested objects
+```javascript
+let dog = {
+    "name": "Bill",
+    "tails": 1,
+    "friends": {
+        "name": "susan",
+        "age": "2",
+        "drink": ["juice", "coke"]
+    },
+    "the drink": "water",
+    1: "age"
+}
+// dog.friends.drink[1] == 'coke'
+```
+
+# while loop
+```javascript
+let arr = [];
+let i = 0;
+while(i < 5) {
+    arr.push(i);
+    i++;
+}
+```
+
+# for loop
+```javascript
+let arr = [];
+
+for (let i = 0; i < 5; i++) {
+    arr.push(i);
+}
+
+arr = [1, 3, 6, 10];
+let temp = 0;
+for (let i = 0; i < arr.length; i++) {
+    temp += arr[i];
+}
+```
+
+# nested for loop
+```javascript
+let sum = 0;
+let num = [[1,2],[3,4],[5,6]]
+
+for (let i=0; i < num.length; i++) {
+    for (let j=0; j < num[i].length; j++){
+    sum += num[i][j];
+    }
+}
+console.log(sum);
+```
+
+# do...while
+* exec at least one time and gets into while loop
+```javascript
+let arr = [];
+let i = 6
+do {
+    arr.push(i);
+} while (i < 5)
+```
