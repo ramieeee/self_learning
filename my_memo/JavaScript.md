@@ -380,7 +380,86 @@ console.log(random_fraction())
 ```javascript
  // with Math.floor()
 function random_int() {
-    return Math.floor(Math.random() * 10);
+    return Math.floor(Math.random() * 10); // floor is rounding down
 }
 console.log(random_int())
+```
+
+# generate random integer within a range
+```javascript
+function rand_range(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+console.log(rand_range(2,10));
+```
+
+# parseInt function
+```javascript
+function toInt(str) {
+    return parseInt(str);
+}
+
+// with radix
+function toInt(str) {
+    return parseInt(str, 2); // set as binary num with number
+}
+```
+
+# ternary operator(conditional)
+```javascript
+// condition ? statement-if-true : statement-if-false;
+
+function check(a, b) {
+    return a === b ? true : false; // if a ===b, return true
+}
+
+// multiple ternary
+function checkSign(num) {
+    return num > 0 ? "positive" : num < 0 ? "negative" : "zero";
+}
+console.log(checkSign(1));
+```
+
+# var, let, const variables
+* let : does not let you declare variable twice(limited in the block)
+* var : function scope
+* "use strict"; : use strict restrictions
+
+# const(read only)
+* variable cannot be redefined
+* when const, capitalise the var name
+* `const VAR = "const variable";`
+
+# mutate an array declared with const
+```javascript
+const s = [5,7,2];
+function edit_value(s) {
+    s[0] = 2;
+    s[1] = 5;
+    s[2] = 7;
+}
+```
+
+# prevent object mutation
+```javascript
+const MATH_CONSTANTS = {
+    PI: 3.14
+}
+
+Object.freeze(MATH_CONSTANTS)
+try {
+    MATH_CONSTANTS.PI = 99;
+}  catch( ex ) {
+    console.log(ex);
+}
+
+const PI = freezeObj();
+```
+
+# anonymous function
+```javascript
+var magic = function() {
+    return new Date();
+}
 ```
