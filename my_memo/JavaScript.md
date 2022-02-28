@@ -459,7 +459,46 @@ const PI = freezeObj();
 
 # anonymous function
 ```javascript
-var magic = function() {
-    return new Date();
+// sample
+const magic = () => new Date();
+
+// rewrite the function into anonymous function form
+let myConcat = function(arr1, arr2) {
+    return arr1.concat(arr2);
 }
+
+const myConcat = (arr1,arr2) => arr1.concat(arr2);
+```
+
+# default parameters
+```javascript
+const increment = (function() {
+    return function increment(number, value = 1) {
+        return number + value;
+    };
+})();
+console.log(increment(5,2));
+console.log(increment(5));
+```
+
+# rest operator
+```javascript
+const sum = (function() {
+    return function sum(...args) { // ... takes anything
+        const args = [x,y,z];
+        return args.reduce((a,b) => a + b, 0);
+    };
+})();
+console.log(sum(1, 2, 3));
+```
+
+# spread operator
+```javascript
+const arr1 = ['JAN', 'FEB', 'MAR', 'APR', 'MAY'];
+let arr2;
+(function() {
+    arr2 = [...arr1];
+    arr1[0] = 'potato'
+})();
+console.log(arr2); // arr2[0] is not potato. it copies the value, not the address
 ```
