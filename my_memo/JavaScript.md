@@ -502,3 +502,45 @@ let arr2;
 })();
 console.log(arr2); // arr2[0] is not potato. it copies the value, not the address
 ```
+
+# destructuring assignment
+```javascript
+let val = {x: 1, y: 3, z: 2};
+// old way
+let a = val.x;
+let b = val.y;
+let c = val.z;
+
+// quicker way
+const {x: a, y: b, z: c} = val; // get xyz into abc from object val
+```
+
+# destructuring assignment with nested object
+```javascript
+const local_forecast = {
+    today: {min: 72, max: 83},
+    tomorrow: {min: 73.3, max: 84.6}
+};
+
+const {tomorrow: {max: maxOfTomorrow}} = local_forecast; // nested
+```
+
+# destructing assignment from array
+* it goes into the variables with orders
+```javascript
+const [z, x, , y] = [1, 2, 3, 4, 5, 6]; // we can skip the order with blank.
+// z=1, x=2, y=4
+```
+
+# switching values
+```javascript
+// switching
+let a = 8, b = 6;
+
+(() => {
+    [a, b] = [b, a]
+})();
+
+console.log(a);
+console.log(b);
+```
