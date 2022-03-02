@@ -544,3 +544,15 @@ let a = 8, b = 6;
 console.log(a);
 console.log(b);
 ```
+
+# rest operator with array
+```javascript
+const source = [1,2,3,4,5,6];
+function removeTwo(list) {
+    const [ , , ...arr] = list; // only first two elements with no value
+    return arr;
+}
+const arr = removeTwo(source);
+console.log(source);
+console.log(arr); // first two elements removed
+```
