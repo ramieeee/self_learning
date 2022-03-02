@@ -556,3 +556,90 @@ const arr = removeTwo(source);
 console.log(source);
 console.log(arr); // first two elements removed
 ```
+
+# destructuring assignment passing object as a parameter
+```javascript
+const stats = {
+    max: 56.78,
+    standard_deviation: 4.34,
+    median: 34.54,
+    mode: 23.87,
+    min: -0.75,
+    average: 35.85
+};
+const half = (function() {
+    return function half({max, min}) { // no need to pass whole object
+        return (max + min) / 2.0;
+    };
+})();
+console.log(stats);
+console.log(half(stats));
+```
+
+# create strings using template literals
+* template literals: makes complex string easier
+* in python it is f string like `f"abc{var}abc"`
+```javascript
+const person = {
+    name: "Ramie",
+    age: 32
+};
+
+const greeting = `Hello, i am ${person.name}! I am ${person.age} years old.`;
+```
+
+# write concise object literal declarations using simple fields
+```javascript
+// the var below will return an object like {name:name, age:age, ...}
+const createPerson = (name, age, gender) => ({name, age, gender});
+
+console.log(createPerson("Ramie", 32, "male"));
+```
+
+# declarative function
+```javascript
+// before
+const bicycle = {
+    gear: 2,
+    setGear: function(newGear) {
+        this.gear = newGear;
+    }
+};
+
+// after
+const bicycle = {
+    gear: 2,
+    setGear(newGear) {
+        this.gear = newGear;
+    }
+};
+
+bicycle.setGear(3);
+console.log(bicycle.gear);
+```
+
+# class syntax to define a constructor function
+```javascript
+// space shuttle class
+class SpaceShuttle {
+    constructor(targetPlanet) {
+        this.targetPlanet = targetPlanet;
+    }
+}
+
+var zeus = new SpaceShuttle('Jupiter');
+
+//vegi class
+function makeClass() {
+    class Vegetable {
+        constructor(name) {
+            this.name = name;
+        }
+    }
+    return Vegetable;
+}
+
+const Vegetable = makeClass();
+const carrot = new Vegetable('carrot');
+console.log(carrot.name);
+```
