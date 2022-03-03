@@ -643,3 +643,81 @@ const Vegetable = makeClass();
 const carrot = new Vegetable('carrot');
 console.log(carrot.name);
 ```
+
+# getters and setters
+```javascript
+// getter and setter example 1
+class Book {
+    constructor(author) {
+        this._author = author;
+    }
+
+    get writer() {
+        return this._author;
+    }
+
+    set writer(updatedAuthor) {
+        this._author = updatedAuthor;
+    }
+}
+
+// getter and setter example 2
+function makeClass() {
+    class Thermostat {
+        constructor(temp) {
+            this._temp = 5/9 * (temp - 32); // underbar means private var
+        }
+        get temperature() {
+            return this._temp;
+        }
+        set temperature(updatedTemp) {
+            this._temp = updatedTemp;
+        }
+    }
+    return Thermostat;
+}
+
+const Thermostat = makeClass();
+const thermos = new Thermostat(76);
+let temp = thermos.temperature; // getter
+thermos.temperature = 26; // setter
+temp = thermos.temperature;
+```
+
+# differences between import and require
+* import
+* require
+```javascript
+// write a function in different file
+export const capitalizeString = str => str.toUpperCase();
+
+// other file
+import {capitalizeString} from "file_name&path";
+const cap = capitalizeString("hello!");
+```
+
+* export: to reuse different code
+```javascript
+const capitalizeString = str => str.toUpperCase();
+
+export {capitalizeString};
+export const foo = "bar";
+export const bar = "foo";
+```
+
+# import *
+```javascript
+import * as capitalizeStrings from "file_name";
+```
+
+# export fallback with export default
+* only one thing to export from a file
+```javascript
+export default function subtract(x,y) {return x - y;}
+```
+
+# import default export
+```javascript
+import subtract from "math_functions"; // without curly braces
+subtract(7,4);
+```
