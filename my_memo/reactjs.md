@@ -158,3 +158,53 @@ ReactDOM.render(
   document.getElementById('root')
 );
 ```
+
+* 예시2
+```javascript
+// App.js
+import HandButton from "./HandButton";
+
+function App() {
+  const handleClick = (value) => console.log(value);
+  return (
+    <div>
+      <HandButton value="rock" onClick={handleClick} />
+      <HandButton value="scissors" onClick={handleClick} />
+      <HandButton value="paper" onClick={handleClick} />
+    </div>
+  );
+}
+export default App;
+
+// Handlcon.js
+import rockImg from './assets/rock.svg';
+import scissorImg from './assets/scissor.svg';
+import paperImg from './assets/paper.svg';
+
+const IMG = {
+    rock: rockImg,
+    scissors: scissorImg,
+    paper: paperImg
+}
+
+function HandIcon({value = "rock"}) {
+    const src = IMG[value];
+    return <img src={src} alt={src} />;
+}
+
+export default HandIcon;
+
+// HandButton.js
+import HandIcon from "./HandIcon";
+
+function HandButton({ value, onClick }) {
+    const handleClick = () => onClick(value);
+    return (
+    <button onClick={handleClick}>
+        <HandIcon value={value} />
+    </button>
+    );
+}
+
+export default HandButton;
+```
