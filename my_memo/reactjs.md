@@ -107,7 +107,8 @@ ReactDOM.render(element, document.getElementById('root'));
 ```
 
 # props
-* 컴포넌트의 속성
+* properties
+* 컴포넌트에 지정한 속성들
 * html 뿐만 아니라 컴포넌트에 속성 추가 가능
 ```javascript
 // 예시. props의 색에 따라 다른 주사위를 display
@@ -207,4 +208,111 @@ function HandButton({ value, onClick }) {
 }
 
 export default HandButton;
+```
+
+# children
+* 기본으로 존재하는 prop
+* 컴포넌트의 자식들을 값으로 받는 prop
+* JSX 문법으로 컴포넌트를 작성할 때 컴포넌트를 여는 태그와 닫는 태그의 형태로 작성. 안에 있는 코드가 children 값에 담김
+```javascript
+// Button.js
+function Button({ children }) {
+    return <button>{children}</button>;
+}
+export default Button;
+
+// App.js
+import Button from "./Button";
+import Dice from "./Dice";
+
+function App() {
+  const handleClick = (value) => console.log(value);
+  return (
+    <div>
+      <div>
+          <Button>던지기</Button>
+          <Button>처음부터</Button>
+      </div>
+      <Dice color="red" num={2} />
+    </div>
+  );
+}
+export default App;
+```
+
+* 예제2
+```javascript
+// Button.js
+function Button({ children, onClick }) {
+    return <button onClick={onClick}>{children}</button>;
+}
+
+export default Button;
+
+// App.js
+import Button from './Button';
+import HandButton from './HandButton';
+
+function App() {
+  const handleButtonClick = (value) => console.log(value);
+  const handleClearClick = () => console.log('처음부터');
+  return (
+    <div>
+      <Button onClick={handleClearClick}>처음부터</Button>
+      <HandButton value="rock" onClick={handleButtonClick} />
+      <HandButton value="scissor" onClick={handleButtonClick} />
+      <HandButton value="paper" onClick={handleButtonClick} />
+    </div>
+  );
+}
+export default App;
+```
+
+# state
+* react의 변수같은 개념
+* state가 바뀌면 react에서 새로 업데이트 해주는 개념
+* html처럼 각각의 페이지를 만들 필요 없이 화면을 바꿔줌
+* 배열의 형태로 값 리턴하기 때문에 배열의 형태로 destructuring. 첫번째 요소는 state 값(현재 변수의 값). 두번째 요소는 set 함수이며 파라미터로 전달하는 값으로 state가 변경됨
+`const [num, setNum] = useState(1);`
+* 일반적으로 두번째 요소는 state 요소의 이름과 같으며 앞에 set를 붙여줌
+```javascript
+// Button.js
+function Button({ children, onClick }) {
+    return <button onClick={onClick}>{children}</button>;
+  }
+  
+  export default Button;
+
+// App.js
+import { useState } from 'react';
+import Button from './Button';
+import Dice from './Dice';
+
+function random(n) {
+    return Math.ceil(Math.random() * n);
+}
+
+function App() {
+  const [num, setNum] = useState(1);
+
+  const handleRollClick = () => {
+      const nextNum = random(6);
+      setNum(nextNum);
+  }
+
+  const handleClearClick =() => {
+      setNum(1);
+  }
+  return (
+    <div>
+      <div>
+          <Button onClick={handleRollClick}>던지기</Button>
+          <Button onClick={handleClearClick}>처음부터</Button>
+      </div>
+      <Dice color="red" num={num} />
+    </div>
+  );
+}
+
+export default App;
 ```
