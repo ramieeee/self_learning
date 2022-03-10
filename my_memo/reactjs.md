@@ -316,3 +316,32 @@ function App() {
 
 export default App;
 ```
+
+# 참조형 state
+* 배열 값을 가진 useState를 사용할 때 push같은 매소드를 사용한다면 주소를 참조하기 때문에 값에 변화가 없을 수 있음. 그래서 Spread문법(...)을 활용함
+```javascript
+const [gameHistory, setGameHistory] = useState)[]);
+
+const handleRollClick = () => {
+  const nextNum = random(6);
+  setGameHistory([...gameHistory, nextNum]);
+};
+
+```
+
+# input 핸들링
+* input 태그로 값을 입력 받을 시 type, value, onChange 등의 prop을 입력받을 수 있음
+```javascript
+// const [bet, setBet] = useState(1);
+
+// 값을 입력받을 시 1-9 사이의 숫자 정수만 입력받을 수 있도록 설정
+const handleBetChange = (e) => {
+  let num = Number(e.target.value); // input의 value를 참조함
+  if (num > 9) num %= 10;
+  if (num < 1) num = 1;
+  num = Math.floor(num);
+  setBet(num);
+}
+
+<input type="number" value={bet} min={1} max={9} onChange={handleBetChange}></input>
+```
