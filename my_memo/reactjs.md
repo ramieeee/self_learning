@@ -320,12 +320,13 @@ export default App;
 # 참조형 state
 * 배열 값을 가진 useState를 사용할 때 push같은 매소드를 사용한다면 주소를 참조하기 때문에 값에 변화가 없을 수 있음. 그래서 Spread문법(...)을 활용함
 ```javascript
-const [gameHistory, setGameHistory] = useState)[]);
+const [gameHistory, setGameHistory] = useState([]);
 
 const handleRollClick = () => {
   const nextNum = random(6);
-  setGameHistory([...gameHistory, nextNum]);
+  setGameHistory([...gameHistory, nextNum]); 
 };
+// gameHistory가 [1], [1, 2] 식으로 하나씩 쌓이게 됨
 
 ```
 
@@ -345,3 +346,11 @@ const handleBetChange = (e) => {
 
 <input type="number" value={bet} min={1} max={9} onChange={handleBetChange}></input>
 ```
+
+# 컴포넌트
+* 부품
+* 반복적인 일이 줄어듦
+* 유지보수가 쉬움
+* 일을 쉽게 나눌 수 있음. 일을 나누고 조립만 하면 됨
+
+# 컴포넌트 재사용
