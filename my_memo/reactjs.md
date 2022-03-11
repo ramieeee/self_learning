@@ -353,4 +353,84 @@ const handleBetChange = (e) => {
 * 유지보수가 쉬움
 * 일을 쉽게 나눌 수 있음. 일을 나누고 조립만 하면 됨
 
-# 컴포넌트 재사용
+# 리액트의 랜더링
+* state가 바뀔 때 새로 랜더링 함.
+* DOM을 바로 변경하는게 아니라 virtualDOM에서 변경사항들을 모아두었다가 일감을 적당히 나눠서 적용함.
+* state값을 변경하고 전체를 랜더링함. 이런 전체 랜더링 하는 문제를 해결하기 위해 virtual DOM을 사용함. 우선 virtual DOM tree를 사용함. 바뀌기 전의 virtualDOM과 바뀐 후의 virtualDOM을 서로 비교하게함
+* 단순하고 깔끔해지는 코드
+
+# 인라인 스타일
+* 컴포넌트에 디자인 적용 방법
+* html의 스타일 속성처럼 style속성 지정 가능.
+* 객체형태로 스타일을 지정해줘야함
+```javascript
+// 객체
+const baseButtonStyle = {
+  padding: '14px 27px',
+  border: 'solid 1px #7090ff',
+  outline: 'none',
+  color: '#7090ff',
+  cursor: 'pointer',
+  backgroundColor: 'rgba(0, 89, 255, 0.2)',
+  borderRadius: '30px',
+  fontSize: '17px',
+}
+
+const blueButtonStyle = {
+  ...baseButtonStyle,  // spread 문법으로 모두 중복되지만 바뀔 값만 따로 설정 가능
+  backgroundColor: 'rgba(0, 89, 255, 0.2)',
+  border: 'solid 1px #7090ff',
+  color: '#7090ff',
+}
+
+function Button({ children, onClick, color }) {
+  const style = color === 'red' ? redButtonStyle : blueButtonStyle;
+  return (
+    <button style={style} onClick={onClick}>
+      {children}
+    </button>
+  );
+}
+
+export default Button;
+```
+```javascript
+import HandIcon from './HandIcon';
+import handBackground from './assets/purple.svg';
+
+const style = {
+  width: '166px',
+  height: '166px',
+  border: 'none',
+  outline: 'none',
+  textAlign: 'center',
+  cursor: 'pointer',
+  backgroundColor: 'transparent',
+  backgroundImage: `url(${handBackground})`,
+  backgroundRepeat: 'no-repeat',
+  backgroundPosition: 'center',
+  backgroundSize: 'contain',
+}
+
+// 인라인 스타일을 적용해주세요
+function HandButton({ value, onClick }) {
+  const handleClick = () => onClick(value);
+  return (
+    <button style={style} onClick={handleClick}>
+      <HandIcon value={value} />
+    </button>
+  );
+}
+
+export default HandButton;
+```
+
+# 자바스크립트 파일에서 CSS 파일 import 기능
+* Create React App 이라는 프로그램이 설정
+```javascript
+import './index.css';
+```
+
+# 빌드하기
+* JSX를 순수한 자바스크립트로 변환해야함. 프론트엔드에선 빌드라고 함
+* 터미널에서 `npm run build` 입력 -> build 디렉토리 확인 -> `npx serve build` 로 로컬 환경에서 빌드된 환경 테스트 실행
