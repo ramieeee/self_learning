@@ -1,4 +1,5 @@
 # map으로 배열 렌더링
+* 배열 랜더링에선 반드시 key를 설정해줘야함 (예: item의 id)
 * 아래 예시는 FoodList에서 items 객체(json)를 받고, FoodListItem에서 객체를 쪼개서 리턴해줌
 ```javascript
 // FoodList.js
@@ -18,8 +19,8 @@ function FoodListItem({ item }) {
 function FoodList({ items }) {
   return (
     <ul>
-      {items.map((item) => (
-        <li>
+      {items.map((item) => ( // 여기서 key prop으로 id 구별
+        <li key={item.id}>
           <FoodListItem item={item} />
         </li>
         ))}
@@ -108,7 +109,7 @@ function ReviewList({ items, onDelete }) {
     <ul>
       {items.map((item) => {
         return (
-          <li>
+          <li key={item.id}>
             <ReviewListItem item={item} onDelete={onDelete} />
           </li>
         );
