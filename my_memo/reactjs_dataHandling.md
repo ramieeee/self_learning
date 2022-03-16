@@ -152,3 +152,31 @@ function App() {
 
 export default App;
 ```
+
+# 데이터 가져오기
+* 네트워크 데이터
+* fetch 함수 사용. `fetch('url');` request 실행 후 네트워크 탭에서 response 확인 가능
+* paging prop: 데이터 추가로딩에 쓸 값
+* reviews: 우리가 받아서 사용할 데이터. 배열
+```javascript
+export async function getReviews() { // async라서 비동기 함수
+  const response = await fetch('https://learn.codeit.kr/api/film-reviews');
+  const body = await response.json(); // 기다렸다가
+}
+```
+
+# useEffect로 초기 데이터 가져오기
+* 콜백 함수를 한번만 실행하기 해줌
+```javascript
+// App.js
+import { useEffect, useState } from 'react';
+
+const handleLoad = async () => {
+  const { reviews } = await getReviews();
+  setItems(reviews);
+};
+
+useEffect(() => {
+  handleLoad();
+}, []);
+```
