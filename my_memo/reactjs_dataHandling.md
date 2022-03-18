@@ -171,6 +171,8 @@ export async function getReviews() { // async라서 비동기 함수
 // App.js
 import { useEffect, useState } from 'react';
 
+// 아래 함수를 실행하면 App 함수 실행 -> handleLoad 실행 -> 다시 App 실행으로 무한루프를 돌게 됨
+// 이런 경우를 위해 한번만 실행하는 useEffect 함수를 사용
 const handleLoad = async () => {
   const { reviews } = await getReviews();
   setItems(reviews);
@@ -178,5 +180,22 @@ const handleLoad = async () => {
 
 useEffect(() => {
   handleLoad();
-}, []);
+}, []); // 배열은 dependency임
+```
+
+# 서버에서 정렬된 데이터 받아오기
+* useEffect 함수의 파라미터
+  - 콜백함수: 리액트가 비동기로 실행할 함수
+  - 배열: dependency
+* useEffect는 콜백 함수를 실행하는 것이 아니라 콜백함수를 예약해두었다가 랜더링이 끝나면 실행함.(디팬던시 리스트도 기억함)
+* useEffect 호출 -> handleLoad 함수에서 스테이스 변경 -> 다시 랜더링 -> 콜백함수 예약(dependency list 기억) -> useEffect 호출 -> dependency list 비교
+* 쿼리를 사용. url 뒤에 `?order=rating` 같이 활용해서 정렬할 수 있음. 예:`fetch(https://google.com/list?order=rating`)
+```javascript
+// 처음 한 번만 실행하기
+useEffect (() => {
+  , []});
+
+// 값이 바뀔 때마다 실행하기
+useEffect (() => {
+  }, [dep1, dep2, dep3, ...]);
 ```
