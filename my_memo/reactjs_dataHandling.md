@@ -199,3 +199,92 @@ useEffect (() => {
 useEffect (() => {
   }, [dep1, dep2, dep3, ...]);
 ```
+
+# 페이지네이션
+* 렌더링하는데만 필요한 정보를 조금씩 나눠서 가져오는 것
+* 유튜브의 댓글이 스크롤 할때마다 더 로드 되는 것
+
+* 오프셋 페이지네이션: 상쇄하다. 지금까지 받아온 데이터의 갯수를 기준. 데이터가 추가되거나 삭제가 되면 누락 혹은 중복의 위험이 있음
+* 커서 기반 페이지네이션: 데이터를 가리키는 값. 지금까지 받은 데이터를 표시하는 책갈피. 메모리 주소를 가리키는 포인터 같은 역할
+```javascript
+//offset request
+// offset=지금까지 받은 데이터 갯수, limit=더 받아올 데이터 갯수
+get https://example.com/posts?offset=20&limit=10
+
+//cursor request
+get https://example.com/posts?limit=10
+```
+
+# 데이터 더 불러오기
+```javascript
+// api.js
+export async function getReviews({
+  order = 'createdAt',
+  offset = 0,
+  limit = 6,
+}) {
+  const query = `order=${order}&offset=${offset}&limit=${limit}`;
+  const response = await fetch(
+    `https://learn.codeit.kr/api/film-reviews?${query}`
+  );
+  const body = await response.json();
+  return body;
+}
+
+// App.js
+import { useEffect, useState } from 'react';
+import ReviewList from './ReviewList';
+import { getReviews } from '../api';
+
+const LIMIT = 6;
+
+function App() {
+  const [order, setOrder] = useState('createdAt');
+  const [offset, setOffset] = useState(0);
+  const [hasNext, setHasNext] = useState(false);
+  const [items, setItems] = useState([]);
+  const sortedItems = items.sort((a, b) => b[order] - a[order]);
+
+  const handleNewestClick = () => setOrder('createdAt');
+
+  const handleBestClick = () => setOrder('rating');
+
+  const handleDelete = (id) => {
+    const nextItems = items.filter((item) => item.id !== id);
+    setItems(nextItems);
+  };
+
+  const handleLoad = async (options) => {
+    const { paging, reviews } = await getReviews(options);
+    if (options.offset === 0) {
+      setItems(reviews);
+    } else {
+      setItems((prevItems) => [...prevItems, ...reviews]);
+    }
+    setOffset(options.offset + options.limit);
+    setHasNext(paging.hasNext);
+  };
+
+  const handleLoadMore = async () => {
+    await handleLoad({ order, offset, limit: LIMIT });
+  };
+
+  useEffect(() => {
+    handleLoad({ order, offset: 0, limit: LIMIT });
+  }, [order]);
+
+  return (
+    <div>
+      <div>
+        <button onClick={handleNewestClick}>최신순</button>
+        <button onClick={handleBestClick}>베스트순</button>
+      </div>
+      <ReviewList items={sortedItems} onDelete={handleDelete} />
+      {hasNext && <button onClick={handleLoadMore}>더 보기</button>}
+    </div>
+  );
+}
+
+export default App;
+// 위 코드에서 <button disabled={!hasNext}...>더 보기</button> 으로 버튼을 숨기지 않고 비활성화 시킬 수 있음
+```
