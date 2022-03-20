@@ -1,3 +1,8 @@
+# VS Code 간단 사용법
+* Ctrl + Shift + L: 같은 단어 멀티 커서
+* Alt + 클릭: 원하는 위치 멀티 커서
+* f2: 찾아서 바꾸기
+
 # setting
 * install node.js
 * `npm init react-app <폴더 이름>`
