@@ -288,3 +288,38 @@ function App() {
 export default App;
 // 위 코드에서 <button disabled={!hasNext}...>더 보기</button> 으로 버튼을 숨기지 않고 비활성화 시킬 수 있음
 ```
+
+# cursor 페이지네이션 api 사용
+```javascript
+// 1. cursor state 추가
+const [cursor, setCursor] = useState();
+
+// 2. handleLoad 함수 작성
+const handleLoad = async (options) => {
+  const {
+    foods,
+    paging: { nextCursor },
+  } = await getFoods(options);
+  if (!options.cursor) {
+    setItems(foods);
+  } else {
+    setItems((prevItems) => [...prevItems, ...foods]);
+  }
+  setCursor(nextCursor);
+}
+
+// 3. handleLoadMore 함수 작성
+const handleLoadMore = () => {
+  handleLoad({
+    order,
+    cursor,
+  });
+};
+
+// 4. userEffect에서 handleLoad를 실행하는 부분도 아규먼트에 맞게 수정
+useEffect(() => {
+  handleLoad({
+    order,
+  });
+}, [order]);
+```
