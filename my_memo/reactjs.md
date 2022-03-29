@@ -335,6 +335,32 @@ const handleRollClick = () => {
 
 ```
 
+# useState 초기값 지정하기
+* 콜백 함수를 사용하여 초깃값 지정 가능
+```javascript
+const [state, setState] = useState(() => {
+  // 초기값 계산
+  return initialState;
+});
+```
+* 참조형 State 사용 예
+```javascript
+const [state, setState] = useState({ count: 0});
+
+const handleAddClick = () => {
+  setState({ ...state, count: state.count + 1 }) ; // 새로운 객체 생성
+}
+```
+* 콜백으로 state 변경
+```javascript
+// 이전 State 값을 참조하면서 state를 변경하는 경우.(비동기 함수에서 State를 변경하게 되면 최신 값이 아닌 State 값을 참조하기 때문)
+// 이전 State 값으로 새로운 State를 만드는 경우엔 항상 콜백을 사용하도록 하자.
+setState((prevState) => {
+  // 다음 State 값 계산
+  return nextState;
+});
+```
+
 # input 핸들링
 * input 태그로 값을 입력 받을 시 type, value, onChange 등의 prop을 입력받을 수 있음
 ```javascript
