@@ -465,3 +465,21 @@ import './index.css';
 # 빌드하기
 * JSX를 순수한 자바스크립트로 변환해야함. 프론트엔드에선 빌드라고 함
 * 터미널에서 `npm run build` 입력 -> build 디렉토리 확인 -> `npx serve build` 로 로컬 환경에서 빌드된 환경 테스트 실행
+
+# 페이지 이동
+* Router, Routes, Route, Link로 페이지 이동을 구현할 수 있음
+* Router: BrowserRouter는 리액트 Router에서 사용하는 data를 모두 가지고 있음. 최상위 컴포넌트에서 감싸줌
+* Routes, Route: 차례대로 경로를 찾으면서 일치할 시 안에 있는 컴포넌트를 보여줌
+```javascript
+<Routes>
+  <Route path="courses" element={<CourseListPage/>} />
+  <Route path="courses/1" element={<CoursePage/>} />
+  <Route path="*" element={<NotFoundPage/>} />
+</Routes>
+```
+* Link: a 태그 대신 사용
+```javascript
+<Link to="/">홈페이지</Link>
+<Link to="/courses">수업 탐색</Link>
+<Link to="/questions">커뮤니티</Link>
+```
