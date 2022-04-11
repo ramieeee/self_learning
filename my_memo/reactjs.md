@@ -483,3 +483,22 @@ import './index.css';
 <Link to="/courses">수업 탐색</Link>
 <Link to="/questions">커뮤니티</Link>
 ```
+* navigate 함수를 이용해서 페이지 이동을 시킬 수 있음. 함수 내부에서 조건만족 시 실행하도록 설정 가능
+* 기존에는 history 함수 사용하였으나 v6부터는 navigate 사용
+```javascript
+// 기존 코드
+const history = useHistory();
+
+history.push('/');
+history.goback();
+history.go(-2);
+history.push(`/user/${user._id}`);
+
+// v6 코드
+const navigate = useNavigate();
+
+navigate('/');
+navigate(-1);
+navigate(-2);
+navigate(`/user/${user._id}`);
+```
