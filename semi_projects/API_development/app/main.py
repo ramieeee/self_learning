@@ -16,8 +16,8 @@ class Post(BaseModel):
     rating: Optional[int] = None
 
 while True:
-    try:
-        conn = psycopg2.connect(host='localhost', database='fastapi', user='postgres', password='jafkagmL00!!', cursor_factory=RealDictCursor)
+    try: # postgres password to password parameter
+        conn = psycopg2.connect(host='localhost', database='fastapi', user='postgres', password='', cursor_factory=RealDictCursor)
         cursor = conn.cursor()
         print("Database connection was successful")
         break
