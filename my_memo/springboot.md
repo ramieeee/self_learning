@@ -52,24 +52,21 @@ public class Student {
     private String name;
     private String email;
     private LocalDate dob;
-    private Integer age;
 
     public Student() {
     }
 
-    public Student(Long id, String name, String email, LocalDate dob, Integer age) {
+    public Student(Long id, String name, String email, LocalDate dob) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.dob = dob;
-        this.age = age;
     }
 
-    public Student(String name, String email, LocalDate dob, Integer age) {
+    public Student(String name, String email, LocalDate dob) {
         this.name = name;
         this.email = email;
         this.dob = dob;
-        this.age = age;
     }
 
     public Long getId() {
@@ -180,3 +177,47 @@ GRANT ALL PRIVILEGES ON DATABASE "student" TO postgres;
 * After creating DB, make sure to uncomment DB dependencies on pom.xml
 * Spring-boot-data-jpa will connect to the DB server
 * also connect to postgresql or any other DB from intellij
+
+# Data into DB
+* If the code below is run, data will be put into DB
+```java
+// StudentConfig.java
+package com.example.demo.student;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.List;
+
+import static java.util.Calendar.JANUARY;
+
+@Configuration
+public class StudentConfig {
+
+    @Bean
+    CommandLineRunner commandLineRunner(
+            StudentRepository repository) {
+        return args -> {
+            Student ramie = new Student(
+                    "Ramie",
+                    "ramie@gamil.com",
+                    LocalDate.of(2000, Month.JANUARY, 5),
+            );
+
+            Student deniz = new Student(
+                    "Deniz",
+                    "deniz@gamil.com",
+                    LocalDate.of(2000, Month.JANUARY, 5),
+            );
+
+            repository.saveAll(
+                    List.of(ramie, deniz)
+            );
+        };
+    }
+}
+
+```
