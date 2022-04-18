@@ -160,3 +160,23 @@ public class DemoApplication {
 }
 
 ```
+
+# Database connection
+* application.properties file lets us to access the database
+```java
+// sample application.properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/student
+spring.datasource.username=
+spring.datasource.password=
+spring.jpa.hibernate.ddl-auto=create-drop
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.properties.hibernate.format_sql=true
+```
+```SQL
+CREATE DATABASE student;
+GRANT ALL PRIVILEGES ON DATABASE "student" TO postgres;
+```
+* After creating DB, make sure to uncomment DB dependencies on pom.xml
+* Spring-boot-data-jpa will connect to the DB server
+* also connect to postgresql or any other DB from intellij
