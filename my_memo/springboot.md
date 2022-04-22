@@ -221,3 +221,44 @@ public class StudentConfig {
 }
 
 ```
+
+# Post request
+```java
+// StudentRepository.java
+
+// responsible for data access
+@Repository
+public interface StudentRepository
+        extends JpaRepository<Student, Long> { // Student class with Long type id
+
+    // SELECT * FROM student WHERE email = ?
+    @Query("SELECT s FROM Student s WHERE s.email = ?1")
+    // email check
+    Optional<Student> findStudentByEmail(String email);
+}
+```
+```java
+// StudentService.java
+
+@Service
+public class StudentService {
+
+    // Add student with no email duplication
+    public void addNewStudent(Student student) {
+        Optional<Student> studentOptional = studentRepository.findStudentByEmail(student.getEmail());
+        if (studentOptional.isPresent()) {
+            throw new IllegalStateException("email already exists");
+        }
+        studentRepository.save(student);
+    }
+}
+```
+```java
+//StudentController.java
+public class StudentController {
+    @PostMapping
+    public void registerNewStudent(@RequestBody Student student) {
+        studentService.addNewStudent(student);
+    }
+}
+```
