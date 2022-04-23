@@ -262,3 +262,28 @@ public class StudentController {
     }
 }
 ```
+
+* to get the error message in HTTP response
+```java
+//application.properties
+server.error.include-message=always
+```
+
+# DELETE request to DB
+
+```java
+// StudentController.java
+@DeleteMapping(path = "{studentId}")
+public void deleteStudent(@PathVariable("studentId") Long studentId) {
+    studentService.deleteStudent(studentId);
+}
+
+// StudentService.java
+public void deleteStudent(Long studentId) {
+    boolean exists = studentRepository.existsById(studentId);
+    if (!exists) {
+        throw new IllegalStateException("student id " + studentId + " does not exist");
+    }
+    studentRepository.deleteById(studentId);
+}
+```
