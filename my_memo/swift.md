@@ -90,3 +90,34 @@ func name() -> DataType {
     return someValue
 }
 ```
+
+*example
+```swift
+func myFunction() -> Int {
+    let a:Int = 1
+    let b:Int = 2
+    
+    return a + b
+}
+
+print(myFunction()) // 3
+```
+
+# function with parameter
+* parameter labels are used so it is more of natural English when read
+```swift
+func add(using num1:Int, and num2:Int) -> Int{
+    return num1 + num2
+}
+
+add(using:1, and:2)
+```
+
+* without labels
+```swift
+func add(_ num1:Int, _ num2:Int) -> Int{
+    return num1 + num2
+}
+
+add(2, 2)
+```
