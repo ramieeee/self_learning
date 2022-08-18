@@ -121,3 +121,6 @@ func add(_ num1:Int, _ num2:Int) -> Int{
 
 add(2, 2)
 ```
+
+# class
+
