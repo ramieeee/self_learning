@@ -157,11 +157,85 @@ override func drive() {
 * pointing at original field or field using super
 ```swift
 class Futurecar : Car {
-    
-    
     func fly() {
         super.drive()
         print("flying")
     }
+}
+```
+
+# initializer
+```swift
+class Person {
+    var name
+    var age
+ 
+    // multiple initializer
+    init() {
+    }
+    
+    init(name:String, age:Int) {
+        self.name = name
+        self.age = age
+    }
+}
+```
+
+# optionals
+optional is marked with question mark("?")
+```swift
+class Game {
+    var title = ""
+}
+
+class Person{
+    var name:String? // it could be null or String
+    var hobby:Game? // it could be null or have Game type
+}
+```
+
+* to check if the optional has a value, use optional binding
+```swift
+let person = Person()
+person.name = "ramieeee"
+
+// if there is name, value is saved into actualName
+if let actualName = person.name { 
+    print(actualName) // ramieeee
+}
+```
+
+* if we know if the field has a value, use exclamation mark
+```swift
+if person.name != nil {
+    print(person.name!) // unwrapping
+}
+```
+
+# properties
+they are fields as in java
+
+# computed property
+class Person
+
+# array
+```swift
+var d = ["dog", "cat"]
+
+d += ["owl", "mouse"] // appending values
+d.remove(at:0) // removing index number 0
+d.count // length of array
+```
+
+# dictionary
+```swift
+var db = Dictionary<String, String>() // declare key, value datatype
+var db2 = [String:String]() // the same format to declare dictionary
+
+db["student1"] = "ramie" // adding key, value
+db["student1"] = nil // removing key, value
+
+for (stdNum, name) in db {
+    print(stdNum + name)
 }
 ```
