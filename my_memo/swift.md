@@ -123,4 +123,45 @@ add(2, 2)
 ```
 
 # class
+```swift
+class name {
 
+}
+```
+
+# class inheritance
+```swift
+class Car {
+    var topSpeed = 200
+    
+    func drive() {
+        print("driving at \(topspeed)")
+    }
+}
+
+// future car extends Car class and can use car fields
+class Futurecar : Car {
+    func fly() {
+        print("flying")
+    }
+}
+```
+
+* overriding
+```swift
+override func drive() {
+    print("driving at \(topSpeed + 50)")
+}
+```
+
+* pointing at original field or field using super
+```swift
+class Futurecar : Car {
+    
+    
+    func fly() {
+        super.drive()
+        print("flying")
+    }
+}
+```
