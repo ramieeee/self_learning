@@ -76,3 +76,58 @@ export async function getServerSideProps() {
   };
 }
 ```
+
+# Server side rendering (static)
+
+- 빌드시에 데이터를 가져옴
+- 한번 빌드되면 재요청 되지 않음
+- getStaticProps() 함수 사용
+- getServerSideProps는 컴포넌트가 렌터링 되기 바로 전에 호출
+
+* getStaticPaths는 getStaticProps와 함께 사용됨. [id].tsx와 같이 동적 경로 할당이 가능하기 때문에
+  원하는 경로만 getServerSideProps로 데이터를 받아온다음 getStaticPaths로 경로설정을 해줌
+
+```typescript
+export async function getStaticPaths() {
+  const { allEvents } = await import("../../data.json");
+
+  const allPaths = allEvents.map((ev) => {
+    return {
+      params: {
+        cat: ev.city.toString(),
+      },
+    };
+  });
+  return {
+    paths: allPaths,
+    fallback: false, // 안맞는 path로 가면 작동 안하게 함
+  };
+}
+
+export async function getStaticProps(context: any) {
+  const id = context?.params.cat;
+  console.log(id);
+  const { allEvents } = await import("../../data.json");
+
+  const data = allEvents.filter((ev) => {
+    return ev.city === id;
+  });
+  console.log(data);
+
+  return {
+    props: { data },
+  };
+}
+```
+
+# Link
+
+- a 태그를 하면 새로고침이 되기 때문에 Link를 사용함
+
+```typescript
+import Link from "next/link";
+
+<Link href={`/events`} passHref>
+  <a>some data</a>
+</Link>;
+```
