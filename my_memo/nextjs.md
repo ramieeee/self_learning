@@ -131,3 +131,18 @@ import Link from "next/link";
   <a>some data</a>
 </Link>;
 ```
+
+# Image
+
+- image를 불러올때는 `<Image/>` 컴포넌트 사용
+
+```typescript
+import Image from 'next/image';
+
+export default const Home = () => {
+  return
+  <div>
+    <Image src={`/events/${ev.id}`}/>
+  </div>
+}
+```
